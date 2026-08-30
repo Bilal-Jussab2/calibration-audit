@@ -141,7 +141,7 @@
     <div class="docmeta">
       <span><b>Subject</b>Illustrative extraction system</span>
       <span><b>Basis</b>Synthetic data</span>
-      <span><b>Sample</b>2,400 scored extractions</span>
+      <span><b>Sample</b>2,400 extractions · representative</span>
       <span><b>Reference</b>CA-EX-001</span>
     </div>
   </div>
@@ -216,7 +216,32 @@
       <div class="kf"><div class="k">Mean claim</div><div class="v">0.89</div><div class="n">avg. confidence</div></div>
     </div>
 
-    <div class="col"><h3><span class="n">5.1</span>Claimed against observed</h3></div>
+    <div class="col"><h3><span class="n">5.1</span>Confident and wrong</h3></div>
+    <div class="col">
+      <p>The most useful finding first. Of the decisions this system would automate
+        above the recommended threshold, <b>158 were incorrect — 21.0%</b>.</p>
+      <p>These are the errors that reach production unflagged, because the system was
+        surest about exactly them. An aggregate error rate can be discounted; a list of
+        the specific fields the model was most confident about and got wrong cannot.</p>
+    </div>
+    <figure>
+      <figcaption>Six of 158. A full engagement lists every one, with the extracted value beside the true one.</figcaption>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Confidence</th><th>Document type</th><th>Field</th></tr></thead>
+          <tbody>
+            <tr><td>0.999</td><td>tax_returns</td><td>loan_amount</td></tr>
+            <tr><td>0.999</td><td>tax_returns</td><td>property_address</td></tr>
+            <tr><td>0.999</td><td>tax_returns</td><td>monthly_income</td></tr>
+            <tr><td>0.998</td><td>bank_statements</td><td>employment_dates</td></tr>
+            <tr><td>0.998</td><td>tax_returns</td><td>employer_name</td></tr>
+            <tr><td>0.998</td><td>bank_statements</td><td>borrower_name</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </figure>
+
+    <div class="col"><h3><span class="n">5.2</span>Claimed against observed</h3></div>
     <figure>
       <figcaption>Marked bands overclaim beyond sampling noise — the claim falls outside the interval.</figcaption>
       <div class="scroll">
@@ -234,7 +259,7 @@
       <p class="tnote">The 0.9–1.0 band carries 56% of all volume. It claims 95.4% and delivers 76.8%.</p>
     </figure>
 
-    <div class="col"><h3><span class="n">5.2</span>The review threshold</h3></div>
+    <div class="col"><h3><span class="n">5.3</span>The review threshold</h3></div>
     <div class="pull">
       <div class="lead">At a 95% accuracy target, no threshold works.</div>
       <p>There is no confidence cut-off on this data at which automated decisions reach 95% accuracy
@@ -246,26 +271,6 @@
     </div>
     <p class="tnote">Thresholds are taken from the lower bound rather than the point estimate. A
       threshold fitted to the point estimate fits the sample and fails on the next batch.</p>
-
-    <div class="col"><h3><span class="n">5.3</span>Confident and wrong</h3></div>
-    <div class="col"><p>Of the decisions automated above the 0.95 threshold, <b>158 were incorrect
-      — 21.0%</b>. These reach production unflagged, because the system was surest about them.</p></div>
-    <figure>
-      <figcaption>Six of 158. A full engagement lists every one, with the extracted value beside the true one.</figcaption>
-      <div class="scroll">
-        <table>
-          <thead><tr><th>Confidence</th><th>Document type</th><th>Field</th></tr></thead>
-          <tbody>
-            <tr><td>0.999</td><td>tax_returns</td><td>loan_amount</td></tr>
-            <tr><td>0.999</td><td>tax_returns</td><td>property_address</td></tr>
-            <tr><td>0.999</td><td>tax_returns</td><td>monthly_income</td></tr>
-            <tr><td>0.998</td><td>bank_statements</td><td>employment_dates</td></tr>
-            <tr><td>0.998</td><td>tax_returns</td><td>employer_name</td></tr>
-            <tr><td>0.998</td><td>bank_statements</td><td>borrower_name</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </figure>
 
     <div class="col"><h3><span class="n">5.4</span>Where the error concentrates</h3></div>
     <div class="col"><p>The aggregate figure hides the finding. Segmented, the damage concentrates —
@@ -305,8 +310,52 @@
     </figure>
   </section>
 
+  <section>
+    <div class="col">
+      <h2><span class="n">6</span>The sample</h2>
+      <p>Everything above describes <em>this sample</em>. Whether it describes
+        production is a separate question, and it is the one most capable of making a
+        rigorous report worthless.</p>
+      <p>Every statistical claim in sections 4 and 5 quantifies <b>sampling</b> error —
+        how far the observed accuracy might sit from the truth <em>for the population
+        this sample was drawn from</em>. None of them can detect that the sample came
+        from the wrong population. If 200 documents are hand-picked, an immaculate
+        report can be produced about traffic that does not exist.</p>
+    </div>
+    <figure>
+      <figcaption>Composition of this sample, against the stated production mix.</figcaption>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Document type</th><th>n</th><th>Sample</th><th>Production</th><th>Divergence</th></tr></thead>
+          <tbody>
+            <tr><td>payslips</td><td>818</td><td>34.1%</td><td>35%</td><td>−0.9%</td></tr>
+            <tr><td>bank_statements</td><td>808</td><td>33.7%</td><td>35%</td><td>−1.3%</td></tr>
+            <tr><td>tax_returns</td><td>774</td><td>32.2%</td><td>30%</td><td>+2.2%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote"><b>Representativeness: representative.</b> No segment diverges
+        from the stated production mix by more than 5 percentage points, and every
+        segment carries enough observations to support a verdict.</p>
+    </figure>
+    <div class="col">
+      <p>Three things this check enforces, and they are refusals rather than
+        reassurances:</p>
+      <ul>
+        <li><b>Without a stated production mix, representativeness is reported as
+          UNVERIFIED</b> — not assumed, not quietly omitted. The mix has to come from
+          the system owner; it cannot be inferred from the data they send.</li>
+        <li><b>A document type present in production but absent from the sample is
+          reported as unmeasured</b>, not as a small number with wide error bars. The
+          audit says nothing about it at all.</li>
+        <li><b>Segments below 30 observations get a count and no verdict.</b> A
+          confident-looking figure on eleven documents is worse than no figure.</li>
+      </ul>
+    </div>
+  </section>
+
   <section class="col">
-    <h2><span class="n">6</span>Inherent limitations</h2>
+    <h2><span class="n">7</span>Inherent limitations</h2>
     <ul>
       <li>Calibration is measured on the sample supplied. If the document mix shifts, the threshold
         shifts with it. A threshold is a finding about a corpus, not a permanent property of a model.</li>
@@ -321,7 +370,7 @@
   </section>
 
   <section class="col">
-    <h2><span class="n">7</span>Independence and restriction of use</h2>
+    <h2><span class="n">8</span>Independence and restriction of use</h2>
     <p>This work is performed independently of the system owner and of any vendor whose product is
       examined. No fee is contingent on the conclusion reached.</p>
     <p><b>This is a measurement, not a certification.</b> It is not an assurance engagement
