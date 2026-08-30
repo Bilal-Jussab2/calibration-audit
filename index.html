@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calibration Audit — worked example</title>
+<meta name="description" content="Worked example of an independent confidence-calibration audit of a document-extraction system, on synthetic data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --paper:#FCFAF5; --panel:#F5F1E8; --rule:#DDD6C7; --hair:#E9E3D6;
+    --ink:#1B1915; --ink-2:#4A453C; --muted:#7C7466;
+    --accent:#2A3F55; --accent-hair:#C6CFDA;
+    --bad:#8C2F22; --bad-tint:#F6E9E4;
+    --good:#2C5A3E;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font-family:Spectral,ui-serif,Georgia,"Times New Roman",serif;
+       font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:44rem;margin:0 auto;padding:3rem 1.4rem 5rem}
+
+  /* masthead */
+  .masthead{border-bottom:2px solid var(--ink);padding-bottom:1rem;margin-bottom:.6rem}
+  .masthead .org{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.18em;
+                 text-transform:uppercase;color:var(--muted)}
+  .masthead h1{font-size:clamp(1.7rem,1.3rem+1.8vw,2.25rem);font-weight:600;line-height:1.15;
+               margin:.5rem 0 .3rem;letter-spacing:-.01em}
+  .masthead .sub{color:var(--ink-2);font-size:1.02rem;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:.2rem 2rem;padding:.7rem 0 0;
+        font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--muted)}
+  .meta b{color:var(--ink-2);font-weight:500}
+
+  /* sections, numbered like a report */
+  section{margin-top:2.4rem}
+  h2{font-size:1.06rem;font-weight:600;margin:0 0 .7rem;padding-bottom:.35rem;
+     border-bottom:1px solid var(--rule);letter-spacing:.01em;display:flex;gap:.7rem;align-items:baseline}
+  h2 .num{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--muted);font-weight:400}
+  p{margin:0 0 .85rem}
+  p:last-child{margin-bottom:0}
+  ul{margin:.2rem 0 .85rem;padding-left:1.15rem}
+  li{margin-bottom:.45rem}
+  em{font-style:italic}
+
+  .notice{background:var(--panel);border:1px solid var(--rule);border-radius:2px;
+          padding:.9rem 1.1rem;font-size:.95rem;color:var(--ink-2)}
+  .notice b{color:var(--ink)}
+
+  /* the conclusion — the one loud element */
+  .conclusion{border:1px solid var(--rule);border-top:3px solid var(--bad);
+              background:var(--bad-tint);padding:1.2rem 1.3rem;border-radius:2px}
+  .conclusion .k{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.16em;
+                 text-transform:uppercase;color:var(--muted)}
+  .conclusion .v{font-size:1.55rem;font-weight:600;color:var(--bad);margin:.15rem 0 .6rem;
+                 letter-spacing:-.01em}
+  .conclusion p{color:var(--ink-2)}
+
+  /* figures */
+  .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));
+        border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+  .fig{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.7rem .85rem}
+  .fig .k{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;
+          text-transform:uppercase;color:var(--muted)}
+  .fig .v{font-family:"IBM Plex Mono",monospace;font-size:1.28rem;font-weight:500;
+          font-variant-numeric:tabular-nums;margin-top:.1rem}
+  .fig .n{font-size:.78rem;color:var(--muted);line-height:1.35}
+
+  .scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;margin:.2rem 0 .6rem}
+  table{border-collapse:collapse;width:100%;font-family:"IBM Plex Mono",monospace;
+        font-size:.82rem;font-variant-numeric:tabular-nums}
+  caption{caption-side:top;text-align:left;padding:.55rem .8rem;background:var(--panel);
+          border-bottom:1px solid var(--rule);font-family:Spectral,serif;font-size:.85rem;
+          color:var(--ink-2);font-style:italic}
+  th,td{padding:.44rem .8rem;text-align:right;border-bottom:1px solid var(--hair);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{font-size:.65rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+     font-weight:500;background:var(--panel)}
+  tbody tr:last-child td{border-bottom:0}
+  tr.flag td{background:var(--bad-tint)}
+  tr.flag td:first-child::after{content:" ▸";color:var(--bad)}
+  .note{font-size:.86rem;color:var(--muted);margin-top:-.2rem}
+
+  .pull{border-left:2px solid var(--accent);background:#F4F6F9;padding:.9rem 1.1rem;
+        border-radius:2px;margin:.3rem 0 .9rem}
+  .pull .big{font-size:1.08rem;font-weight:600;margin-bottom:.4rem;color:var(--ink)}
+  .pull p{color:var(--ink-2);margin-bottom:.5rem}
+
+  .sig{margin-top:3rem;border-top:2px solid var(--ink);padding-top:1rem;
+       display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:flex-end}
+  .sig .who{font-size:1.02rem}
+  .sig .who b{font-weight:600}
+  .sig .who span{color:var(--muted);font-size:.9rem;display:block}
+  .sig .terms{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--muted);text-align:right}
+
+  @media (max-width:34rem){
+    body{font-size:16px} .sheet{padding:2rem 1.1rem 4rem}
+    .sig{flex-direction:column;align-items:flex-start} .sig .terms{text-align:left}
+  }
+  @media print{
+    body{background:#fff;font-size:11pt} .sheet{max-width:none;padding:0}
+    section{break-inside:avoid} .scroll{overflow:visible}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="org">Independent calibration audit</div>
+    <h1>Does 0.9 mean right nine times out of ten?</h1>
+    <p class="sub">Confidence calibration of a document-extraction system, and the review
+      threshold its numbers actually support.</p>
+  </div>
+  <div class="meta">
+    <span><b>Subject</b> Illustrative extraction system</span>
+    <span><b>Basis</b> Synthetic data</span>
+    <span><b>Sample</b> 2,400 scored extractions</span>
+    <span><b>Ref</b> CA-EX-001</span>
+  </div>
+
+  <section>
+    <div class="notice">
+      <b>This is a worked example, not a real engagement.</b> The system examined here was
+      generated with a known, deliberately injected miscalibration, so every figure below can be
+      checked against ground truth. A real engagement follows the same procedure on your own test
+      set: 200 extractions, no customer data, five working days.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">1</span> Subject matter</h2>
+    <p>The subject matter is the set of <em>confidence scores</em> a document-extraction system
+      reports alongside each extracted field, and whether those scores are calibrated — that is,
+      whether the fields it scores 0.9 are correct about 90% of the time.</p>
+    <p>Calibration matters because it is what a human-review threshold rests on. A system that
+      routes low-confidence extractions to a reviewer is only as safe as the score doing the
+      routing. If the score is an artefact of the model's output layer rather than a probability,
+      the routing is decorative.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span> Responsibilities</h2>
+    <p><b>The system owner</b> is responsible for the extraction system, for the confidence scores
+      it emits, for the correctness labels supplied, and for any decision taken on the basis of this
+      report.</p>
+    <p><b>The auditor</b> is responsible for measuring the relationship between the scores and the
+      labels using the methods set out in section 3, and for reporting what those measurements
+      show — including where they show that no safe automation threshold exists.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span> Basis of the conclusion</h2>
+    <p>Standard, published methods, applied so that every figure in this report can be
+      independently reproduced from the same inputs:</p>
+    <ul>
+      <li><b>Expected and maximum calibration error</b> — the mean and worst gap between claimed
+        confidence and observed accuracy, across ten equal-width confidence bands.</li>
+      <li><b>Wilson score intervals</b> on each band's observed accuracy, so that an overclaim is
+        only reported where it exceeds sampling noise.</li>
+      <li><b>Brier score</b> as an overall measure of the scores' quality.</li>
+      <li><b>Risk–coverage analysis</b> to identify the lowest threshold meeting a stated accuracy
+        target at the <em>lower bound</em> of observed accuracy, not the point estimate.</li>
+    </ul>
+    <p>No proprietary metric is used and no model is retrained. The procedure runs with the standard
+      library alone and can be executed inside the system owner's own environment.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span> Conclusion</h2>
+    <div class="conclusion">
+      <div class="k">Expected calibration error 0.169 — the threshold for usable is 0.02</div>
+      <div class="v">Miscalibrated</div>
+      <p>The confidence scores do not mean what they say. Every band above 0.6 claims more than it
+        delivers, and the gap widens as confidence rises — the scores are least trustworthy exactly
+        where the system depends on them most.</p>
+      <p>Any automation threshold set from these numbers is guesswork.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span> Findings</h2>
+
+    <div class="figs">
+      <div class="fig"><div class="k">Sample</div><div class="v">2,400</div><div class="n">scored extractions</div></div>
+      <div class="fig"><div class="k">ECE</div><div class="v">0.169</div><div class="n">usable ≤ 0.02</div></div>
+      <div class="fig"><div class="k">Max band error</div><div class="v">0.187</div><div class="n">worst single band</div></div>
+      <div class="fig"><div class="k">Brier</div><div class="v">0.224</div><div class="n">0.25 = coin flip</div></div>
+      <div class="fig"><div class="k">Accuracy</div><div class="v">71.9%</div><div class="n">overall</div></div>
+      <div class="fig"><div class="k">Mean claim</div><div class="v">0.89</div><div class="n">average confidence</div></div>
+    </div>
+
+    <h3 style="font-size:.95rem;margin:1.4rem 0 .3rem;font-weight:600">5.1 Claimed against observed</h3>
+    <div class="scroll">
+      <table>
+        <caption>Marked bands overclaim beyond sampling noise — the claim sits outside the interval.</caption>
+        <thead><tr><th>Band</th><th>n</th><th>Claims</th><th>Observed</th><th>Gap</th><th>95% interval</th></tr></thead>
+        <tbody>
+          <tr><td>0.5 – 0.6</td><td>25</td><td>0.559</td><td>0.480</td><td>+0.079</td><td>0.300 – 0.665</td></tr>
+          <tr class="flag"><td>0.6 – 0.7</td><td>103</td><td>0.659</td><td>0.505</td><td>+0.154</td><td>0.410 – 0.599</td></tr>
+          <tr class="flag"><td>0.7 – 0.8</td><td>267</td><td>0.757</td><td>0.577</td><td>+0.181</td><td>0.517 – 0.635</td></tr>
+          <tr class="flag"><td>0.8 – 0.9</td><td>647</td><td>0.857</td><td>0.722</td><td>+0.135</td><td>0.686 – 0.755</td></tr>
+          <tr class="flag"><td>0.9 – 1.0</td><td>1,352</td><td>0.954</td><td>0.768</td><td>+0.186</td><td>0.745 – 0.789</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The 0.9–1.0 band carries 56% of all volume. It claims 95.4% and delivers 76.8%.</p>
+
+    <h3 style="font-size:.95rem;margin:1.4rem 0 .3rem;font-weight:600">5.2 The review threshold</h3>
+    <div class="pull">
+      <div class="big">At a 95% accuracy target, no threshold works.</div>
+      <p>There is no confidence cut-off on this data at which automated decisions reach 95% accuracy
+        at the lower bound — not a high one, not any one. The honest recommendation is that this
+        system should not be automating against a 95% target at all.</p>
+      <p>Relax the target to 75% and a threshold appears: <b>≥ 0.95</b>, automating 31.4% of volume
+        at 79.0% observed accuracy, lower bound 76.0%. Note what that means in practice — to reach
+        even 75%, roughly two-thirds of all volume must go to a human.</p>
+    </div>
+    <p class="note">Thresholds are taken from the lower bound rather than the point estimate. A
+      threshold fitted to the point estimate fits the sample and fails on the next batch.</p>
+
+    <h3 style="font-size:.95rem;margin:1.4rem 0 .3rem;font-weight:600">5.3 Confident and wrong</h3>
+    <p>Of the decisions automated above the 0.95 threshold, <b>158 were incorrect — 21.0%</b>. These
+      reach production unflagged, because the system was surest about them.</p>
+    <div class="scroll">
+      <table>
+        <caption>Six of 158. A full engagement lists every one, with the extracted value beside the true one.</caption>
+        <thead><tr><th>Confidence</th><th>Document type</th><th>Field</th></tr></thead>
+        <tbody>
+          <tr><td>0.999</td><td>tax_returns</td><td>loan_amount</td></tr>
+          <tr><td>0.999</td><td>tax_returns</td><td>property_address</td></tr>
+          <tr><td>0.999</td><td>tax_returns</td><td>monthly_income</td></tr>
+          <tr><td>0.998</td><td>bank_statements</td><td>employment_dates</td></tr>
+          <tr><td>0.998</td><td>tax_returns</td><td>employer_name</td></tr>
+          <tr><td>0.998</td><td>bank_statements</td><td>borrower_name</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:.95rem;margin:1.4rem 0 .3rem;font-weight:600">5.4 Where the error concentrates</h3>
+    <p>The aggregate figure hides the finding. Segmented, the damage concentrates — and it
+      concentrates in the fields and document types that cost most when wrong.</p>
+    <div class="scroll">
+      <table>
+        <caption>By field, worst calibration first.</caption>
+        <thead><tr><th>Field</th><th>n</th><th>ECE</th><th>Accuracy</th></tr></thead>
+        <tbody>
+          <tr class="flag"><td>debt_to_income</td><td>303</td><td>0.325</td><td>56.1%</td></tr>
+          <tr class="flag"><td>monthly_income</td><td>367</td><td>0.270</td><td>61.6%</td></tr>
+          <tr class="flag"><td>employment_dates</td><td>324</td><td>0.243</td><td>64.5%</td></tr>
+          <tr><td>employer_name</td><td>336</td><td>0.160</td><td>72.9%</td></tr>
+          <tr><td>loan_amount</td><td>300</td><td>0.114</td><td>78.7%</td></tr>
+          <tr><td>property_address</td><td>375</td><td>0.072</td><td>82.1%</td></tr>
+          <tr><td>borrower_name</td><td>395</td><td>0.060</td><td>83.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="scroll">
+      <table>
+        <caption>By document type.</caption>
+        <thead><tr><th>Document type</th><th>n</th><th>ECE</th><th>Accuracy</th></tr></thead>
+        <tbody>
+          <tr class="flag"><td>bank_statements</td><td>808</td><td>0.248</td><td>64.0%</td></tr>
+          <tr><td>tax_returns</td><td>774</td><td>0.145</td><td>74.4%</td></tr>
+          <tr><td>payslips</td><td>818</td><td>0.119</td><td>77.3%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The two worst-calibrated fields are the two a lender cares most about. Bank
+      statements — the most degraded corpus — are twice as miscalibrated as payslips. Neither is
+      visible in the headline number.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">6</span> Inherent limitations</h2>
+    <ul>
+      <li>Calibration is measured on the sample supplied. If the document mix shifts, the threshold
+        shifts with it. A threshold is a finding about a corpus, not a permanent property of a model.</li>
+      <li>Correctness derives from the labels provided. Where an extracted value is compared against
+        ground truth, only differences of case and whitespace are forgiven — currency symbols,
+        thousands separators and date formats are <em>not</em> normalised, because normalising them
+        would flatter the result.</li>
+      <li>Rows that cannot be parsed are skipped, counted and reported. Nothing is silently dropped.</li>
+      <li>Confidence intervals reflect sampling error only. They do not account for a corpus that is
+        unrepresentative of production traffic.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="num">7</span> Independence and restriction of use</h2>
+    <p>This work is performed independently of the system owner and of any vendor whose product is
+      examined. No fee is contingent on the conclusion reached.</p>
+    <p><b>This is a measurement, not a certification.</b> It is not an assurance engagement conducted
+      under ISAE 3000 or any equivalent standard, and no accreditation, professional body membership
+      or regulatory approval is claimed or implied. It is an independent measurement, reported
+      plainly, that you can reproduce yourself.</p>
+    <p>A real engagement's report is prepared for the system owner and is not intended for any other
+      party. This worked example carries no such restriction — it exists to be shared.</p>
+  </section>
+
+  <div class="sig">
+    <div class="who"><b>Bilal Jussab</b><span>Calibration audits for document AI</span></div>
+    <div class="terms">£450 · 200 extractions from your own test set<br>no customer data · five working days</div>
+  </div>
+
+</div>
+</body>
+</html>
