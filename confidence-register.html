@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Everyone ships a confidence score. Nobody shows their working.</title>
+<meta name="description" content="Five document-extraction vendors publish a rule for when to trust a confidence score. None publish evidence that the score is calibrated.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --paper:#FDFBF7; --panel:#F4F0E8; --rule:#1C1A16; --hair:#D9D3C6; --hair-soft:#E8E3D8;
+    --ink:#1C1A16; --ink-2:#443F37; --muted:#7A7264;
+    --accent:#25405C;
+    --bad:#8A2E21; --bad-tint:#F7ECE8;
+    --measure:37rem;          /* ~68 characters at 17.5px Source Serif */
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Source Serif 4",ui-serif,Georgia,"Times New Roman",serif;
+    font-size:17.5px;line-height:1.5;                    /* 150% — inside 120–145% + a touch for screen */
+    font-variant-numeric:lining-nums proportional-nums;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  .sheet{max-width:46rem;margin:0 auto;padding:3.5rem 1.5rem 6rem}
+  .col{max-width:var(--measure)}                          /* text column, narrower than tables */
+
+  /* ── masthead ─────────────────────────────────────────── */
+  .masthead{border-bottom:1.5px solid var(--rule);padding-bottom:1.1rem}
+  .kicker{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.2em;
+          text-transform:uppercase;color:var(--muted)}
+  h1{font-size:2.15rem;line-height:1.14;font-weight:700;margin:.65rem 0 .45rem;
+     letter-spacing:-.015em;max-width:var(--measure)}     /* 1:1.6 against 1.34rem h2 */
+  .standfirst{font-size:1.06rem;line-height:1.45;color:var(--ink-2);margin:0;max-width:var(--measure)}
+  .docmeta{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));
+           gap:.35rem 1.5rem;padding:.9rem 0 0;font-family:"IBM Plex Mono",monospace;
+           font-size:.7rem;color:var(--muted);letter-spacing:.02em}
+  .docmeta b{color:var(--ink-2);font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+             font-size:.64rem;display:block}
+
+  /* ── structure ────────────────────────────────────────── */
+  section{margin-top:2.6rem}
+  .claim{border-left:2px solid var(--accent);padding-left:1.1rem;margin:1.4rem 0 .9rem}
+  h2{font-size:1.34rem;line-height:1.25;font-weight:600;margin:0 0 .85rem;letter-spacing:-.008em;
+     padding-bottom:.4rem;border-bottom:1px solid var(--hair)}
+  h2 .n{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--muted);
+        font-weight:400;margin-right:.7rem;vertical-align:.16em}
+  h3{font-size:1.02rem;font-weight:600;margin:1.7rem 0 .5rem;letter-spacing:-.005em}
+  h3 .n{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--muted);
+        font-weight:400;margin-right:.55rem;vertical-align:.14em}
+  p{margin:0 0 .9rem;max-width:var(--measure)}
+  p:last-child{margin-bottom:0}
+  ul{margin:.3rem 0 .95rem;padding-left:1.05rem;max-width:var(--measure)}
+  li{margin-bottom:.5rem}
+  li::marker{color:var(--muted)}
+  b,strong{font-weight:600}
+
+  .prelim{background:var(--panel);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+          padding:.95rem 0;margin-top:1.4rem}
+  .prelim p{font-size:.97rem;color:var(--ink-2);margin:0;padding:0 1.1rem;max-width:calc(var(--measure) + 2.2rem)}
+
+  /* ── the conclusion, the one emphatic element ─────────── */
+  .opinion{border:1px solid var(--hair);border-left:3px solid var(--bad);background:var(--bad-tint);
+           padding:1.15rem 1.3rem;max-width:calc(var(--measure) + 2.6rem)}
+  .opinion .basis{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.11em;
+                  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+  .opinion .word{font-size:1.6rem;font-weight:700;color:var(--bad);letter-spacing:-.015em;
+                 margin:.2rem 0 .65rem;line-height:1.1}
+  .opinion p{color:var(--ink-2);margin-bottom:.6rem}
+
+  /* ── figures ──────────────────────────────────────────── */
+  .keyfigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));
+           border-top:1px solid var(--hair);margin:.2rem 0 1.2rem}
+  .kf{border-bottom:1px solid var(--hair);padding:.65rem .9rem .7rem 0}
+  .kf .k{font-family:"IBM Plex Mono",monospace;font-size:.63rem;letter-spacing:.11em;
+         text-transform:uppercase;color:var(--muted)}
+  .kf .v{font-size:1.42rem;font-weight:600;letter-spacing:-.01em;margin-top:.05rem;
+         font-variant-numeric:tabular-nums lining-nums}
+  .kf .n{font-size:.78rem;color:var(--muted);line-height:1.3}
+
+  /* ── tables: horizontal rules only, tabular lining figures ─ */
+  figure{margin:.2rem 0 1rem}
+  figcaption{font-size:.86rem;font-style:italic;color:var(--muted);margin-bottom:.4rem;
+             max-width:var(--measure)}
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;
+        font-variant-numeric:tabular-nums lining-nums}
+  th,td{padding:.42rem .9rem .42rem 0;text-align:right;border-bottom:1px solid var(--hair-soft);
+        white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.1em;
+           text-transform:uppercase;color:var(--muted);font-weight:500;
+           border-bottom:1px solid var(--rule);padding-bottom:.35rem}
+  tbody tr:last-child td{border-bottom:1px solid var(--rule)}
+  td:first-child{font-variant-numeric:normal}
+  tr.mark td:first-child{font-weight:600}
+  tr.mark td:first-child::before{content:"▪ ";color:var(--bad)}
+  .tnote{font-size:.85rem;color:var(--muted);max-width:var(--measure);margin:.15rem 0 0}
+
+  .pull{border-left:3px solid var(--accent);padding:.15rem 0 .15rem 1.15rem;margin:.4rem 0 1rem;
+        max-width:calc(var(--measure) + 1.15rem)}
+  .pull .lead{font-size:1.12rem;font-weight:600;line-height:1.32;margin-bottom:.5rem;
+              letter-spacing:-.008em}
+  .pull p{color:var(--ink-2)}
+
+  /* ── signature ────────────────────────────────────────── */
+  .sig{margin-top:3.4rem;border-top:1.5px solid var(--rule);padding-top:1.1rem;
+       display:flex;flex-wrap:wrap;gap:1.4rem;justify-content:space-between;align-items:flex-end}
+  .sig .name{font-size:1.08rem;font-weight:600}
+  .sig .role{color:var(--muted);font-size:.92rem}
+  .sig .terms{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--muted);
+              text-align:right;line-height:1.65;letter-spacing:.02em}
+
+  @media (max-width:38rem){
+    body{font-size:16.5px}
+    .sheet{padding:2.2rem 1.15rem 4rem}
+    h1{font-size:1.75rem}
+    .sig{flex-direction:column;align-items:flex-start}
+    .sig .terms{text-align:left}
+  }
+  @media print{
+    body{background:#fff;font-size:10.5pt;line-height:1.4}
+    .sheet{max-width:none;padding:0}
+    section,figure,.opinion{break-inside:avoid}
+    .scroll{overflow:visible}
+    h2{break-after:avoid}
+  }
+
+  .no{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--bad);
+      background:var(--bad-tint);text-align:center;white-space:nowrap}
+  td a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--hair);
+       font-family:"IBM Plex Mono",monospace;font-size:.72rem;white-space:nowrap}
+  td a:hover{border-bottom-color:var(--accent)}
+
+  .reg{max-width:var(--measure);margin:1.5rem 0 .4rem}
+  .reg-item{padding:1.05rem 0;border-top:1px solid var(--hair)}
+  .reg-item:last-child{border-bottom:1px solid var(--hair)}
+  .reg-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:.4rem}
+  .reg-name{font-weight:700;font-size:1.02rem}
+  .reg-no{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.13em;
+          text-transform:uppercase;color:var(--bad);background:var(--bad-tint);
+          padding:.2rem .5rem;white-space:nowrap;flex:none}
+  .reg-item p{margin:0 0 .5rem}
+  .src{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--muted);
+       text-decoration:none;border-bottom:1px solid var(--hair-soft)}
+  .src:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+  .xref{border-top:1px solid var(--hair);margin-top:2.6rem;padding-top:1rem;max-width:var(--measure)}
+  .xref .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.13em;
+           text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem}
+  .xref a{color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1px solid var(--hair)}
+  .xref a:hover{border-bottom-color:var(--accent);color:var(--accent)}
+  .xref p{color:var(--ink-2);font-size:.94rem;margin:.35rem 0 0}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="kicker">Field note &middot; September 2026</div>
+    <h1>Everyone ships a confidence score. Nobody shows their working.</h1>
+    <p class="standfirst">Five document-extraction vendors publish a rule for when a machine's
+      output can skip a human. Not one publishes evidence that the number the rule depends on
+      means what it says.</p>
+    <div class="docmeta">
+      <span><b>Vendors examined</b>5 with a published rule</span>
+      <span><b>Publishing calibration data</b>0</span>
+      <span><b>Claims verified</b>3 September 2026</span>
+      <span><b>Reference</b>FN-001</span>
+    </div>
+  </div>
+
+  <div class="prelim">
+    <p><b>Every claim below was read on the vendor's own domain and re-checked on 3 September
+      2026.</b> Each is linked. Where a vendor's position is stronger or more careful than a
+      summary would suggest, that is said here rather than left out.</p>
+  </div>
+
+  <section class="col">
+    <h2><span class="n">1</span>The number that decides who looks at the document</h2>
+    <p>A document-extraction system reads a payslip, a bank statement, an invoice, and returns
+      values. Beside each value it returns a confidence &mdash; 0.82, 0.97. That number does one
+      job in production: it decides whether a person ever sees the field.</p>
+    <p>Above the line, the value flows into a decision. Below it, a reviewer checks it. The
+      threshold is where a company chooses to stop looking, and it is almost always set as a
+      round number that felt about right.</p>
+    <p>Which raises a question with an answer, and the answer is measurable: <b>of the fields a
+      system scores 0.9, how many are actually correct?</b> If the answer is 90%, the threshold
+      is doing what everyone assumes. If it is 71%, then a number chosen to control risk is
+      quietly mispricing it, and every downstream figure built on that automation rate is
+      overstated.</p>
+  </section>
+
+  <section>
+    <div class="col">
+      <h2><span class="n">2</span>The register</h2>
+      <p>Five vendors publish, in their own documentation, a rule tying a confidence score to an
+        automation decision. Each is put to one question: does the same vendor publish data
+        showing how often its outputs at that confidence are actually correct?</p>
+    </div>
+    <div class="reg">
+      <div class="reg-item">
+        <div class="reg-head"><span class="reg-name">Landing AI</span><span class="reg-no">No calibration data</span></div>
+        <p>Recommends 0.95 as a starting threshold, and states plainly that the score <em>is not a probability of correctness</em>.</p>
+        <a class="src" href="https://landing.ai/blog/introducing-confidence-scores-surface-parsing-uncertainty-before-it-becomes-a-problem">landing.ai</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-head"><span class="reg-name">Runpulse</span><span class="reg-no">No calibration data</span></div>
+        <p>A five-tier ladder: auto-accept at 0.95 and above; auto-accept with a 5% audit sample from 0.85; route to review below 0.85, at high priority below 0.70; reject below 0.50.</p>
+        <a class="src" href="https://runpulse.com/blog/confidence-scoring-for-downstream-automation-when-to-trust-when-to-review">runpulse.com</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-head"><span class="reg-name">Affinda</span><span class="reg-no">No calibration data</span></div>
+        <p>Field-level thresholds set as validation rules, and a global threshold that auto-validates fields and whole documents meeting it.</p>
+        <a class="src" href="https://docs.affinda.com/configuration/confidence">docs.affinda.com</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-head"><span class="reg-name">super.AI</span><span class="reg-no">No calibration data</span></div>
+        <p>Auto-accept and auto-reject boundaries: below the reject boundary a job becomes <em>needs review</em>; above the accept boundary it is marked correct. Documented as coming soon rather than shipped.</p>
+        <a class="src" href="https://docs.super.ai/docs/review-settings">docs.super.ai</a>
+      </div>
+      <div class="reg-item">
+        <div class="reg-head"><span class="reg-name">KlearStack</span><span class="reg-no">No calibration data</span></div>
+        <p>Low-confidence fields routed to human-in-the-loop validation. No numeric threshold published.</p>
+        <a class="src" href="https://klearstack.com/blogs/insurance-data-extraction">klearstack.com</a>
+      </div>
+    </div>
+    <div class="col">
+      <p class="tnote"><b>Calibration data</b> means published figures showing observed accuracy
+        at stated confidence levels &mdash; a reliability table, an expected calibration error, or
+        equivalent, for the vendor's own product. Accuracy benchmarks are a different thing and
+        several vendors publish those: a headline accuracy figure says how often the system is
+        right, not whether it knows when it is wrong.</p>
+    </div>
+  </section>
+
+  <section class="col">
+    <h2><span class="n">3</span>The most useful sentence in the industry was written by a vendor</h2>
+    <p>Landing AI's own documentation says the confidence score <b>&ldquo;is not a probability of
+      correctness&rdquo;</b>, and spells it out: a score of 0.80 does not mean an 80% chance the
+      output is right. Two paragraphs later it recommends 0.95 as a starting threshold.</p>
+    <p>Both of those things are defensible, and stating the first takes more integrity than most
+      product documentation manages. But read together they describe the whole situation exactly.
+      The number is not a probability. The number is nonetheless where you should draw your line.
+      How far the first fact should move the second is left to the reader, and the reader has no
+      data with which to work it out.</p>
+    <p>Runpulse goes furthest of the five. Its post discusses expected calibration error, monitoring
+      for calibration drift, and spot-check sampling, and it publishes a table of adjustments
+      applied to raw scores by document type. That is a serious engineering position and better
+      than a round number. It is still a description of method rather than a measurement of
+      result: no observed accuracy per confidence band is shown.</p>
+  </section>
+
+  <section class="col">
+    <h2><span class="n">4</span>Why the gap is worth closing</h2>
+    <p>An unevidenced threshold is not a neutral default. It is a live decision about how much
+      error goes unreviewed, taken without the one measurement that would price it.</p>
+    <p>Set it too low and reviewers spend their day confirming correct extractions &mdash; a cost
+      that is visible, complained about, and therefore usually fixed. Set it too high and wrong
+      values flow into decisions unexamined. That cost is invisible, which is the problem: it does
+      not appear as an error rate, it appears months later as a bad decision nobody traces back.</p>
+    <p>The asymmetry matters most in the band everyone trusts. Errors at 0.4 get caught by the
+      process. Errors at 0.95 are, by construction, the ones nobody looks at.</p>
+  </section>
+
+  <section class="col">
+    <h2><span class="n">5</span>What would settle it</h2>
+    <p>Not a benchmark, and not a certification. One table, produced from data most teams already
+      have:</p>
+    <ul>
+      <li>Take extractions a person has already checked in the normal course of review &mdash; a
+        few hundred is enough to say something, and the arithmetic will tell you how much.</li>
+      <li>Bucket them by the confidence the system reported.</li>
+      <li>In each bucket, count how many were right, with an interval wide enough to be honest
+        about the count.</li>
+      <li>Compare each bucket's claim to its result.</li>
+    </ul>
+    <p>That is the whole method. It is arithmetic over a table, it involves no language model at
+      any point, and any competent engineer can run it in an afternoon. The reason to publish the
+      output is not that it is hard. It is that a vendor who can show the line holds has evidence
+      for a claim every competitor is currently asserting.</p>
+  </section>
+
+  <section class="col">
+    <h2><span class="n">6</span>What this shows, and what it does not</h2>
+    <ul>
+      <li><b>It shows what is public.</b> A vendor may hold calibration data internally and choose
+        not to publish it. Several probably do. Absence of publication is not absence of
+        measurement, and nothing here should be read as an accusation that these systems are
+        miscalibrated.</li>
+      <li><b>It is five vendors, not the market.</b> They were selected because each publishes a
+        routing rule specific enough to check. A wider search would find more of both kinds.</li>
+      <li><b>Claims move.</b> Every row was verified on 3 September 2026 and every source is
+        linked so the reading can be disputed. If one is wrong, it should be corrected rather than
+        defended.</li>
+      <li><b>The author sells a related service</b> &mdash; independent measurement of exactly this
+        &mdash; which is a reason to check the sources rather than take the framing on trust.</li>
+    </ul>
+  </section>
+
+  <div class="xref">
+    <span class="k">Also on this site</span>
+    <a href="./">Does 0.9 mean right nine times out of ten?</a>
+    <p>A calibration audit of Tesseract 5.3.4 across 200 scanned receipts &mdash; what happens
+      when someone actually measures the number these vendors ask you to trust.</p>
+  </div>
+
+  <div class="sig">
+    <div>
+      <b>Bilal Jussab</b><br>
+      Calibration audits for document AI
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

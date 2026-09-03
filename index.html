@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calibration Audit — worked example</title>
-<meta name="description" content="Worked example of an independent confidence-calibration audit of a document-extraction system, on synthetic data.">
+<title>Calibration audit — Tesseract 5.3.4 on 200 scanned receipts</title>
+<meta name="description" content="An independent confidence-calibration audit of Tesseract 5.3.4, measured on 10,720 text regions across 200 scanned receipts. Real data, reproducible method.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -44,6 +44,8 @@
 
   /* ── structure ────────────────────────────────────────── */
   section{margin-top:2.6rem}
+  .lft,td.lft{text-align:left !important}
+  .claim{border-left:2px solid var(--accent);padding-left:1.1rem;margin:1.4rem 0 .9rem}
   h2{font-size:1.34rem;line-height:1.25;font-weight:600;margin:0 0 .85rem;letter-spacing:-.008em;
      padding-bottom:.4rem;border-bottom:1px solid var(--hair)}
   h2 .n{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--muted);
@@ -72,7 +74,7 @@
   .opinion p{color:var(--ink-2);margin-bottom:.6rem}
 
   /* ── figures ──────────────────────────────────────────── */
-  .keyfigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));
+  .keyfigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(6.6rem,1fr));
            border-top:1px solid var(--hair);margin:.2rem 0 1.2rem}
   .kf{border-bottom:1px solid var(--hair);padding:.65rem .9rem .7rem 0}
   .kf .k{font-family:"IBM Plex Mono",monospace;font-size:.63rem;letter-spacing:.11em;
@@ -128,6 +130,15 @@
     .scroll{overflow:visible}
     h2{break-after:avoid}
   }
+
+  .mono{font-family:"IBM Plex Mono",monospace;font-size:.86em;letter-spacing:-.01em}
+
+  .xref{border-top:1px solid var(--hair);margin-top:2.6rem;padding-top:1rem;max-width:var(--measure)}
+  .xref .k{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.13em;
+           text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem}
+  .xref a{color:var(--ink);text-decoration:none;font-weight:600;border-bottom:1px solid var(--hair)}
+  .xref a:hover{border-bottom-color:var(--accent);color:var(--accent)}
+  .xref p{color:var(--ink-2);font-size:.94rem;margin:.35rem 0 0}
 </style>
 </head>
 <body>
@@ -136,42 +147,50 @@
   <div class="masthead">
     <div class="kicker">Independent calibration audit</div>
     <h1>Does 0.9 mean right nine times out of ten?</h1>
-    <p class="standfirst">Confidence calibration of a document-extraction system, and the
+    <p class="standfirst">Tesseract 5.3.4, measured on 200 scanned retail receipts, and the
       review threshold its own numbers actually support.</p>
     <div class="docmeta">
-      <span><b>Subject</b>Illustrative extraction system</span>
-      <span><b>Basis</b>Synthetic data</span>
-      <span><b>Sample</b>2,400 extractions · representative</span>
-      <span><b>Reference</b>CA-EX-001</span>
+      <span><b>Subject</b>Tesseract OCR 5.3.4</span>
+      <span><b>Corpus</b>ICDAR-2019 SROIE, 200 receipts</span>
+      <span><b>Sample</b>10,720 scored regions</span>
+      <span><b>Date</b>3 September 2026</span>
     </div>
   </div>
 
   <div class="prelim">
-    <p><b>This is a worked example, not a real engagement.</b> The system examined was generated
-      with a known, deliberately injected miscalibration, so every figure below can be checked
-      against ground truth. A real engagement follows the same procedure on your own test set:
-      200 extractions, no customer data, five working days.</p>
+    <p><b>This is a real measurement, not a worked example.</b> The subject is a real,
+      widely deployed OCR engine reading real scanned receipts, against ground truth published
+      with the corpus. No customer data is involved and nothing here is simulated: every figure
+      below came out of the run, including the ones that are inconvenient. The corpus is public
+      and the code is a few hundred lines, so any of it can be reproduced or contradicted.</p>
   </div>
 
   <section class="col">
     <h2><span class="n">1</span>Subject matter</h2>
     <p>The subject matter is the set of <em>confidence scores</em> a document-extraction system
-      reports alongside each extracted field, and whether those scores are calibrated — that is,
-      whether the fields it scores 0.9 are correct about 90% of the time.</p>
+      reports alongside each value it reads, and whether those scores are calibrated &mdash; that
+      is, whether the values it scores 0.9 are correct about 90% of the time.</p>
     <p>Calibration matters because it is what a human-review threshold rests on. A system that
       routes low-confidence extractions to a reviewer is only as safe as the score doing the
       routing. Where that score is an artefact of the model's output layer rather than a
       probability, the routing is decorative.</p>
+    <p><b>Why this subject.</b> Tesseract is open, in production in a very large number of
+      pipelines, and reports a per-word confidence that engineers threshold on. Auditing it
+      requires nobody's private data and costs nobody a customer relationship. It is the
+      cheapest available answer to a fair question: does this measurement actually show anything,
+      or only work on data chosen to make it work?</p>
   </section>
 
   <section class="col">
-    <h2><span class="n">2</span>Responsibilities</h2>
-    <p><b>The system owner</b> is responsible for the extraction system, for the confidence scores
-      it emits, for the correctness labels supplied, and for any decision taken on the basis of
-      this report.</p>
-    <p><b>The auditor</b> is responsible for measuring the relationship between those scores and
-      those labels using the methods in section 3, and for reporting what the measurements show —
-      including where they show that no safe automation threshold exists.</p>
+    <h2><span class="n">2</span>Responsibilities and the shape of this engagement</h2>
+    <p><b>In a commissioned engagement</b>, the system owner is responsible for the extraction
+      system, the confidence scores it emits, and the correctness labels supplied. The auditor is
+      responsible for measuring the relationship between the two and reporting what it shows.</p>
+    <p><b>This report differs in one respect, and it is worth stating plainly.</b> Nobody
+      commissioned it. The labels come from a published academic corpus rather than from a system
+      owner's review queue, and the auditor chose both the subject and the corpus. That makes
+      this weaker evidence about Tesseract-in-your-pipeline than a commissioned audit would be,
+      and it is why section 6 says what it says about representativeness.</p>
   </section>
 
   <section class="col">
@@ -179,28 +198,41 @@
     <p>Standard, published methods, applied so that every figure in this report can be
       independently reproduced from the same inputs:</p>
     <ul>
-      <li><b>Expected and maximum calibration error</b> — the mean and worst gap between claimed
-        confidence and observed accuracy, across ten equal-width confidence bands.</li>
+      <li><b>Expected and maximum calibration error</b> &mdash; the mean and worst gap between
+        claimed confidence and observed accuracy, across ten equal-width confidence bands.</li>
       <li><b>Wilson score intervals</b> on each band's observed accuracy, so that an overclaim is
         reported only where it exceeds sampling noise.</li>
       <li><b>Brier score</b>, as an overall measure of the scores' quality.</li>
-      <li><b>Risk–coverage analysis</b>, identifying the lowest threshold that meets a stated
+      <li><b>Risk&ndash;coverage analysis</b>, identifying the lowest threshold that meets a stated
         accuracy target at the <em>lower bound</em> of observed accuracy rather than the point
         estimate.</li>
     </ul>
-    <p>No proprietary metric is used and no model is retrained. The procedure runs on the standard
-      library alone and can be executed inside the system owner's own environment.</p>
+    <p>One prediction is one annotated text region: the region is cropped from the scan, the
+      engine reads it, and the read is scored right or wrong against the transcript published
+      with the corpus. Localisation is given, so what is measured is recognition confidence
+      &mdash; the number a production system thresholds on &mdash; and not the separate question
+      of whether the region was found.</p>
+    <p class="claim"><b>No language model takes part in the measurement.</b> Every figure in this
+      report is arithmetic over a table of confidences and correctness labels &mdash; bucketing,
+      counting, and a Wilson interval. Nothing is scored by a model, summarised by a model or
+      judged by a model. Where a value is compared with ground truth the comparison is an exact
+      string match, with only case and whitespace forgiven; no system decides whether two values
+      are close enough. This matters because an audit whose verdict rested on a model's judgment
+      would fail in exactly the way the audit exists to detect &mdash; sharing its blind spots
+      with the system under test, and reporting a flattering number with confidence.</p>
   </section>
 
   <section>
     <div class="col"><h2><span class="n">4</span>Conclusion</h2></div>
     <div class="opinion">
-      <div class="basis">Expected calibration error 0.169 — the threshold for usable is 0.02</div>
+      <div class="basis">Expected calibration error 0.191 &mdash; the threshold for usable is 0.02</div>
       <div class="word">Miscalibrated</div>
-      <p>The confidence scores do not mean what they say. Every band above 0.6 claims more than it
-        delivers, and the gap widens as confidence rises — the scores are least trustworthy exactly
-        where the system depends on them most.</p>
-      <p>Any automation threshold set from these numbers is guesswork.</p>
+      <p>The confidence scores do not mean what they say. Every band from 0.2 upward claims more
+        than it delivers, and the gap peaks near the middle: values scored around 0.75 are correct
+        40% of the time.</p>
+      <p>At a 95% accuracy target there is no threshold on this data at which automated decisions
+        reach the target at the lower bound. Under this comparison rule, the honest recommendation
+        is that this system should not be automating against that target at all.</p>
     </div>
   </section>
 
@@ -208,185 +240,266 @@
     <div class="col"><h2><span class="n">5</span>Findings</h2></div>
 
     <div class="keyfigs">
-      <div class="kf"><div class="k">Sample</div><div class="v">2,400</div><div class="n">scored extractions</div></div>
-      <div class="kf"><div class="k">ECE</div><div class="v">0.169</div><div class="n">usable ≤ 0.02</div></div>
-      <div class="kf"><div class="k">Worst band</div><div class="v">0.187</div><div class="n">max error</div></div>
-      <div class="kf"><div class="k">Brier</div><div class="v">0.224</div><div class="n">0.25 = coin flip</div></div>
-      <div class="kf"><div class="k">Accuracy</div><div class="v">71.9%</div><div class="n">overall</div></div>
-      <div class="kf"><div class="k">Mean claim</div><div class="v">0.89</div><div class="n">avg. confidence</div></div>
+      <div class="kf"><div class="k">Sample</div><div class="v">10,720</div><div class="n">scored regions</div></div>
+      <div class="kf"><div class="k">ECE</div><div class="v">0.191</div><div class="n">usable &le; 0.02</div></div>
+      <div class="kf"><div class="k">Worst band</div><div class="v">0.353</div><div class="n">max error</div></div>
+      <div class="kf"><div class="k">Brier</div><div class="v">0.218</div><div class="n">0.25 = coin flip</div></div>
+      <div class="kf"><div class="k">Accuracy</div><div class="v">60.7%</div><div class="n">overall</div></div>
+      <div class="kf"><div class="k">Mean claim</div><div class="v">0.79</div><div class="n">avg. confidence</div></div>
     </div>
 
     <div class="col"><h3><span class="n">5.1</span>Confident and wrong</h3></div>
     <div class="col">
-      <p>The most useful finding first. Of the decisions this system would automate
-        above the recommended threshold, <b>158 were incorrect — 21.0%</b>.</p>
-      <p>These are the errors that reach production unflagged, because the system was
-        surest about exactly them. An aggregate error rate can be discounted; a list of
-        the specific fields the model was most confident about and got wrong cannot.</p>
+      <p>0.90 is the threshold teams pick when nobody has measured anything. <b>5,088 of the
+        10,720 regions &mdash; 47% of all traffic &mdash; score at or above it, and 714 of those
+        are wrong.</b> That is a 14.0% error rate inside the band chosen precisely because it was
+        supposed to be safe to leave alone.</p>
+      <p>The individual failures are worse than the rate. Among values shaped like money
+        &mdash; digits, a decimal point, two more digits &mdash; 1,010 score at or above 0.90 and
+        136 of those are wrong. <b>Roughly a quarter of those errors are a lost decimal
+        point.</b></p>
     </div>
     <figure>
-      <figcaption>Six of 158. A full engagement lists every one, with the extracted value beside the true one.</figcaption>
+      <figcaption>Money values misread at 0.96 confidence. The decimal point is gone.</figcaption>
       <div class="scroll">
         <table>
-          <thead><tr><th>Confidence</th><th>Document type</th><th>Field</th></tr></thead>
+          <thead><tr><th>Confidence</th><th>On the receipt</th><th>Read as</th><th>Factor</th></tr></thead>
           <tbody>
-            <tr><td>0.999</td><td>tax_returns</td><td>loan_amount</td></tr>
-            <tr><td>0.999</td><td>tax_returns</td><td>property_address</td></tr>
-            <tr><td>0.999</td><td>tax_returns</td><td>monthly_income</td></tr>
-            <tr><td>0.998</td><td>bank_statements</td><td>employment_dates</td></tr>
-            <tr><td>0.998</td><td>tax_returns</td><td>employer_name</td></tr>
-            <tr><td>0.998</td><td>bank_statements</td><td>borrower_name</td></tr>
+            <tr class="mark"><td>0.96</td><td>9.00</td><td>900</td><td>&times;100</td></tr>
+            <tr class="mark"><td>0.96</td><td>4.60</td><td>460</td><td>&times;100</td></tr>
+            <tr class="mark"><td>0.96</td><td>4.77</td><td>477</td><td>&times;100</td></tr>
+            <tr><td>0.96</td><td>2.25</td><td>225</td><td>&times;100</td></tr>
+            <tr><td>0.96</td><td>4.30</td><td>430</td><td>&times;100</td></tr>
+            <tr><td>0.96</td><td>2.0</td><td>20</td><td>&times;10</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="tnote">These are not near misses. A dropped decimal point is a hundredfold error
+        on a monetary amount, and it arrives at the confidence level at which a pipeline stops
+        looking. An aggregate accuracy figure of 60.7% does not tell you this is the shape of the
+        failure; only the list does.</p>
     </figure>
 
     <div class="col"><h3><span class="n">5.2</span>Claimed against observed</h3></div>
     <figure>
-      <figcaption>Marked bands overclaim beyond sampling noise — the claim falls outside the interval.</figcaption>
+      <figcaption>Each band's claim, what it delivered, and the 95% interval on the delivery.</figcaption>
       <div class="scroll">
         <table>
-          <thead><tr><th>Band</th><th>n</th><th>Claims</th><th>Observed</th><th>Gap</th><th>95% interval</th></tr></thead>
+          <thead><tr><th>Band</th><th>n</th><th>Claims</th><th>Delivers</th><th>Gap</th><th>95% CI</th></tr></thead>
           <tbody>
-            <tr><td>0.5 – 0.6</td><td>25</td><td>0.559</td><td>0.480</td><td>+0.079</td><td>0.300 – 0.665</td></tr>
-            <tr class="mark"><td>0.6 – 0.7</td><td>103</td><td>0.659</td><td>0.505</td><td>+0.154</td><td>0.410 – 0.599</td></tr>
-            <tr class="mark"><td>0.7 – 0.8</td><td>267</td><td>0.757</td><td>0.577</td><td>+0.181</td><td>0.517 – 0.635</td></tr>
-            <tr class="mark"><td>0.8 – 0.9</td><td>647</td><td>0.857</td><td>0.722</td><td>+0.135</td><td>0.686 – 0.755</td></tr>
-            <tr class="mark"><td>0.9 – 1.0</td><td>1,352</td><td>0.954</td><td>0.768</td><td>+0.186</td><td>0.745 – 0.789</td></tr>
+            <tr><td>0.0&ndash;0.1</td><td>241</td><td>0.019</td><td>0.112</td><td>-0.093</td><td>0.078&ndash;0.158</td></tr>
+            <tr><td>0.1&ndash;0.2</td><td>115</td><td>0.147</td><td>0.139</td><td>+0.008</td><td>0.087&ndash;0.214</td></tr>
+            <tr><td>0.2&ndash;0.3</td><td>155</td><td>0.250</td><td>0.168</td><td>+0.083</td><td>0.117&ndash;0.234</td></tr>
+            <tr><td>0.3&ndash;0.4</td><td>238</td><td>0.351</td><td>0.143</td><td>+0.208</td><td>0.104&ndash;0.193</td></tr>
+            <tr><td>0.4&ndash;0.5</td><td>338</td><td>0.449</td><td>0.201</td><td>+0.248</td><td>0.162&ndash;0.247</td></tr>
+            <tr><td>0.5&ndash;0.6</td><td>549</td><td>0.550</td><td>0.273</td><td>+0.277</td><td>0.238&ndash;0.312</td></tr>
+            <tr><td>0.6&ndash;0.7</td><td>790</td><td>0.651</td><td>0.297</td><td>+0.353</td><td>0.267&ndash;0.330</td></tr>
+            <tr><td>0.7&ndash;0.8</td><td>1,187</td><td>0.749</td><td>0.400</td><td>+0.349</td><td>0.373&ndash;0.428</td></tr>
+            <tr class="mark"><td>0.8&ndash;0.9</td><td>2,019</td><td>0.853</td><td>0.544</td><td>+0.310</td><td>0.522&ndash;0.565</td></tr>
+            <tr class="mark"><td>0.9&ndash;1.0</td><td>5,088</td><td>0.940</td><td>0.860</td><td>+0.080</td><td>0.850&ndash;0.869</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="tnote">The 0.9–1.0 band carries 56% of all volume. It claims 95.4% and delivers 76.8%.</p>
+      <p class="tnote">The two heaviest bands are marked. Every band from 0.2 up overclaims by
+        more than sampling noise. The worst gap is not at the top but in the middle &mdash; the
+        0.6&ndash;0.7 band claims 0.651 and delivers 0.297 &mdash; while the top band, carrying
+        47% of all traffic, claims 0.940 and delivers 0.860. The lowest band <em>under</em>claims:
+        things scored near zero are right 11% of the time.</p>
     </figure>
 
-    <div class="col"><h3><span class="n">5.3</span>The review threshold</h3></div>
+    <div class="col"><h3><span class="n">5.3</span>The review threshold, and the rule it depends on</h3></div>
     <div class="pull">
-      <div class="lead">At a 95% accuracy target, no threshold works.</div>
-      <p>There is no confidence cut-off on this data at which automated decisions reach 95% accuracy
-        at the lower bound — not a high one, not any one. The honest recommendation is that this
-        system should not be automating against a 95% target at all.</p>
-      <p>Relax the target to 75% and a threshold appears: <b>≥ 0.95</b>, automating 31.4% of volume
-        at 79.0% observed accuracy, lower bound 76.0%. Note what that means in practice — to reach
-        even 75%, roughly two-thirds of all volume must go to a human.</p>
+      <div class="lead">Whether a safe threshold exists at all depends on the comparison rule.</div>
+      <p>Under this report's rule &mdash; exact match, only case and whitespace forgiven &mdash;
+        no threshold reaches 95% accuracy at the lower bound. There is no number to recommend.</p>
+      <p>Relax the rule to also forgive punctuation at the start and end of a value, which is
+        defensible when the value is a field rather than a line of prose, and a threshold appears:
+        <b>&ge; 0.96</b>, automating 11.5% of volume at 96.9% accuracy, 95.8% at the lower bound.
+        Same engine, same documents, same day.</p>
     </div>
-    <p class="tnote">Thresholds are taken from the lower bound rather than the point estimate. A
-      threshold fitted to the point estimate fits the sample and fails on the next batch.</p>
+    <div class="col">
+      <p>That difference is the finding, not a footnote to it. The looser rule changes overall
+        accuracy from 60.7% to 64.7% and the calibration error from 0.191 to 0.155 &mdash; and it
+        changes the recommendation from <em>do not automate</em> to <em>automate an eighth of
+        it</em>.</p>
+      <p><b>So an accuracy figure quoted without its comparison rule is not a measurement.</b>
+        Vendors publish headline accuracy constantly and almost never publish the rule underneath
+        it. Both numbers above are honest; they are not the same number; and nothing but the rule
+        separates them. This report states its rule in section 3 and reports the sensitivity here,
+        which is the least that should be expected of any figure of this kind.</p>
+      <p>Note also what the 0.96 threshold buys even when it works: <b>88.5% of the documents
+        still go to a human.</b> A threshold that meets the target by automating almost nothing is
+        a true answer to the wrong question, and it should be read as evidence about the engine
+        rather than as a recommendation to deploy it.</p>
+    </div>
 
     <div class="col"><h3><span class="n">5.4</span>Where the error concentrates</h3></div>
-    <div class="col"><p>The aggregate figure hides the finding. Segmented, the damage concentrates —
-      and it concentrates in the fields and document types that cost most when wrong.</p></div>
     <figure>
-      <figcaption>By field, worst calibration first.</figcaption>
+      <figcaption>By content type. Worst calibration first.</figcaption>
       <div class="scroll">
         <table>
-          <thead><tr><th>Field</th><th>n</th><th>ECE</th><th>Accuracy</th></tr></thead>
+          <thead><tr><th>Content</th><th>n</th><th>ECE</th><th>Accuracy</th></tr></thead>
           <tbody>
-            <tr class="mark"><td>debt_to_income</td><td>303</td><td>0.325</td><td>56.1%</td></tr>
-            <tr class="mark"><td>monthly_income</td><td>367</td><td>0.270</td><td>61.6%</td></tr>
-            <tr class="mark"><td>employment_dates</td><td>324</td><td>0.243</td><td>64.5%</td></tr>
-            <tr><td>employer_name</td><td>336</td><td>0.160</td><td>72.9%</td></tr>
-            <tr><td>loan_amount</td><td>300</td><td>0.114</td><td>78.7%</td></tr>
-            <tr><td>property_address</td><td>375</td><td>0.072</td><td>82.1%</td></tr>
-            <tr><td>borrower_name</td><td>395</td><td>0.060</td><td>83.8%</td></tr>
+            <tr class="mark"><td>mixed (letters and digits)</td><td>2,682</td><td>0.314</td><td>45.2%</td></tr>
+            <tr><td>numeric</td><td>3,280</td><td>0.159</td><td>63.1%</td></tr>
+            <tr><td>alphabetic</td><td>4,615</td><td>0.146</td><td>68.7%</td></tr>
+            <tr><td>symbolic</td><td>143</td><td>0.139</td><td>35.7%</td></tr>
           </tbody>
         </table>
       </div>
-    </figure>
-    <figure>
-      <figcaption>By document type.</figcaption>
-      <div class="scroll">
-        <table>
-          <thead><tr><th>Document type</th><th>n</th><th>ECE</th><th>Accuracy</th></tr></thead>
-          <tbody>
-            <tr class="mark"><td>bank_statements</td><td>808</td><td>0.248</td><td>64.0%</td></tr>
-            <tr><td>tax_returns</td><td>774</td><td>0.145</td><td>74.4%</td></tr>
-            <tr><td>payslips</td><td>818</td><td>0.119</td><td>77.3%</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="tnote">The two worst-calibrated fields are the two a lender cares most about. Bank
-        statements — the most degraded corpus — are twice as miscalibrated as payslips. Neither is
-        visible in the headline number.</p>
+      <p class="tnote">Mixed content &mdash; dates, reference numbers, amounts carrying a currency
+        code, anything combining letters and digits &mdash; is more than twice as miscalibrated as
+        plain prose and correct less than half the time. These are the fields document automation
+        exists to capture. Confidence is least trustworthy exactly where the decisions are made,
+        and an overall figure of 0.191 conceals a 0.314 inside it.</p>
     </figure>
   </section>
 
   <section>
     <div class="col">
-      <h2><span class="n">6</span>The sample</h2>
-      <p>Everything above describes <em>this sample</em>. Whether it describes
-        production is a separate question, and it is the one most capable of making a
-        rigorous report worthless.</p>
-      <p>Every statistical claim in sections 4 and 5 quantifies <b>sampling</b> error —
-        how far the observed accuracy might sit from the truth <em>for the population
-        this sample was drawn from</em>. None of them can detect that the sample came
-        from the wrong population. If 200 documents are hand-picked, an immaculate
-        report can be produced about traffic that does not exist.</p>
+      <h2><span class="n">6</span>The sample, and the labels</h2>
+      <h3><span class="n">6.1</span>The sample</h3>
+      <p>Everything above describes <em>this sample</em>. Whether it describes production is a
+        separate question, and it is the one most capable of making a rigorous report
+        worthless.</p>
+      <p>Every statistical claim in sections 4 and 5 quantifies <b>sampling</b> error &mdash; how
+        far the observed accuracy might sit from the truth <em>for the population this sample was
+        drawn from</em>. None of them can detect that the sample came from the wrong population.
+        If 200 documents are hand-picked, an immaculate report can be produced about traffic that
+        does not exist.</p>
     </div>
     <figure>
-      <figcaption>Composition of this sample, against the stated production mix.</figcaption>
+      <figcaption>Composition of this sample by content type.</figcaption>
       <div class="scroll">
         <table>
-          <thead><tr><th>Document type</th><th>n</th><th>Sample</th><th>Production</th><th>Divergence</th></tr></thead>
+          <thead><tr><th>Content</th><th>n</th><th>Share of sample</th><th>Production share</th></tr></thead>
           <tbody>
-            <tr><td>payslips</td><td>818</td><td>34.1%</td><td>35%</td><td>−0.9%</td></tr>
-            <tr><td>bank_statements</td><td>808</td><td>33.7%</td><td>35%</td><td>−1.3%</td></tr>
-            <tr><td>tax_returns</td><td>774</td><td>32.2%</td><td>30%</td><td>+2.2%</td></tr>
+            <tr><td>alphabetic</td><td>4,615</td><td>43.1%</td><td>unknown</td></tr>
+            <tr><td>numeric</td><td>3,280</td><td>30.6%</td><td>unknown</td></tr>
+            <tr><td>mixed</td><td>2,682</td><td>25.0%</td><td>unknown</td></tr>
+            <tr><td>symbolic</td><td>143</td><td>1.3%</td><td>unknown</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="tnote"><b>Representativeness: representative.</b> No segment diverges
-        from the stated production mix by more than 5 percentage points, and every
-        segment carries enough observations to support a verdict.</p>
+      <p class="tnote"><b>Representativeness: UNVERIFIED</b> &mdash; and it stays that way. These
+        are Malaysian retail receipts from a 2019 competition corpus. Nobody has stated a
+        production mix for them because there is no production system here, so the audit reports
+        the verdict it is entitled to rather than the one that would read better. The findings
+        describe this sample. Whether they describe any particular pipeline is not something this
+        report can establish, and a commissioned engagement would begin by fixing exactly that.</p>
     </figure>
     <div class="col">
-      <p>Three things this check enforces, and they are refusals rather than
-        reassurances:</p>
+      <p>Three things this check enforces, and they are refusals rather than reassurances:</p>
       <ul>
         <li><b>Without a stated production mix, representativeness is reported as
-          UNVERIFIED</b> — not assumed, not quietly omitted. The mix has to come from
-          the system owner; it cannot be inferred from the data they send.</li>
-        <li><b>A document type present in production but absent from the sample is
-          reported as unmeasured</b>, not as a small number with wide error bars. The
-          audit says nothing about it at all.</li>
-        <li><b>Segments below 30 observations get a count and no verdict.</b> A
-          confident-looking figure on eleven documents is worse than no figure.</li>
+          UNVERIFIED</b> &mdash; not assumed, not quietly omitted. The mix has to come from the
+          system owner; it cannot be inferred from the data they send.</li>
+        <li><b>A document type present in production but absent from the sample is reported as
+          unmeasured</b>, not as a small number with wide error bars. The audit says nothing about
+          it at all.</li>
+        <li><b>Segments below 30 observations get a count and no verdict.</b> A confident-looking
+          figure on eleven documents is worse than no figure.</li>
       </ul>
+
+      <h3><span class="n">6.2</span>Where the labels come from</h3>
+      <p>Calibration is a comparison between what a system claimed and what turned out to be true.
+        The second half of that sentence is not free. Every figure in this report inherits the
+        quality of the correctness labels it was measured against, and those labels are the least
+        examined part of most evaluations.</p>
+      <p><b>Here they are the transcripts published with the corpus</b>, produced by its
+        annotators. In a commissioned engagement they come from the system owner instead &mdash;
+        an existing review queue, extractions a person has already checked in the course of normal
+        work. They are not commissioned for the audit.</p>
+      <p><b>The auditor does not generate ground truth, and in particular does not generate it
+        with a language model.</b> This is a refusal, not an omission. A model asked to judge
+        another model's extraction fails on the same documents &mdash; the same smudged scan, the
+        same ambiguous field &mdash; and it fails in the same direction. Its errors would be
+        <em>correlated</em> with the errors under test, which does not merely add noise: it
+        cancels out precisely the disagreements that reveal overconfidence. The system would be
+        reported as better calibrated than it is, and the report would be most wrong exactly where
+        it mattered most. There is no sample size that repairs this.</p>
+      <p><b>And these labels are not clean, which is the point of saying where they came from.</b>
+        One region is transcribed <span class="mono">SDN BND</span>; the engine read
+        <span class="mono">SDN BHD</span>, which is the correct Malaysian company suffix and
+        almost certainly what is printed. The audit scored the engine wrong. That is one visible
+        instance of a class of error nobody has counted here, and it runs in the direction of
+        making the engine look worse than it is.</p>
     </div>
+    <figure>
+      <figcaption>What is recorded about the labels, and what each entry constrains.</figcaption>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Recorded</th><th class="lft">Why it is in the report</th></tr></thead>
+          <tbody>
+            <tr><td>Source</td><td class="lft">Which review queue or process the labels came from, named.</td></tr>
+            <tr><td>Method</td><td class="lft">Whether a person checked the field against the document, or a downstream correction was inferred.</td></tr>
+            <tr><td>Re-check</td><td class="lft">Whether a subset was independently re-labelled, and how often the two disagreed.</td></tr>
+            <tr><td>Floor</td><td class="lft">The disagreement rate above, carried into every conclusion as a limit on resolution.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tnote"><b>The floor is the point of the table, and this report does not have
+        one.</b> No independent re-check of the corpus transcripts was performed, so the label
+        error rate here is <b>unquantified</b> and every figure above should be read as resting on
+        it. If a re-check found the labels disagreed 3% of the time, no calibration gap smaller
+        than roughly three percentage points could be distinguished from label noise &mdash; which
+        would leave the central findings standing, since they are an order of magnitude larger,
+        and would rightly dissolve the small ones.</p>
+    </figure>
   </section>
 
   <section class="col">
     <h2><span class="n">7</span>Inherent limitations</h2>
     <ul>
-      <li>Calibration is measured on the sample supplied. If the document mix shifts, the threshold
-        shifts with it. A threshold is a finding about a corpus, not a permanent property of a model.</li>
-      <li>Correctness derives from the labels provided. Where an extracted value is compared against
-        ground truth, only differences of case and whitespace are forgiven — currency symbols,
-        thousands separators and date formats are <em>not</em> normalised, because normalising them
-        would flatter the result.</li>
-      <li>Rows that cannot be parsed are skipped, counted and reported. Nothing is silently dropped.</li>
-      <li>Confidence intervals reflect sampling error only. They do not account for a corpus that is
-        unrepresentative of production traffic.</li>
+      <li>Calibration is measured on the sample supplied. If the document mix shifts, the
+        threshold shifts with it. A threshold is a finding about a corpus, not a permanent
+        property of a model.</li>
+      <li>Correctness derives from the labels provided. Where a value is compared against ground
+        truth, only differences of case and whitespace are forgiven &mdash; currency symbols,
+        thousands separators and date formats are <em>not</em> normalised, because normalising
+        them would flatter the result. Section 5.3 reports what a looser rule does.</li>
+      <li>The engine was run with default settings and the default English model, one text line at
+        a time. Tuned pre-processing, a different page-segmentation mode or a fine-tuned model
+        would produce different numbers. This is a measurement of a default configuration, which
+        is what most pipelines run.</li>
+      <li>Localisation was given by the corpus. A production system that also has to find the text
+        would do worse, and its confidence would have a second source of error this report does
+        not touch.</li>
+      <li>Rows that could not be parsed or read were skipped, counted and reported. Nothing was
+        silently dropped.</li>
+      <li>Confidence intervals reflect sampling error only. They do not account for a corpus that
+        is unrepresentative of production traffic, and they do not account for error in the labels
+        &mdash; see section 6.</li>
     </ul>
   </section>
 
   <section class="col">
     <h2><span class="n">8</span>Independence and restriction of use</h2>
-    <p>This work is performed independently of the system owner and of any vendor whose product is
-      examined. No fee is contingent on the conclusion reached.</p>
+    <p>This work is performed independently. The author has no commercial relationship with the
+      Tesseract project, no interest in the corpus, and no fee contingent on the conclusion
+      reached. Tesseract was selected because auditing it requires nobody's private data.</p>
     <p><b>This is a measurement, not a certification.</b> It is not an assurance engagement
-      conducted under ISAE 3000 or any equivalent standard, and no accreditation, professional body
-      membership or regulatory approval is claimed or implied. It is an independent measurement,
-      reported plainly, that you can reproduce yourself.</p>
-    <p>A real engagement's report is prepared for the system owner and is not intended for any other
-      party. This worked example carries no such restriction — it exists to be shared.</p>
+      conducted under ISAE 3000 or any equivalent standard, and no accreditation, professional
+      body membership or regulatory approval is claimed or implied. It is an independent
+      measurement, reported plainly, that you can reproduce yourself.</p>
+    <p><b>The author sells this measurement as a service</b>, which is a reason to check the
+      method rather than take the conclusion on trust. A commissioned report is prepared for the
+      system owner and is not intended for any other party. This one carries no such restriction
+      &mdash; it exists to be checked.</p>
   </section>
+
+  <div class="xref">
+    <span class="k">Also on this site</span>
+    <a href="confidence-register.html">Everyone ships a confidence score. Nobody shows their working.</a>
+    <p>Five document-extraction vendors publish a rule for when to trust a confidence score.
+      None publish evidence that the score is calibrated.</p>
+  </div>
 
   <div class="sig">
     <div>
-      <div class="name">Bilal Jussab</div>
-      <div class="role">Calibration audits for document AI</div>
+      <b>Bilal Jussab</b><br>
+      Calibration audits for document AI
     </div>
-    <div class="terms">£450 · 200 extractions from your own test set<br>no customer data · five working days</div>
   </div>
 
 </div>
