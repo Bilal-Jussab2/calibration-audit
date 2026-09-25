@@ -1,28 +1,18 @@
-# Calibration audits for document AI
+# Korbant: independent calibration measurements
 
-Independent measurement of whether a document-extraction system's confidence scores mean what they say — whether the fields it scores 0.9 are correct about 90% of the time.
+When an AI system says it is 90% sure, is it right 90% of the time? Each study here measures that for one system, with the method, code and data published so anyone can check it. The public index lives at [audit.korbant.co.uk](https://audit.korbant.co.uk).
 
-Most extraction products route low-confidence fields to a human reviewer. That routing is only as good as the score doing it. Confidence scores are shipped almost universally and validated almost never.
+| Study | System | Status |
+|---|---|---|
+| Receipt OCR | Tesseract 5.3.4, 200 scanned receipts | [Published](https://audit.korbant.co.uk/tesseract-receipts.html) |
+| Intent routing | Jev by TypeSafe AI | [Method committed](preregistration/jev-preregistration.md) 22 Sep 2026. Results not yet published |
 
-**Worked example, on synthetic data:** https://bilal-jussab2.github.io/calibration-audit/
+## How every study works
 
-## What an engagement measures
+1. The method and pass mark are committed here before any test data is sent.
+2. Results are scored against the dataset's original labels. Any corrections sit next to them, never in place of them.
+3. The system's maker gets the full results at least seven days before publication and can reply in full.
 
-- Expected and maximum calibration error, across ten confidence bands
-- Wilson score intervals, so an overclaim is only reported where it exceeds sampling noise
-- Brier score
-- Risk-coverage analysis: the lowest review threshold meeting a stated accuracy target at the lower bound, not the point estimate
-- The confident-and-wrong set: every automated decision above the threshold that was wrong
-- Per-field and per-document-type breakdowns, because the aggregate hides the finding
+This is a measurement, not a certification.
 
-Standard methods only. No proprietary metric, no model retraining, and every figure reproducible from the same inputs.
-
-## Terms
-
-200 extractions from your own test set. No customer data. Five working days. £450.
-
-This is a measurement, not a certification. It is not an assurance engagement under ISAE 3000 or any equivalent standard, and no accreditation is claimed or implied.
-
----
-
-Bilal Jussab · Calibration audits for document AI
+Bilal Jussab · Korbant
