@@ -1,0 +1,6 @@
+.env
+.env.txt
+*.env
+data/
+results/
+__pycache__/
