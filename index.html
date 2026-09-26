@@ -73,6 +73,16 @@
     td{border-bottom:1px solid var(--hair-soft)}
     td[data-h]::before{content:attr(data-h);display:block;font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}
   }
+  .stats{grid-template-columns:repeat(4,1fr)!important}
+  .kind{display:block;font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem}
+  .kp{color:var(--bad)} .kn{color:var(--good)} .kt{color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 .7rem}
+  .chip{font-family:"IBM Plex Mono",monospace;font-size:.7rem;padding:.35rem .65rem;border:1px solid var(--hair);background:#fff;color:var(--ink-2);border-radius:999px;cursor:pointer}
+  .chip span{color:var(--muted)}
+  .chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)} .chip.on span{color:var(--hair)}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  tr[hidden]{display:none!important}
+  @media (max-width:760px){.stats{grid-template-columns:1fr 1fr!important}.stat:nth-child(2){border-right:0}.stat{border-bottom:1px solid var(--hair)}}
 </style>
 </head>
 <body>
@@ -83,8 +93,9 @@
     <h1>Does the confidence score mean what it says?</h1>
     <p class="standfirst">AI systems attach a confidence score to their answers, and software uses it to decide what a person checks and what goes straight through. This index records what each maker says about that score, and whether anyone has published evidence that it holds.</p>
     <div class="stats" aria-label="Summary">
-      <div class="stat"><b>7</b><span>Systems listed</span></div>
-      <div class="stat"><b>0 of 7</b><span>Makers publish calibration evidence</span></div>
+      <div class="stat"><b>30</b><span>Systems listed</span></div>
+      <div class="stat"><b>6</b><span>Makers who say the score is a probability of being right</span></div>
+      <div class="stat"><b>0 of 30</b><span>Makers who publish evidence that it is</span></div>
       <div class="stat"><b>2</b><span>Measured by Korbant</span></div>
     </div>
   </header>
@@ -92,54 +103,222 @@
   <h2>The index</h2>
   <p class="col"><b>Calibration evidence</b> means data showing how often answers at a given confidence turn out to be right, such as a reliability curve or a calibration error figure. An accuracy benchmark does not count: it says how often a system is right overall, not whether its confidence tells you which answers to trust.</p>
 
+  <div class="chips" role="group" aria-label="Filter the index">
+    <button class="chip on" data-f="all">All <span></span></button>
+    <button class="chip" data-f="cat:doc">Document extraction <span></span></button>
+    <button class="chip" data-f="cat:intent">Intent and text classification <span></span></button>
+    <button class="chip" data-f="kind:P">Says it is a probability <span></span></button>
+    <button class="chip" data-f="kind:N">Says not to read it as one <span></span></button>
+  </div>
   <table>
     <thead><tr><th style="width:17%">System</th><th style="width:40%">What the maker says</th><th style="width:15%">Evidence published</th><th style="width:18%">Independent measurement</th><th style="width:10%">Checked</th></tr></thead>
     <tbody>
-      <tr>
+      <tr data-cat="intent" data-kind="P">
         <td data-h="System"><span class="sys">Jev</span><span class="maker">TypeSafe AI</span></td>
-        <td data-h="What the maker says"><q>Calibrated: higher confidence means higher accuracy.</q><a class="src" href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">typesafe.ai</a></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span><q>Calibrated: higher confidence means higher accuracy.</q><a class="src" href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">typesafe.ai</a></td>
         <td data-h="Evidence published"><span class="tag none">None found</span></td>
         <td data-h="Independent measurement"><span class="tag prog">In progress</span><span class="note"><a href="https://github.com/Bilal-Jussab2/calibration-audit/blob/main/preregistration/jev-preregistration.md">Method committed</a> 22 Sep 2026, before any test data was sent.</span></td>
         <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
       </tr>
-      <tr>
+      <tr data-cat="doc" data-kind="X">
         <td data-h="System"><span class="sys">Tesseract 5.3.4</span><span class="maker">Open source OCR</span></td>
-        <td data-h="What the maker says">No calibration claim. Reports a confidence for each word it reads.<a class="src" href="https://github.com/tesseract-ocr/tesseract">github.com/tesseract-ocr</a></td>
+        <td data-h="What the maker says"><span class="kind kt">No claim made</span>No calibration claim. Reports a confidence for each word it reads.<a class="src" href="https://github.com/tesseract-ocr/tesseract">github.com/tesseract-ocr</a></td>
         <td data-h="Evidence published"><span class="tag na">No claim made</span></td>
         <td data-h="Independent measurement"><span class="tag done">Published</span><span class="note"><a href="tesseract-receipts.html">Calibration error 0.191</a> on 200 scanned receipts.</span></td>
         <td data-h="Checked"><span class="date">3 Sep 2026</span></td>
       </tr>
-      <tr>
-        <td data-h="System"><span class="sys">Landing AI</span><span class="maker">Document parsing</span></td>
-        <td data-h="What the maker says">Recommends 0.95 as a starting threshold, and says the score <q>is not a probability of correctness.</q><a class="src" href="https://landing.ai/blog/introducing-confidence-scores-surface-parsing-uncertainty-before-it-becomes-a-problem">landing.ai</a></td>
+      <tr data-cat="doc" data-kind="P">
+        <td data-h="System"><span class="sys">Amazon Textract</span><span class="maker">Amazon Web Services</span></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span><q>A confidence score is a number between 0 and 100 that indicates the probability that a given prediction is correct.</q><a class="src" href="https://docs.aws.amazon.com/textract/latest/dg/textract-best-practices.html">docs.aws.amazon.com</a></td>
         <td data-h="Evidence published"><span class="tag none">None found</span></td>
         <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
         <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
       </tr>
-      <tr>
+      <tr data-cat="doc" data-kind="P">
+        <td data-h="System"><span class="sys">Azure AI Document Intelligence</span><span class="maker">Microsoft</span></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span><q>For example, a confidence value of 0.95 (95%) indicates that the prediction is likely correct 19 out of 20 times.</q><a class="src" href="https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/concept/accuracy-confidence?view=doc-intel-4.0.0">learn.microsoft.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="P">
+        <td data-h="System"><span class="sys">Rossum</span><span class="maker">Rossum</span></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span><q>We calibrate the confidence scores to correspond to the probability of a given value being right.</q> Default automation threshold 0.975.<a class="src" href="https://knowledge-base.rossum.ai/docs/using-ai-confidence-thresholds-for-automation-in-rossum">knowledge-base.rossum.ai</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span><span class="note">Calibration is claimed. No figures are published.</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="P">
+        <td data-h="System"><span class="sys">LlamaExtract</span><span class="maker">LlamaIndex</span></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span>On some tiers, <q>a score approximates a real probability of correctness.</q> Two tiers are described as not calibrated.<a class="src" href="https://developers.llamaindex.ai/llamaparse/extract/guides/extensions/">developers.llamaindex.ai</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span><span class="note">One figure: at 0.8, roughly 75% of errors fall below the line. No curve or calibration error.</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="N">
+        <td data-h="System"><span class="sys">Landing AI</span><span class="maker">Document parsing</span></td>
+        <td data-h="What the maker says"><span class="kind kn">Says not to read it as a probability</span>Recommends 0.95 as a starting threshold, and says the score <q>is not a probability of correctness.</q><a class="src" href="https://landing.ai/blog/introducing-confidence-scores-surface-parsing-uncertainty-before-it-becomes-a-problem">landing.ai</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="N">
+        <td data-h="System"><span class="sys">Hyperscience</span><span class="maker">Hyperscience</span></td>
+        <td data-h="What the maker says"><span class="kind kn">Says not to read it as a probability</span><q>Note that machine confidence is different from accuracy and probability.</q><a class="src" href="https://help.hyperscience.ai/v41/docs/transcription-accuracy-and-automation">help.hyperscience.ai</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="N">
+        <td data-h="System"><span class="sys">Mindee</span><span class="maker">Mindee</span></td>
+        <td data-h="What the maker says"><span class="kind kn">Says not to read it as a probability</span><q>The confidence score in Automation is a consensus-based reliability measure, not a simple probability.</q><a class="src" href="https://docs.mindee.com/extraction-models/optional-features/automation-confidence-score">docs.mindee.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Google Document AI</span><span class="maker">Google Cloud</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>The confidence score communicates how strongly your model associates each entity with the predicted value.</q><a class="src" href="https://docs.cloud.google.com/document-ai/docs/custom-extractor-overview">docs.cloud.google.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Nanonets</span><span class="maker">Nanonets</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>A higher confidence score represents a higher probability that the model is correctly predicting a field</q>. Recommends a threshold of about 0.8.<a class="src" href="https://docs.nanonets.com/docs/confidence-scores">docs.nanonets.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span><span class="note">Says 0.8 <q>typically represents</q> precision of 0.9, <q>in our experience</q>. No data is published.</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Veryfi</span><span class="maker">Veryfi</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>The minimum recommended threshold is between 0.7 and 0.9, depending on the strictness of your use case, but don&#8217;t rely on it blindly</q><a class="src" href="https://faq.veryfi.com/en/articles/5571597-confidence-score-explained">faq.veryfi.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
         <td data-h="System"><span class="sys">Runpulse</span><span class="maker">Document extraction</span></td>
-        <td data-h="What the maker says">Auto accept at 0.95 and above, audit a 5% sample from 0.85, review below 0.85, reject below 0.50. States a target calibration error below 0.02.<a class="src" href="https://runpulse.com/blog/confidence-scoring-for-downstream-automation-when-to-trust-when-to-review">runpulse.com</a></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span>Auto accept at 0.95 and above, audit a 5% sample from 0.85, review below 0.85, reject below 0.50. States a target calibration error below 0.02.<a class="src" href="https://runpulse.com/blog/confidence-scoring-for-downstream-automation-when-to-trust-when-to-review">runpulse.com</a></td>
         <td data-h="Evidence published"><span class="tag none">None found</span><span class="note">A target is stated. No measured value is published.</span></td>
         <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
         <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
       </tr>
-      <tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Extend</span><span class="maker">Document extraction</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>Use them to trust high-confidence values automatically and route the rest to human review.</q><a class="src" href="https://docs.extend.ai/product/extraction/confidence-scores">docs.extend.ai</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
         <td data-h="System"><span class="sys">Affinda</span><span class="maker">Document extraction</span></td>
-        <td data-h="What the maker says">Field thresholds set as validation rules, for example <q>confidence is &gt;80%</q>. Automatic validation against a global threshold is available on request.<a class="src" href="https://docs.affinda.com/configuration/confidence">docs.affinda.com</a></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span>Field thresholds set as validation rules, for example <q>confidence is &gt;80%</q>. Automatic validation against a global threshold is available on request.<a class="src" href="https://docs.affinda.com/configuration/confidence">docs.affinda.com</a></td>
         <td data-h="Evidence published"><span class="tag none">None found</span></td>
         <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
         <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
       </tr>
-      <tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Docsumo</span><span class="maker">Document extraction</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>The confidence score is a valuable indicator that informs you about the system&#8217;s level of confidence in the accuracy of extracted field values.</q><a class="src" href="https://support.docsumo.com/docs/confidence-score">support.docsumo.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Infrrd</span><span class="maker">Document extraction</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>Confidence Score is the level of certainty or reliability associated with the extracted data.</q><a class="src" href="https://www.infrrd.ai/blog/accuracy-vs-confidence-score-common-mistakes">infrrd.ai</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Instabase</span><span class="maker">Document extraction</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>Non-OCR confidence is calculated using log probabilities, which provide a mathematical measure of how likely a result is.</q><a class="src" href="https://docs.instabase.com/automate/validating-documents">docs.instabase.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span><span class="note">Says the method <q>proves reliable</q> in internal testing. No data is published.</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Reducto</span><span class="maker">Document extraction</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>Low parse_confidence suggests OCR errors. Low extract_confidence suggests the model was uncertain about interpretation.</q><a class="src" href="https://docs.reducto.ai/configs/extract/citations">docs.reducto.ai</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">Sensible</span><span class="maker">Document extraction</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span>Returns uncertainty signals reported by the language model, and warns: <q>Note that LLMs can inaccurately report confidence signals.</q><a class="src" href="https://docs.sensible.so/docs/confidence">docs.sensible.so</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
         <td data-h="System"><span class="sys">super.AI</span><span class="maker">Document processing</span></td>
-        <td data-h="What the maker says">Auto accept and auto reject boundaries: below one a job <q>needs review</q>, above the other it is marked correct. Listed as coming soon.<a class="src" href="https://docs.super.ai/docs/review-settings">docs.super.ai</a></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span>Auto accept and auto reject boundaries: below one a job <q>needs review</q>, above the other it is marked correct. Listed as coming soon.<a class="src" href="https://docs.super.ai/docs/review-settings">docs.super.ai</a></td>
         <td data-h="Evidence published"><span class="tag none">None found</span></td>
         <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
         <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
       </tr>
-      <tr>
+      <tr data-cat="doc" data-kind="T">
         <td data-h="System"><span class="sys">KlearStack</span><span class="maker">Document extraction</span></td>
-        <td data-h="What the maker says"><q>Low-confidence fields are routed to human-in-the-loop validation workflows.</q> No numeric threshold published.<a class="src" href="https://klearstack.com/blogs/insurance-data-extraction">klearstack.com</a></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>Low-confidence fields are routed to human-in-the-loop validation workflows.</q> No numeric threshold published.<a class="src" href="https://klearstack.com/blogs/insurance-data-extraction">klearstack.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="doc" data-kind="T">
+        <td data-h="System"><span class="sys">ABBYY Vantage</span><span class="maker">ABBYY</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span>Dropped its field confidence value: <q>it always contained a fixed constant numeric value 1.0.</q> Points users to flagged characters instead.<a class="src" href="https://support.abbyy.com/hc/en-us/articles/4415828701459-Where-to-find-a-Confidence-property-in-the-JSON-output-file">support.abbyy.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="P">
+        <td data-h="System"><span class="sys">Einstein Classification</span><span class="maker">Salesforce</span></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span><q>Prediction confidence measures the likelihood that Einstein&#8217;s best prediction for the field value is correct.</q><a class="src" href="https://help.salesforce.com/s/articleView?id=sf.cc_service_confidence_faq.htm&language=en_US&type=5">help.salesforce.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="T">
+        <td data-h="System"><span class="sys">Amazon Lex V2</span><span class="maker">Amazon Web Services</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>The confidence scores that Amazon Lex V2 returns are comparative values. You should not rely on them as an absolute score.</q><a class="src" href="https://docs.aws.amazon.com/lexv2/latest/dg/using-intent-confidence-scores.html">docs.aws.amazon.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="T">
+        <td data-h="System"><span class="sys">Dialogflow CX</span><span class="maker">Google Cloud</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>If the highest scoring intent has a confidence score greater than or equal to the classification threshold setting, it is returned as a match.</q><a class="src" href="https://docs.cloud.google.com/dialogflow/cx/docs/concept/intent">docs.cloud.google.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="T">
+        <td data-h="System"><span class="sys">Azure AI Language CLU</span><span class="maker">Microsoft</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>Set the score according to your own observations of prediction scores because they might vary by project.</q><a class="src" href="https://learn.microsoft.com/en-us/azure/ai-services/language-service/conversational-language-understanding/concepts/none-intent">learn.microsoft.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="T">
+        <td data-h="System"><span class="sys">watsonx Assistant</span><span class="maker">IBM</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span>Intents below 0.2 stop triggering: <q>the dialog node stops being processed.</q><a class="src" href="https://cloud.ibm.com/docs/watson-assistant?topic=watson-assistant-intents">cloud.ibm.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="T">
+        <td data-h="System"><span class="sys">Rasa</span><span class="maker">Rasa</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>the intent nlu_fallback will be predicted when all other intent predictions fall below the configured confidence threshold.</q><a class="src" href="https://legacy-docs-oss.rasa.com/docs/rasa/fallback-handoff/">legacy-docs-oss.rasa.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="T">
+        <td data-h="System"><span class="sys">Cohere Classify</span><span class="maker">Cohere</span></td>
+        <td data-h="What the maker says"><span class="kind kt">Thresholds or ranking only</span><q>The confidence level represents the model&#8217;s degree of certainty that the query falls under a given label.</q><a class="src" href="https://docs.cohere.com/docs/text-classification-with-classify">docs.cohere.com</a></td>
         <td data-h="Evidence published"><span class="tag none">None found</span></td>
         <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
         <td data-h="Checked"><span class="date">25 Sep 2026</span></td>
@@ -169,5 +348,20 @@
   </div>
 
 </div>
+<script>
+(function(){
+  var rows=[].slice.call(document.querySelectorAll('tbody tr'));
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  function match(f,r){if(f==='all')return true;var p=f.split(':');return r.getAttribute('data-'+p[0])===p[1];}
+  chips.forEach(function(c){
+    var f=c.getAttribute('data-f');
+    c.querySelector('span').textContent=rows.filter(function(r){return match(f,r);}).length;
+    c.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.toggle('on',x===c);x.setAttribute('aria-pressed',x===c);});
+      rows.forEach(function(r){r.hidden=!match(f,r);});
+    });
+  });
+})();
+</script>
 </body>
 </html>
