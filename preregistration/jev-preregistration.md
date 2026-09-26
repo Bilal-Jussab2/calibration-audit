@@ -96,4 +96,6 @@ TypeSafe will get the results at least seven days before they are published, wit
 
 If anything here changes after the commit date, the change is added below with the date and the reason. Nothing above will be edited in place.
 
-**Amendments:** none so far.
+**Amendments:**
+
+1. 26 September 2026. A correction to the background, not to the method. Under "Why this test" I wrote that, as far as I could find, nobody had published a reliability curve, a calibration error figure or a paper showing whether the claim holds. That was already wrong when I wrote it. JourdanLabs published ASSAY-001 on 18 September 2026 ([donttrustme.ai/assay-001.html](https://donttrustme.ai/assay-001.html)), a pre-registered calibration test of Jev on BANKING77 and CLINC150, reporting a calibration error of 0.0936 on BANKING77 and 0.0204 on CLINC150. My search missed it. Nothing in the data, method, pass mark or analysis above has changed. The results write-up cites ASSAY-001 and compares the two.
