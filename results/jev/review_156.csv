@@ -1,0 +1,157 @@
+﻿id,confidence,text,dataset_label,jev_answer,verdict,reason
+b77-test-0000,0.98,How do I locate my card?,card_arrival,lost_or_stolen_card,ambiguous,"""Locate my card"" could be tracking or loss."
+b77-test-0003,0.93,Is there a way to know when my card will arrive?,card_arrival,card_delivery_estimate,ambiguous,Arrival and delivery-estimate are near-duplicates here.
+b77-test-0011,0.98,How long does a card delivery take?,card_arrival,card_delivery_estimate,label,Asks how long delivery takes: estimate.
+b77-test-0015,0.9,"I have been waiting longer than expected for my bank card, could you provide information on when it will arrive?",card_arrival,card_delivery_estimate,ambiguous,Waiting and asking when it arrives.
+b77-test-0022,0.97,How long should my new card take to arrive?,card_arrival,card_delivery_estimate,ambiguous,Same near-duplicate pair.
+b77-test-0041,1.0,I would like to reactivate my card.,card_linking,activate_my_card,label,"""Reactivate my card"" is activation."
+b77-test-0055,0.97,"Hello, I found the card I misplaced and I need to reactive it, how do I do that?",card_linking,activate_my_card,label,Found a misplaced card and wants to reactivate.
+b77-test-0057,0.9,How do I view the card I received in the app?,card_linking,getting_virtual_card,ambiguous,Viewing a card in the app: linking or virtual card.
+b77-test-0062,1.0,"I found my card, I would like to reactivate it.",card_linking,activate_my_card,label,"Found the card, wants to reactivate."
+b77-test-0125,0.97,This rate is too low. Are you sure your using the right exchange rate.,card_payment_wrong_exchange_rate,exchange_rate,ambiguous,Disputes a rate without naming the payment.
+b77-test-0138,0.96,Why am I being charged more ?,card_payment_wrong_exchange_rate,extra_charge_on_statement,ambiguous,"""Charged more"" with no cause named."
+b77-test-0145,0.93,The exchange rate seems off on this transaction,card_payment_wrong_exchange_rate,exchange_rate,model,"Says ""on this transaction"": the card-payment rate."
+b77-test-0147,0.99,"Hi, I don't think your exchange rate is right. I need you to check the official interbank exchange please.",card_payment_wrong_exchange_rate,exchange_rate,ambiguous,Asks to check the rate generally.
+b77-test-0156,1.0,How can I check the exchange rate applied to my transaction?,card_payment_wrong_exchange_rate,exchange_rate,model,Asks about the rate applied to a transaction.
+b77-test-0165,0.92,I would like a refund on the extra pound I was charged.,extra_charge_on_statement,request_refund,ambiguous,Wants a refund of an extra charge.
+b77-test-0279,0.9,What countries can I travel to and have access to their currencies?,fiat_currency_support,country_support,ambiguous,Countries and currencies in one question.
+b77-test-0281,0.93,my card was not in the mail again can you advise?,card_delivery_estimate,card_arrival,ambiguous,Card not in the mail: either label fits.
+b77-test-0312,0.9400000000000001,I am waiting for my card to arrive.,card_delivery_estimate,card_arrival,ambiguous,Waiting for the card.
+b77-test-0345,1.0,Can I space out how often money is transferred along my travels?,automatic_top_up,transfer_timing,model,"Spacing out top-ups is automatic_top_up, not transfer timing."
+b77-test-0377,1.0,My card was declined today when eating and I need to know what's wrong.,card_not_working,declined_card_payment,ambiguous,Card declined at a restaurant: declined or not working.
+b77-test-0409,0.98,How do I interconvert between AUD and GBP?,exchange_via_app,exchange_rate,model,Converting AUD to GBP is exchanging in the app.
+b77-test-0416,0.94,How would I use my money in a different country?,exchange_via_app,country_support,ambiguous,Using money abroad: exchange or country support.
+b77-test-0420,0.93,What is the best way to exchange currency?,exchange_via_app,exchange_rate,ambiguous,Best way to exchange: method or rate.
+b77-test-0537,1.0,"I attempted to use my card while I was intoxicated, and I failed to input my PIN, and the machine kept my card. How soon can I have it back?",pin_blocked,card_swallowed,ambiguous,PIN failed and the machine kept the card; both happened.
+b77-test-0552,0.96,How do I reset my PIN?,pin_blocked,change_pin,label,"""Reset my PIN"" is change_pin."
+b77-test-0601,0.91,I would like to make a transfer. How much does it cost?,top_up_by_bank_transfer_charge,transfer_fee_charged,label,Cost of making a transfer is transfer_fee_charged.
+b77-test-0602,0.95,"I need to make a transfer, what will the fee be?",top_up_by_bank_transfer_charge,transfer_fee_charged,label,Fee for a transfer being made.
+b77-test-0610,0.95,Do I have to pay any fees in order to receive money?,top_up_by_bank_transfer_charge,receiving_money,ambiguous,"Fees on money received, method not stated."
+b77-test-0613,0.91,Will there be any charges for money received?,top_up_by_bank_transfer_charge,receiving_money,ambiguous,"Charges for money received, method not stated."
+b77-test-0614,0.98,Will a transfer incur a fee?,top_up_by_bank_transfer_charge,transfer_fee_charged,label,Whether a transfer incurs a fee.
+b77-test-0620,0.97,What are the charges for receiving money?,top_up_by_bank_transfer_charge,receiving_money,ambiguous,Charges for receiving money.
+b77-test-0622,0.94,How much am I charged for a SEPA transfer?,top_up_by_bank_transfer_charge,transfer_fee_charged,label,Charge for a SEPA transfer.
+b77-test-0623,0.93,How much is the fee for a SEPA transfer?,top_up_by_bank_transfer_charge,transfer_fee_charged,label,Fee for a SEPA transfer.
+b77-test-0628,0.94,Will I be charged for a SEPA transfer?,top_up_by_bank_transfer_charge,transfer_fee_charged,label,Charge for a SEPA transfer.
+b77-test-0629,0.95,is there a fee for a transfer? if so how much will it be?,top_up_by_bank_transfer_charge,transfer_fee_charged,label,Fee for a transfer.
+b77-test-0637,0.9400000000000001,Do I get charged if i am getting money?,top_up_by_bank_transfer_charge,receiving_money,ambiguous,Charged for getting money.
+b77-test-0638,0.97,Can you tell me the total cost of a transfer?,top_up_by_bank_transfer_charge,transfer_fee_charged,label,Total cost of a transfer.
+b77-test-0650,0.96,I topped up but it didn't complete,pending_top_up,top_up_failed,ambiguous,Same wording.
+b77-test-0661,0.98,top up did not complete,pending_top_up,top_up_failed,ambiguous,Top-up did not complete: pending or failed.
+b77-test-0666,0.99,"OMG!  I'm trying to load my card and it wont top up!  I desperately need the money either on my card or in my bank, where is it?",pending_top_up,top_up_failed,label,Says it will not top up: failed.
+b77-test-0773,0.93,Where is the money I pushed it's on my mobile app as being withdrawn.,wrong_amount_of_cash_received,pending_cash_withdrawal,ambiguous,Money shown as withdrawn but missing.
+b77-test-0775,0.99,My cash withdrawal was partly declined,wrong_amount_of_cash_received,declined_cash_withdrawal,ambiguous,Withdrawal partly declined.
+b77-test-0799,0.96,Will declined funds I tried to withdraw be returned to me?,wrong_amount_of_cash_received,declined_cash_withdrawal,label,Asks about declined withdrawal funds.
+b77-test-0835,0.92,There is a fee on my account. Why?,card_payment_fee_charged,extra_charge_on_statement,ambiguous,"""A fee on my account"" with no source named."
+b77-test-0842,0.93,I am still waiting for a transaction to be completed,transfer_not_received_by_recipient,pending_transfer,ambiguous,Still waiting for a transaction.
+b77-test-0845,0.99,How long does it take for a transfer to get to a recipient?,transfer_not_received_by_recipient,transfer_timing,ambiguous,How long to reach a recipient: names the recipient.
+b77-test-0849,1.0,how long do money transfers take?,transfer_not_received_by_recipient,transfer_timing,label,How long money transfers take is timing.
+b77-test-0861,0.95,"The day before yesterday, I performed a transfer which was within this country. It still hasn't gone through. Can you check on that? The account number is definitely correct, as I've checked and double checked.",transfer_not_received_by_recipient,pending_transfer,ambiguous,Domestic transfer not gone through.
+b77-test-0873,0.97,When will my funds transfer?,transfer_not_received_by_recipient,transfer_timing,ambiguous,When will funds transfer.
+b77-test-0876,0.91,How long until my friend receives my transaction?,transfer_not_received_by_recipient,transfer_timing,ambiguous,How long until a friend receives it.
+b77-test-0878,0.9,I am still awaiting the completion of the transaction.,transfer_not_received_by_recipient,pending_transfer,ambiguous,Awaiting completion.
+b77-test-0881,0.99,"I need support options, I want to top my card",supported_cards_and_currencies,topping_up_by_card,ambiguous,Wants to top up a card; support wording is loose.
+b77-test-0894,0.99,I would like to add money to my account through my American Express.,supported_cards_and_currencies,topping_up_by_card,ambiguous,Amex top-up: supported cards or topping up by card.
+b77-test-0899,0.99,How can I use American Express to add money to my account?,supported_cards_and_currencies,topping_up_by_card,ambiguous,Same Amex pattern.
+b77-test-0916,0.98,How can I use American Express to add funds to my account?,supported_cards_and_currencies,topping_up_by_card,ambiguous,Same Amex pattern.
+b77-test-1006,1.0,The app wouldn't accept my top up.,top_up_reverted,top_up_failed,ambiguous,Top-up not accepted: failed or reverted.
+b77-test-1008,0.98,"I believe my money did not go through with my top up, was there a problem on your end?",top_up_reverted,top_up_failed,ambiguous,Money did not go through.
+b77-test-1010,0.91,I put money into my account for the minimum balance but the application didn't accept.,top_up_reverted,top_up_failed,ambiguous,Application did not accept it.
+b77-test-1017,0.96,I believed crypto top up with something you offered. This does not seem to be working. The money has been removed from my account though so what's going on?,top_up_reverted,top_up_failed,model,Money was removed then did not work: reverted.
+b77-test-1038,1.0,On my last transaction it seem that my top-up was not successful.,top_up_reverted,top_up_failed,ambiguous,Top-up not successful.
+b77-test-1067,0.99,Why does my account not accept cash deposits?,balance_not_updated_after_cheque_or_cash_deposit,top_up_by_cash_or_cheque,label,"Asks whether cash deposits are accepted, not about a balance."
+b77-test-1103,0.99,What should I do to get transactions off of my account if I didn't make them?  My card must have been compromised and I need to freeze it asap!,card_payment_not_recognised,compromised_card,ambiguous,Says the card must have been compromised.
+b77-test-1171,0.95,"Can I still use my account, even though the identity verification has not passed yet?",why_verify_identity,unable_to_verify_identity,ambiguous,Verification not passed yet; why or unable both fit.
+b77-test-1209,0.98,Help my verify my id.,unable_to_verify_identity,verify_my_identity,label,Asks for help verifying: verify_my_identity.
+b77-test-1225,0.98,What do i need to verify my id?,unable_to_verify_identity,verify_my_identity,label,Asks what is needed to verify.
+b77-test-1244,0.9,I cannot seem to find my PIN. Where is it?,get_physical_card,passcode_forgotten,ambiguous,Cannot find the PIN: forgotten or not received.
+b77-test-1257,0.9,I received my card but not my PIN.,get_physical_card,card_arrival,ambiguous,"Card arrived, PIN did not; neither label is clean."
+b77-test-1259,0.98,what is the process for setting up a pin,get_physical_card,change_pin,ambiguous,Setting up a PIN: get card or change PIN.
+b77-test-1275,0.93,What do I need to do for a PIN?,get_physical_card,change_pin,ambiguous,"PIN process, no card context."
+b77-test-1337,0.98,"I did a top-up, but I'm not seeing it in my wallet yet.",topping_up_by_card,pending_top_up,label,Top-up done but not showing: pending.
+b77-test-1360,0.93,How can i get multiple disposble cards.,disposable_card_limits,get_disposable_virtual_card,ambiguous,"""Multiple disposable cards"" is getting or limits."
+b77-test-1391,0.94,How many virtual cards do I get?,disposable_card_limits,getting_virtual_card,model,"""How many"" is a limits question."
+b77-test-1492,0.92,"Even though it's late, I wanted to see about disputing a charge. I was just looking through my transactions over the past couple of months and noticed a pretty large amount that was not completed by me. Is this possibly something I can still do.",direct_debit_payment_not_recognised,card_payment_not_recognised,ambiguous,"Disputing a charge, type not stated."
+b77-test-1493,0.95,"There was a transaction from two weeks ago from a business that I don't know. I'm fairly certain it wasn't me who made it, but is it an option to trace it to confirm?",direct_debit_payment_not_recognised,card_payment_not_recognised,ambiguous,"Unrecognised transaction, payment type not stated."
+b77-test-1498,0.93,There is a transaction from my account that I don't recognize can you trace back the information so I can make sure it's something I did or not?,direct_debit_payment_not_recognised,card_payment_not_recognised,ambiguous,"Unrecognised transaction, type not stated."
+b77-test-1501,0.92,"I am seeing a weird payment showing up that I know I did not make, how can I get it cancelled?",direct_debit_payment_not_recognised,card_payment_not_recognised,ambiguous,"Unrecognised payment, type not stated."
+b77-test-1605,0.93,Why has my payment not gone through?,pending_card_payment,declined_card_payment,ambiguous,Payment not gone through: pending or declined.
+b77-test-1626,0.92,"I was double charged, and the second charge is showing as ""pending"". How long will it be before I get my money back once the second charge has been refunded?",pending_card_payment,transaction_charged_twice,ambiguous,Double charge with one pending.
+b77-test-1672,1.0,Someone stole my cards!,lost_or_stolen_phone,lost_or_stolen_card,label,"Says cards were stolen, not a phone."
+b77-test-1721,1.0,Good morning. I tried to make a purchase with my credit card last night and again this morning. Both times it was declined. Can you investigate?,declined_transfer,declined_card_payment,label,"Describes a card purchase declined, not a transfer."
+b77-test-1722,0.99,I am getting continuous failure for all my transfers. I have cross checked each recipient detail again and again and everything is correct.,declined_transfer,failed_transfer,ambiguous,All transfers failing; beneficiary not named.
+b77-test-1726,0.97,"How can I fix my card, it got declined twice.",declined_transfer,declined_card_payment,label,Card declined twice.
+b77-test-1730,1.0,The card got declined twice when I tried to use it to buy something online yesterday.,declined_transfer,declined_card_payment,label,Card declined on an online purchase.
+b77-test-1739,1.0,When I try and to buy something using my card it keeps getting declined.,declined_transfer,declined_card_payment,label,Card keeps getting declined.
+b77-test-1754,1.0,I tried to buy something online yesterday but it kept saying declined. Tried again today but same thing happened. What's broken?,declined_transfer,declined_card_payment,label,Online purchase declined.
+b77-test-1755,1.0,I tried to buy something online yesterday but it wouldn't stop saying declined. Tried again today but same thing happened. What's Broken?,declined_transfer,declined_card_payment,label,Online purchase declined.
+b77-test-1756,0.99,My card is being declined online. Could you tell me what might be broken or wrong with the account?,declined_transfer,declined_card_payment,label,Card declined online.
+b77-test-1758,1.0,"I was attempting to purchase a golf club off eBay yesterday, but my credit card was declined. I tried multiple times, and again this morning. Can you check into my card please?",declined_transfer,declined_card_payment,label,Credit card declined on eBay.
+b77-test-1796,0.99,"I am waiting patiently for a week now for the seller to get back to me and there has been no response, could you please help me further with getting my money back.  Thank you.",Refund_not_showing_up,request_refund,ambiguous,Waiting on a seller; either a missing refund or a refund request.
+b77-test-1851,1.0,How long can an EU transfer take?,pending_transfer,transfer_timing,label,How long an EU transfer takes is timing.
+b77-test-1859,0.91,When will the transfer go through?,pending_transfer,transfer_timing,ambiguous,When will it go through: pending or timing.
+b77-test-1864,0.95,When will the transfer be completed?,pending_transfer,transfer_timing,ambiguous,When completed: pending or timing.
+b77-test-1868,0.92,How long does a transfer take to be confirmed?,pending_transfer,transfer_timing,label,How long to be confirmed is timing.
+b77-test-1879,0.91,How long does it take for a money transfer to show?,pending_transfer,transfer_timing,label,How long to show is timing.
+b77-test-1934,1.0,My ATM got stuck and I'm not sure what to do.,card_swallowed,atm_support,ambiguous,"Says the ATM got stuck, not the card."
+b77-test-1954,0.98,What should I do with my atm that got stuck?,card_swallowed,atm_support,ambiguous,Same wording.
+b77-test-2080,0.95,I think my card payment has been stopped,reverted_card_payment?,declined_card_payment,ambiguous,Payment stopped: reverted or declined.
+b77-test-2092,1.0,My card is being declined for a purchase. I bought items before and the card worked. Do you know what the problem is?,reverted_card_payment?,declined_card_payment,label,Card declined on a purchase.
+b77-test-2094,0.97,why did the app refuse to make an approved payment,reverted_card_payment?,declined_card_payment,ambiguous,App refused an approved payment.
+b77-test-2100,0.98,I was contacted by a seller with a message that they never received my money. I am 100% sure it was taken from my account so I definitely need this sorted out soon.,reverted_card_payment?,transfer_not_received_by_recipient,ambiguous,Seller never received the money.
+b77-test-2163,0.9400000000000001,I was unable to make a transfer to another account.,beneficiary_not_allowed,failed_transfer,ambiguous,"Transfer failed, no reason given."
+b77-test-2164,0.98,I had a transfer blocked,beneficiary_not_allowed,declined_transfer,ambiguous,"""Transfer blocked"" gives no reason."
+b77-test-2165,0.99,Can you please help me with this exchange?  I am trying to get crypto and the app won't let me.,beneficiary_not_allowed,exchange_via_app,ambiguous,Crypto purchase refused; app restriction either way.
+b77-test-2166,1.0,How do I do a successful transfer to an account?,beneficiary_not_allowed,transfer_into_account,label,Asks how to transfer to an account.
+b77-test-2168,0.9400000000000001,"Hey I want to buy some crypto but the app doesn't allow me to! What's the issue, I really want to exchange this",beneficiary_not_allowed,exchange_via_app,ambiguous,Same crypto restriction.
+b77-test-2172,0.9,What's the deal with no cryptocurrency on your app?,beneficiary_not_allowed,supported_cards_and_currencies,label,"Asks about crypto support, not a blocked beneficiary."
+b77-test-2176,0.96,I have tried transferring money numerous times.  All I keep getting is an error message.  Can you tell me what is going on and how this van be fixed?,beneficiary_not_allowed,failed_transfer,ambiguous,"Repeated error message, no cause stated."
+b77-test-2185,0.9,My transfer to beneficiary didn't go through,beneficiary_not_allowed,failed_transfer,model,Names the beneficiary explicitly.
+b77-test-2190,0.99,The account transfer I was trying to do failed.,beneficiary_not_allowed,failed_transfer,ambiguous,"Transfer failed, no cause."
+b77-test-2195,1.0,Can you help with a transfer to an account,beneficiary_not_allowed,transfer_into_account,label,Asks for help doing a transfer.
+b77-test-2198,0.93,i tried to make a transfer to a beneficiary and it didn't go through,beneficiary_not_allowed,failed_transfer,model,Names the beneficiary explicitly.
+b77-test-2233,0.98,What extra charges are there?,transfer_fee_charged,extra_charge_on_statement,ambiguous,"""Extra charges"" with no source named."
+b77-test-2338,0.9400000000000001,How do I top up my card?,transfer_into_account,topping_up_by_card,label,Asks how to top up a card.
+b77-test-2477,0.9400000000000001,How can I top-up my card?,top_up_by_cash_or_cheque,topping_up_by_card,ambiguous,"How to top up, method not stated."
+b77-test-2493,0.95,I need to get an actual card so that I can use it for in person transactions. How would I do this?,order_physical_card,get_physical_card,ambiguous,order_physical_card and get_physical_card are near-duplicates.
+b77-test-2494,0.91,Will I get a real card?,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2497,0.97,Please tell me how to get a physical card.,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2500,0.92,How much does it cost in fees to use your card?,order_physical_card,card_payment_fee_charged,ambiguous,"Cost of using the card, not ordering it."
+b77-test-2501,0.95,How can I get a physical card,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2502,0.95,Can I get a physical card through this app?,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2503,0.93,can I have a non virtual card?,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2504,0.97,How do I get a physical card?,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2505,0.91,What are the fees to get a physical card?,order_physical_card,get_physical_card,ambiguous,Fees to get a physical card; both labels fit.
+b77-test-2516,0.94,I need a physical card.,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2518,0.95,How do I get an actual card?,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2519,0.96,Can I get a real card?,order_physical_card,get_physical_card,ambiguous,Same near-duplicate pair.
+b77-test-2544,1.0,My card is just not working at this time.,virtual_card_not_working,card_not_working,ambiguous,"Says only ""my card""; virtual is not stated."
+b77-test-2562,0.97,I made a withdraw from the ATM this past holiday and it seems like a was charged too much. If I would have   known about these charges I wouldn't have made a withdraw.,wrong_exchange_rate_for_cash_withdrawal,cash_withdrawal_charge,label,"Complains about ATM charges, not the rate."
+b77-test-2563,0.99,Can you look to make sure the exchange rate is correct,wrong_exchange_rate_for_cash_withdrawal,exchange_rate,ambiguous,Asks whether the exchange rate is correct.
+b77-test-2571,0.99,Is there a fee for exchanging cash?,wrong_exchange_rate_for_cash_withdrawal,exchange_charge,label,Asks about a fee for exchanging cash.
+b77-test-2575,1.0,Will there be additional costs of I make a withdrawal from a local ATM of British pounds? I need some cash to feel comfortable on the journey home,wrong_exchange_rate_for_cash_withdrawal,cash_withdrawal_charge,label,Asks about withdrawal costs.
+b77-test-2576,0.92,It seems I was overcharged when I used an ATM while on vacation. If I knew about your fees in advance I sure would have gone somewhere else.,wrong_exchange_rate_for_cash_withdrawal,cash_withdrawal_charge,label,Complains about ATM fees.
+b77-test-2587,0.98,I withdrew some cash out of the ATM over the holiday. It seems that I was charged some outrageous fees. I would not have done that had I been aware of these outrageous charges!,wrong_exchange_rate_for_cash_withdrawal,cash_withdrawal_charge,label,Complains about ATM fees.
+b77-test-2597,0.98,I used the ATM machine to get money out for Holiday shopping and saw the outrageous charges. Why is that? I would not have used the ATM if I had known!,wrong_exchange_rate_for_cash_withdrawal,cash_withdrawal_charge,label,Complains about ATM charges.
+b77-test-2622,0.9400000000000001,how does a virtual card work,get_disposable_virtual_card,getting_virtual_card,ambiguous,"How a virtual card works, disposable not mentioned."
+b77-test-2637,1.0,how many transactions can i make with a disposable card,get_disposable_virtual_card,disposable_card_limits,label,"""How many transactions"" is a limits question."
+b77-test-2650,0.96,How can I check to see if my top-up worked?,top_up_failed,verify_top_up,label,Checking whether a top-up worked is verify_top_up.
+b77-test-2685,0.96,How long does it take for an international transfer into my account?,balance_not_updated_after_bank_transfer,transfer_timing,label,Asks how long an inbound transfer takes: timing.
+b77-test-2687,0.93,When will my transfer be available in my account.,balance_not_updated_after_bank_transfer,transfer_timing,label,Asks when funds will be available: timing.
+b77-test-2691,1.0,How long does a UK transfer take?,balance_not_updated_after_bank_transfer,transfer_timing,label,"""How long does a UK transfer take"" is timing."
+b77-test-2693,0.98,I made a transfer and am still waiting.,balance_not_updated_after_bank_transfer,pending_transfer,ambiguous,"""Made a transfer and still waiting"" fits pending or not-updated."
+b77-test-2694,0.93,I made an out of country transfer and it hasn't went through yet.,balance_not_updated_after_bank_transfer,pending_transfer,ambiguous,Same shape: transfer not through yet.
+b77-test-2711,1.0,My transfer is pending.,balance_not_updated_after_bank_transfer,pending_transfer,label,"""My transfer is pending"" is literally pending_transfer."
+b77-test-2745,0.9,I need to cancel my card that got stolen a little while ago. Someone has already taken some money out and I don't want them to take anymore. Can you please do that?,cash_withdrawal_not_recognised,lost_or_stolen_card,ambiguous,Stolen card and withdrawals in one message.
+b77-test-2748,0.95,"Can anyone help me, I lost my wallet and they've started withdrawing from my account.",cash_withdrawal_not_recognised,lost_or_stolen_card,ambiguous,Lost wallet and withdrawals.
+b77-test-2751,0.93,Help!  My wallet was stolen and someone is taking money out.  I need this money!  What can I do?,cash_withdrawal_not_recognised,lost_or_stolen_card,ambiguous,Stolen wallet and withdrawals.
+b77-test-2756,0.9400000000000001,There is a problem with my card. Somebody has removed money from my account in a town I haven't been to. Can you please freeze my account immediately?,cash_withdrawal_not_recognised,compromised_card,ambiguous,Unknown withdrawals; compromised card is reasonable.
+b77-test-2761,1.0,whats your exchange rate,exchange_charge,exchange_rate,label,"Asks the exchange rate, not the charge."
+b77-test-2763,1.0,Where do I find the exchange rate?,exchange_charge,exchange_rate,label,Asks where to find the rate.
+b77-test-2829,0.96,Is it okay to use a bank card to top up,top_up_by_card_charge,topping_up_by_card,ambiguous,Bank card top-up: charge or method.
+b77-test-2833,1.0,Is there a charge or discount if I use a European bank in a top up?,top_up_by_card_charge,top_up_by_bank_transfer_charge,label,Top-up using a European bank is a bank transfer.
+b77-test-2848,0.99,Is there a way my new card can be renewed?,activate_my_card,card_about_to_expire,ambiguous,"""Renewed"" reads as either activation or expiry."
+b77-test-2852,1.0,WHAT CAN I DO AFTER THE CARD MISSING,activate_my_card,lost_or_stolen_card,label,Card missing: lost_or_stolen fits better than activate.
+b77-test-2962,0.9,My top-up for Google Pay isn't working,apple_pay_or_google_pay,top_up_failed,ambiguous,Mentions Google Pay and a failing top-up; both labels fit.
+b77-test-2991,0.92,"My American Express is in my Apple Pay and the top up is failing, why?",apple_pay_or_google_pay,top_up_failed,ambiguous,Apple Pay and a failing top-up in one sentence.
+b77-test-3058,0.9,Where can I find your locations?,country_support,atm_support,ambiguous,"""Your locations"" could mean ATMs or countries."

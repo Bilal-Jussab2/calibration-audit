@@ -1,0 +1,1406 @@
+[
+ {
+  "id": "b77-test-0000",
+  "confidence": 0.98,
+  "text": "How do I locate my card?",
+  "dataset_label": "card_arrival",
+  "jev_answer": "lost_or_stolen_card",
+  "verdict": "ambiguous",
+  "reason": "\"Locate my card\" could be tracking or loss."
+ },
+ {
+  "id": "b77-test-0003",
+  "confidence": 0.93,
+  "text": "Is there a way to know when my card will arrive?",
+  "dataset_label": "card_arrival",
+  "jev_answer": "card_delivery_estimate",
+  "verdict": "ambiguous",
+  "reason": "Arrival and delivery-estimate are near-duplicates here."
+ },
+ {
+  "id": "b77-test-0011",
+  "confidence": 0.98,
+  "text": "How long does a card delivery take?",
+  "dataset_label": "card_arrival",
+  "jev_answer": "card_delivery_estimate",
+  "verdict": "label",
+  "reason": "Asks how long delivery takes: estimate."
+ },
+ {
+  "id": "b77-test-0015",
+  "confidence": 0.9,
+  "text": "I have been waiting longer than expected for my bank card, could you provide information on when it will arrive?",
+  "dataset_label": "card_arrival",
+  "jev_answer": "card_delivery_estimate",
+  "verdict": "ambiguous",
+  "reason": "Waiting and asking when it arrives."
+ },
+ {
+  "id": "b77-test-0022",
+  "confidence": 0.97,
+  "text": "How long should my new card take to arrive?",
+  "dataset_label": "card_arrival",
+  "jev_answer": "card_delivery_estimate",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-0041",
+  "confidence": 1.0,
+  "text": "I would like to reactivate my card.",
+  "dataset_label": "card_linking",
+  "jev_answer": "activate_my_card",
+  "verdict": "label",
+  "reason": "\"Reactivate my card\" is activation."
+ },
+ {
+  "id": "b77-test-0055",
+  "confidence": 0.97,
+  "text": "Hello, I found the card I misplaced and I need to reactive it, how do I do that?",
+  "dataset_label": "card_linking",
+  "jev_answer": "activate_my_card",
+  "verdict": "label",
+  "reason": "Found a misplaced card and wants to reactivate."
+ },
+ {
+  "id": "b77-test-0057",
+  "confidence": 0.9,
+  "text": "How do I view the card I received in the app?",
+  "dataset_label": "card_linking",
+  "jev_answer": "getting_virtual_card",
+  "verdict": "ambiguous",
+  "reason": "Viewing a card in the app: linking or virtual card."
+ },
+ {
+  "id": "b77-test-0062",
+  "confidence": 1.0,
+  "text": "I found my card, I would like to reactivate it.",
+  "dataset_label": "card_linking",
+  "jev_answer": "activate_my_card",
+  "verdict": "label",
+  "reason": "Found the card, wants to reactivate."
+ },
+ {
+  "id": "b77-test-0125",
+  "confidence": 0.97,
+  "text": "This rate is too low. Are you sure your using the right exchange rate.",
+  "dataset_label": "card_payment_wrong_exchange_rate",
+  "jev_answer": "exchange_rate",
+  "verdict": "ambiguous",
+  "reason": "Disputes a rate without naming the payment."
+ },
+ {
+  "id": "b77-test-0138",
+  "confidence": 0.96,
+  "text": "Why am I being charged more ?",
+  "dataset_label": "card_payment_wrong_exchange_rate",
+  "jev_answer": "extra_charge_on_statement",
+  "verdict": "ambiguous",
+  "reason": "\"Charged more\" with no cause named."
+ },
+ {
+  "id": "b77-test-0145",
+  "confidence": 0.93,
+  "text": "The exchange rate seems off on this transaction",
+  "dataset_label": "card_payment_wrong_exchange_rate",
+  "jev_answer": "exchange_rate",
+  "verdict": "model",
+  "reason": "Says \"on this transaction\": the card-payment rate."
+ },
+ {
+  "id": "b77-test-0147",
+  "confidence": 0.99,
+  "text": "Hi, I don't think your exchange rate is right. I need you to check the official interbank exchange please.",
+  "dataset_label": "card_payment_wrong_exchange_rate",
+  "jev_answer": "exchange_rate",
+  "verdict": "ambiguous",
+  "reason": "Asks to check the rate generally."
+ },
+ {
+  "id": "b77-test-0156",
+  "confidence": 1.0,
+  "text": "How can I check the exchange rate applied to my transaction?",
+  "dataset_label": "card_payment_wrong_exchange_rate",
+  "jev_answer": "exchange_rate",
+  "verdict": "model",
+  "reason": "Asks about the rate applied to a transaction."
+ },
+ {
+  "id": "b77-test-0165",
+  "confidence": 0.92,
+  "text": "I would like a refund on the extra pound I was charged.",
+  "dataset_label": "extra_charge_on_statement",
+  "jev_answer": "request_refund",
+  "verdict": "ambiguous",
+  "reason": "Wants a refund of an extra charge."
+ },
+ {
+  "id": "b77-test-0279",
+  "confidence": 0.9,
+  "text": "What countries can I travel to and have access to their currencies?",
+  "dataset_label": "fiat_currency_support",
+  "jev_answer": "country_support",
+  "verdict": "ambiguous",
+  "reason": "Countries and currencies in one question."
+ },
+ {
+  "id": "b77-test-0281",
+  "confidence": 0.93,
+  "text": "my card was not in the mail again can you advise?",
+  "dataset_label": "card_delivery_estimate",
+  "jev_answer": "card_arrival",
+  "verdict": "ambiguous",
+  "reason": "Card not in the mail: either label fits."
+ },
+ {
+  "id": "b77-test-0312",
+  "confidence": 0.9400000000000001,
+  "text": "I am waiting for my card to arrive.",
+  "dataset_label": "card_delivery_estimate",
+  "jev_answer": "card_arrival",
+  "verdict": "ambiguous",
+  "reason": "Waiting for the card."
+ },
+ {
+  "id": "b77-test-0345",
+  "confidence": 1.0,
+  "text": "Can I space out how often money is transferred along my travels?",
+  "dataset_label": "automatic_top_up",
+  "jev_answer": "transfer_timing",
+  "verdict": "model",
+  "reason": "Spacing out top-ups is automatic_top_up, not transfer timing."
+ },
+ {
+  "id": "b77-test-0377",
+  "confidence": 1.0,
+  "text": "My card was declined today when eating and I need to know what's wrong.",
+  "dataset_label": "card_not_working",
+  "jev_answer": "declined_card_payment",
+  "verdict": "ambiguous",
+  "reason": "Card declined at a restaurant: declined or not working."
+ },
+ {
+  "id": "b77-test-0409",
+  "confidence": 0.98,
+  "text": "How do I interconvert between AUD and GBP?",
+  "dataset_label": "exchange_via_app",
+  "jev_answer": "exchange_rate",
+  "verdict": "model",
+  "reason": "Converting AUD to GBP is exchanging in the app."
+ },
+ {
+  "id": "b77-test-0416",
+  "confidence": 0.94,
+  "text": "How would I use my money in a different country?",
+  "dataset_label": "exchange_via_app",
+  "jev_answer": "country_support",
+  "verdict": "ambiguous",
+  "reason": "Using money abroad: exchange or country support."
+ },
+ {
+  "id": "b77-test-0420",
+  "confidence": 0.93,
+  "text": "What is the best way to exchange currency?",
+  "dataset_label": "exchange_via_app",
+  "jev_answer": "exchange_rate",
+  "verdict": "ambiguous",
+  "reason": "Best way to exchange: method or rate."
+ },
+ {
+  "id": "b77-test-0537",
+  "confidence": 1.0,
+  "text": "I attempted to use my card while I was intoxicated, and I failed to input my PIN, and the machine kept my card. How soon can I have it back?",
+  "dataset_label": "pin_blocked",
+  "jev_answer": "card_swallowed",
+  "verdict": "ambiguous",
+  "reason": "PIN failed and the machine kept the card; both happened."
+ },
+ {
+  "id": "b77-test-0552",
+  "confidence": 0.96,
+  "text": "How do I reset my PIN?",
+  "dataset_label": "pin_blocked",
+  "jev_answer": "change_pin",
+  "verdict": "label",
+  "reason": "\"Reset my PIN\" is change_pin."
+ },
+ {
+  "id": "b77-test-0601",
+  "confidence": 0.91,
+  "text": "I would like to make a transfer. How much does it cost?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Cost of making a transfer is transfer_fee_charged."
+ },
+ {
+  "id": "b77-test-0602",
+  "confidence": 0.95,
+  "text": "I need to make a transfer, what will the fee be?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Fee for a transfer being made."
+ },
+ {
+  "id": "b77-test-0610",
+  "confidence": 0.95,
+  "text": "Do I have to pay any fees in order to receive money?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "receiving_money",
+  "verdict": "ambiguous",
+  "reason": "Fees on money received, method not stated."
+ },
+ {
+  "id": "b77-test-0613",
+  "confidence": 0.91,
+  "text": "Will there be any charges for money received?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "receiving_money",
+  "verdict": "ambiguous",
+  "reason": "Charges for money received, method not stated."
+ },
+ {
+  "id": "b77-test-0614",
+  "confidence": 0.98,
+  "text": "Will a transfer incur a fee?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Whether a transfer incurs a fee."
+ },
+ {
+  "id": "b77-test-0620",
+  "confidence": 0.97,
+  "text": "What are the charges for receiving money?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "receiving_money",
+  "verdict": "ambiguous",
+  "reason": "Charges for receiving money."
+ },
+ {
+  "id": "b77-test-0622",
+  "confidence": 0.94,
+  "text": "How much am I charged for a SEPA transfer?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Charge for a SEPA transfer."
+ },
+ {
+  "id": "b77-test-0623",
+  "confidence": 0.93,
+  "text": "How much is the fee for a SEPA transfer?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Fee for a SEPA transfer."
+ },
+ {
+  "id": "b77-test-0628",
+  "confidence": 0.94,
+  "text": "Will I be charged for a SEPA transfer?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Charge for a SEPA transfer."
+ },
+ {
+  "id": "b77-test-0629",
+  "confidence": 0.95,
+  "text": "is there a fee for a transfer? if so how much will it be?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Fee for a transfer."
+ },
+ {
+  "id": "b77-test-0637",
+  "confidence": 0.9400000000000001,
+  "text": "Do I get charged if i am getting money?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "receiving_money",
+  "verdict": "ambiguous",
+  "reason": "Charged for getting money."
+ },
+ {
+  "id": "b77-test-0638",
+  "confidence": 0.97,
+  "text": "Can you tell me the total cost of a transfer?",
+  "dataset_label": "top_up_by_bank_transfer_charge",
+  "jev_answer": "transfer_fee_charged",
+  "verdict": "label",
+  "reason": "Total cost of a transfer."
+ },
+ {
+  "id": "b77-test-0650",
+  "confidence": 0.96,
+  "text": "I topped up but it didn't complete",
+  "dataset_label": "pending_top_up",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Same wording."
+ },
+ {
+  "id": "b77-test-0661",
+  "confidence": 0.98,
+  "text": "top up did not complete",
+  "dataset_label": "pending_top_up",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Top-up did not complete: pending or failed."
+ },
+ {
+  "id": "b77-test-0666",
+  "confidence": 0.99,
+  "text": "OMG!  I'm trying to load my card and it wont top up!  I desperately need the money either on my card or in my bank, where is it?",
+  "dataset_label": "pending_top_up",
+  "jev_answer": "top_up_failed",
+  "verdict": "label",
+  "reason": "Says it will not top up: failed."
+ },
+ {
+  "id": "b77-test-0773",
+  "confidence": 0.93,
+  "text": "Where is the money I pushed it's on my mobile app as being withdrawn.",
+  "dataset_label": "wrong_amount_of_cash_received",
+  "jev_answer": "pending_cash_withdrawal",
+  "verdict": "ambiguous",
+  "reason": "Money shown as withdrawn but missing."
+ },
+ {
+  "id": "b77-test-0775",
+  "confidence": 0.99,
+  "text": "My cash withdrawal was partly declined",
+  "dataset_label": "wrong_amount_of_cash_received",
+  "jev_answer": "declined_cash_withdrawal",
+  "verdict": "ambiguous",
+  "reason": "Withdrawal partly declined."
+ },
+ {
+  "id": "b77-test-0799",
+  "confidence": 0.96,
+  "text": "Will declined funds I tried to withdraw be returned to me?",
+  "dataset_label": "wrong_amount_of_cash_received",
+  "jev_answer": "declined_cash_withdrawal",
+  "verdict": "label",
+  "reason": "Asks about declined withdrawal funds."
+ },
+ {
+  "id": "b77-test-0835",
+  "confidence": 0.92,
+  "text": "There is a fee on my account. Why?",
+  "dataset_label": "card_payment_fee_charged",
+  "jev_answer": "extra_charge_on_statement",
+  "verdict": "ambiguous",
+  "reason": "\"A fee on my account\" with no source named."
+ },
+ {
+  "id": "b77-test-0842",
+  "confidence": 0.93,
+  "text": "I am still waiting for a transaction to be completed",
+  "dataset_label": "transfer_not_received_by_recipient",
+  "jev_answer": "pending_transfer",
+  "verdict": "ambiguous",
+  "reason": "Still waiting for a transaction."
+ },
+ {
+  "id": "b77-test-0845",
+  "confidence": 0.99,
+  "text": "How long does it take for a transfer to get to a recipient?",
+  "dataset_label": "transfer_not_received_by_recipient",
+  "jev_answer": "transfer_timing",
+  "verdict": "ambiguous",
+  "reason": "How long to reach a recipient: names the recipient."
+ },
+ {
+  "id": "b77-test-0849",
+  "confidence": 1.0,
+  "text": "how long do money transfers take?",
+  "dataset_label": "transfer_not_received_by_recipient",
+  "jev_answer": "transfer_timing",
+  "verdict": "label",
+  "reason": "How long money transfers take is timing."
+ },
+ {
+  "id": "b77-test-0861",
+  "confidence": 0.95,
+  "text": "The day before yesterday, I performed a transfer which was within this country. It still hasn't gone through. Can you check on that? The account number is definitely correct, as I've checked and double checked.",
+  "dataset_label": "transfer_not_received_by_recipient",
+  "jev_answer": "pending_transfer",
+  "verdict": "ambiguous",
+  "reason": "Domestic transfer not gone through."
+ },
+ {
+  "id": "b77-test-0873",
+  "confidence": 0.97,
+  "text": "When will my funds transfer?",
+  "dataset_label": "transfer_not_received_by_recipient",
+  "jev_answer": "transfer_timing",
+  "verdict": "ambiguous",
+  "reason": "When will funds transfer."
+ },
+ {
+  "id": "b77-test-0876",
+  "confidence": 0.91,
+  "text": "How long until my friend receives my transaction?",
+  "dataset_label": "transfer_not_received_by_recipient",
+  "jev_answer": "transfer_timing",
+  "verdict": "ambiguous",
+  "reason": "How long until a friend receives it."
+ },
+ {
+  "id": "b77-test-0878",
+  "confidence": 0.9,
+  "text": "I am still awaiting the completion of the transaction.",
+  "dataset_label": "transfer_not_received_by_recipient",
+  "jev_answer": "pending_transfer",
+  "verdict": "ambiguous",
+  "reason": "Awaiting completion."
+ },
+ {
+  "id": "b77-test-0881",
+  "confidence": 0.99,
+  "text": "I need support options, I want to top my card",
+  "dataset_label": "supported_cards_and_currencies",
+  "jev_answer": "topping_up_by_card",
+  "verdict": "ambiguous",
+  "reason": "Wants to top up a card; support wording is loose."
+ },
+ {
+  "id": "b77-test-0894",
+  "confidence": 0.99,
+  "text": "I would like to add money to my account through my American Express.",
+  "dataset_label": "supported_cards_and_currencies",
+  "jev_answer": "topping_up_by_card",
+  "verdict": "ambiguous",
+  "reason": "Amex top-up: supported cards or topping up by card."
+ },
+ {
+  "id": "b77-test-0899",
+  "confidence": 0.99,
+  "text": "How can I use American Express to add money to my account?",
+  "dataset_label": "supported_cards_and_currencies",
+  "jev_answer": "topping_up_by_card",
+  "verdict": "ambiguous",
+  "reason": "Same Amex pattern."
+ },
+ {
+  "id": "b77-test-0916",
+  "confidence": 0.98,
+  "text": "How can I use American Express to add funds to my account?",
+  "dataset_label": "supported_cards_and_currencies",
+  "jev_answer": "topping_up_by_card",
+  "verdict": "ambiguous",
+  "reason": "Same Amex pattern."
+ },
+ {
+  "id": "b77-test-1006",
+  "confidence": 1.0,
+  "text": "The app wouldn't accept my top up.",
+  "dataset_label": "top_up_reverted",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Top-up not accepted: failed or reverted."
+ },
+ {
+  "id": "b77-test-1008",
+  "confidence": 0.98,
+  "text": "I believe my money did not go through with my top up, was there a problem on your end?",
+  "dataset_label": "top_up_reverted",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Money did not go through."
+ },
+ {
+  "id": "b77-test-1010",
+  "confidence": 0.91,
+  "text": "I put money into my account for the minimum balance but the application didn't accept.",
+  "dataset_label": "top_up_reverted",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Application did not accept it."
+ },
+ {
+  "id": "b77-test-1017",
+  "confidence": 0.96,
+  "text": "I believed crypto top up with something you offered. This does not seem to be working. The money has been removed from my account though so what's going on?",
+  "dataset_label": "top_up_reverted",
+  "jev_answer": "top_up_failed",
+  "verdict": "model",
+  "reason": "Money was removed then did not work: reverted."
+ },
+ {
+  "id": "b77-test-1038",
+  "confidence": 1.0,
+  "text": "On my last transaction it seem that my top-up was not successful.",
+  "dataset_label": "top_up_reverted",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Top-up not successful."
+ },
+ {
+  "id": "b77-test-1067",
+  "confidence": 0.99,
+  "text": "Why does my account not accept cash deposits?",
+  "dataset_label": "balance_not_updated_after_cheque_or_cash_deposit",
+  "jev_answer": "top_up_by_cash_or_cheque",
+  "verdict": "label",
+  "reason": "Asks whether cash deposits are accepted, not about a balance."
+ },
+ {
+  "id": "b77-test-1103",
+  "confidence": 0.99,
+  "text": "What should I do to get transactions off of my account if I didn't make them?  My card must have been compromised and I need to freeze it asap!",
+  "dataset_label": "card_payment_not_recognised",
+  "jev_answer": "compromised_card",
+  "verdict": "ambiguous",
+  "reason": "Says the card must have been compromised."
+ },
+ {
+  "id": "b77-test-1171",
+  "confidence": 0.95,
+  "text": "Can I still use my account, even though the identity verification has not passed yet?",
+  "dataset_label": "why_verify_identity",
+  "jev_answer": "unable_to_verify_identity",
+  "verdict": "ambiguous",
+  "reason": "Verification not passed yet; why or unable both fit."
+ },
+ {
+  "id": "b77-test-1209",
+  "confidence": 0.98,
+  "text": "Help my verify my id.",
+  "dataset_label": "unable_to_verify_identity",
+  "jev_answer": "verify_my_identity",
+  "verdict": "label",
+  "reason": "Asks for help verifying: verify_my_identity."
+ },
+ {
+  "id": "b77-test-1225",
+  "confidence": 0.98,
+  "text": "What do i need to verify my id?",
+  "dataset_label": "unable_to_verify_identity",
+  "jev_answer": "verify_my_identity",
+  "verdict": "label",
+  "reason": "Asks what is needed to verify."
+ },
+ {
+  "id": "b77-test-1244",
+  "confidence": 0.9,
+  "text": "I cannot seem to find my PIN. Where is it?",
+  "dataset_label": "get_physical_card",
+  "jev_answer": "passcode_forgotten",
+  "verdict": "ambiguous",
+  "reason": "Cannot find the PIN: forgotten or not received."
+ },
+ {
+  "id": "b77-test-1257",
+  "confidence": 0.9,
+  "text": "I received my card but not my PIN.",
+  "dataset_label": "get_physical_card",
+  "jev_answer": "card_arrival",
+  "verdict": "ambiguous",
+  "reason": "Card arrived, PIN did not; neither label is clean."
+ },
+ {
+  "id": "b77-test-1259",
+  "confidence": 0.98,
+  "text": "what is the process for setting up a pin",
+  "dataset_label": "get_physical_card",
+  "jev_answer": "change_pin",
+  "verdict": "ambiguous",
+  "reason": "Setting up a PIN: get card or change PIN."
+ },
+ {
+  "id": "b77-test-1275",
+  "confidence": 0.93,
+  "text": "What do I need to do for a PIN?",
+  "dataset_label": "get_physical_card",
+  "jev_answer": "change_pin",
+  "verdict": "ambiguous",
+  "reason": "PIN process, no card context."
+ },
+ {
+  "id": "b77-test-1337",
+  "confidence": 0.98,
+  "text": "I did a top-up, but I'm not seeing it in my wallet yet.",
+  "dataset_label": "topping_up_by_card",
+  "jev_answer": "pending_top_up",
+  "verdict": "label",
+  "reason": "Top-up done but not showing: pending."
+ },
+ {
+  "id": "b77-test-1360",
+  "confidence": 0.93,
+  "text": "How can i get multiple disposble cards.",
+  "dataset_label": "disposable_card_limits",
+  "jev_answer": "get_disposable_virtual_card",
+  "verdict": "ambiguous",
+  "reason": "\"Multiple disposable cards\" is getting or limits."
+ },
+ {
+  "id": "b77-test-1391",
+  "confidence": 0.94,
+  "text": "How many virtual cards do I get?",
+  "dataset_label": "disposable_card_limits",
+  "jev_answer": "getting_virtual_card",
+  "verdict": "model",
+  "reason": "\"How many\" is a limits question."
+ },
+ {
+  "id": "b77-test-1492",
+  "confidence": 0.92,
+  "text": "Even though it's late, I wanted to see about disputing a charge. I was just looking through my transactions over the past couple of months and noticed a pretty large amount that was not completed by me. Is this possibly something I can still do.",
+  "dataset_label": "direct_debit_payment_not_recognised",
+  "jev_answer": "card_payment_not_recognised",
+  "verdict": "ambiguous",
+  "reason": "Disputing a charge, type not stated."
+ },
+ {
+  "id": "b77-test-1493",
+  "confidence": 0.95,
+  "text": "There was a transaction from two weeks ago from a business that I don't know. I'm fairly certain it wasn't me who made it, but is it an option to trace it to confirm?",
+  "dataset_label": "direct_debit_payment_not_recognised",
+  "jev_answer": "card_payment_not_recognised",
+  "verdict": "ambiguous",
+  "reason": "Unrecognised transaction, payment type not stated."
+ },
+ {
+  "id": "b77-test-1498",
+  "confidence": 0.93,
+  "text": "There is a transaction from my account that I don't recognize can you trace back the information so I can make sure it's something I did or not?",
+  "dataset_label": "direct_debit_payment_not_recognised",
+  "jev_answer": "card_payment_not_recognised",
+  "verdict": "ambiguous",
+  "reason": "Unrecognised transaction, type not stated."
+ },
+ {
+  "id": "b77-test-1501",
+  "confidence": 0.92,
+  "text": "I am seeing a weird payment showing up that I know I did not make, how can I get it cancelled?",
+  "dataset_label": "direct_debit_payment_not_recognised",
+  "jev_answer": "card_payment_not_recognised",
+  "verdict": "ambiguous",
+  "reason": "Unrecognised payment, type not stated."
+ },
+ {
+  "id": "b77-test-1605",
+  "confidence": 0.93,
+  "text": "Why has my payment not gone through?",
+  "dataset_label": "pending_card_payment",
+  "jev_answer": "declined_card_payment",
+  "verdict": "ambiguous",
+  "reason": "Payment not gone through: pending or declined."
+ },
+ {
+  "id": "b77-test-1626",
+  "confidence": 0.92,
+  "text": "I was double charged, and the second charge is showing as \"pending\". How long will it be before I get my money back once the second charge has been refunded?",
+  "dataset_label": "pending_card_payment",
+  "jev_answer": "transaction_charged_twice",
+  "verdict": "ambiguous",
+  "reason": "Double charge with one pending."
+ },
+ {
+  "id": "b77-test-1672",
+  "confidence": 1.0,
+  "text": "Someone stole my cards!",
+  "dataset_label": "lost_or_stolen_phone",
+  "jev_answer": "lost_or_stolen_card",
+  "verdict": "label",
+  "reason": "Says cards were stolen, not a phone."
+ },
+ {
+  "id": "b77-test-1721",
+  "confidence": 1.0,
+  "text": "Good morning. I tried to make a purchase with my credit card last night and again this morning. Both times it was declined. Can you investigate?",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Describes a card purchase declined, not a transfer."
+ },
+ {
+  "id": "b77-test-1722",
+  "confidence": 0.99,
+  "text": "I am getting continuous failure for all my transfers. I have cross checked each recipient detail again and again and everything is correct.",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "failed_transfer",
+  "verdict": "ambiguous",
+  "reason": "All transfers failing; beneficiary not named."
+ },
+ {
+  "id": "b77-test-1726",
+  "confidence": 0.97,
+  "text": "How can I fix my card, it got declined twice.",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Card declined twice."
+ },
+ {
+  "id": "b77-test-1730",
+  "confidence": 1.0,
+  "text": "The card got declined twice when I tried to use it to buy something online yesterday.",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Card declined on an online purchase."
+ },
+ {
+  "id": "b77-test-1739",
+  "confidence": 1.0,
+  "text": "When I try and to buy something using my card it keeps getting declined.",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Card keeps getting declined."
+ },
+ {
+  "id": "b77-test-1754",
+  "confidence": 1.0,
+  "text": "I tried to buy something online yesterday but it kept saying declined. Tried again today but same thing happened. What's broken?",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Online purchase declined."
+ },
+ {
+  "id": "b77-test-1755",
+  "confidence": 1.0,
+  "text": "I tried to buy something online yesterday but it wouldn't stop saying declined. Tried again today but same thing happened. What's Broken?",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Online purchase declined."
+ },
+ {
+  "id": "b77-test-1756",
+  "confidence": 0.99,
+  "text": "My card is being declined online. Could you tell me what might be broken or wrong with the account?",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Card declined online."
+ },
+ {
+  "id": "b77-test-1758",
+  "confidence": 1.0,
+  "text": "I was attempting to purchase a golf club off eBay yesterday, but my credit card was declined. I tried multiple times, and again this morning. Can you check into my card please?",
+  "dataset_label": "declined_transfer",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Credit card declined on eBay."
+ },
+ {
+  "id": "b77-test-1796",
+  "confidence": 0.99,
+  "text": "I am waiting patiently for a week now for the seller to get back to me and there has been no response, could you please help me further with getting my money back.  Thank you.",
+  "dataset_label": "Refund_not_showing_up",
+  "jev_answer": "request_refund",
+  "verdict": "ambiguous",
+  "reason": "Waiting on a seller; either a missing refund or a refund request."
+ },
+ {
+  "id": "b77-test-1851",
+  "confidence": 1.0,
+  "text": "How long can an EU transfer take?",
+  "dataset_label": "pending_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "label",
+  "reason": "How long an EU transfer takes is timing."
+ },
+ {
+  "id": "b77-test-1859",
+  "confidence": 0.91,
+  "text": "When will the transfer go through?",
+  "dataset_label": "pending_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "ambiguous",
+  "reason": "When will it go through: pending or timing."
+ },
+ {
+  "id": "b77-test-1864",
+  "confidence": 0.95,
+  "text": "When will the transfer be completed?",
+  "dataset_label": "pending_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "ambiguous",
+  "reason": "When completed: pending or timing."
+ },
+ {
+  "id": "b77-test-1868",
+  "confidence": 0.92,
+  "text": "How long does a transfer take to be confirmed?",
+  "dataset_label": "pending_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "label",
+  "reason": "How long to be confirmed is timing."
+ },
+ {
+  "id": "b77-test-1879",
+  "confidence": 0.91,
+  "text": "How long does it take for a money transfer to show?",
+  "dataset_label": "pending_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "label",
+  "reason": "How long to show is timing."
+ },
+ {
+  "id": "b77-test-1934",
+  "confidence": 1.0,
+  "text": "My ATM got stuck and I'm not sure what to do.",
+  "dataset_label": "card_swallowed",
+  "jev_answer": "atm_support",
+  "verdict": "ambiguous",
+  "reason": "Says the ATM got stuck, not the card."
+ },
+ {
+  "id": "b77-test-1954",
+  "confidence": 0.98,
+  "text": "What should I do with my atm that got stuck?",
+  "dataset_label": "card_swallowed",
+  "jev_answer": "atm_support",
+  "verdict": "ambiguous",
+  "reason": "Same wording."
+ },
+ {
+  "id": "b77-test-2080",
+  "confidence": 0.95,
+  "text": "I think my card payment has been stopped",
+  "dataset_label": "reverted_card_payment?",
+  "jev_answer": "declined_card_payment",
+  "verdict": "ambiguous",
+  "reason": "Payment stopped: reverted or declined."
+ },
+ {
+  "id": "b77-test-2092",
+  "confidence": 1.0,
+  "text": "My card is being declined for a purchase. I bought items before and the card worked. Do you know what the problem is?",
+  "dataset_label": "reverted_card_payment?",
+  "jev_answer": "declined_card_payment",
+  "verdict": "label",
+  "reason": "Card declined on a purchase."
+ },
+ {
+  "id": "b77-test-2094",
+  "confidence": 0.97,
+  "text": "why did the app refuse to make an approved payment",
+  "dataset_label": "reverted_card_payment?",
+  "jev_answer": "declined_card_payment",
+  "verdict": "ambiguous",
+  "reason": "App refused an approved payment."
+ },
+ {
+  "id": "b77-test-2100",
+  "confidence": 0.98,
+  "text": "I was contacted by a seller with a message that they never received my money. I am 100% sure it was taken from my account so I definitely need this sorted out soon.",
+  "dataset_label": "reverted_card_payment?",
+  "jev_answer": "transfer_not_received_by_recipient",
+  "verdict": "ambiguous",
+  "reason": "Seller never received the money."
+ },
+ {
+  "id": "b77-test-2163",
+  "confidence": 0.9400000000000001,
+  "text": "I was unable to make a transfer to another account.",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "failed_transfer",
+  "verdict": "ambiguous",
+  "reason": "Transfer failed, no reason given."
+ },
+ {
+  "id": "b77-test-2164",
+  "confidence": 0.98,
+  "text": "I had a transfer blocked",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "declined_transfer",
+  "verdict": "ambiguous",
+  "reason": "\"Transfer blocked\" gives no reason."
+ },
+ {
+  "id": "b77-test-2165",
+  "confidence": 0.99,
+  "text": "Can you please help me with this exchange?  I am trying to get crypto and the app won't let me.",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "exchange_via_app",
+  "verdict": "ambiguous",
+  "reason": "Crypto purchase refused; app restriction either way."
+ },
+ {
+  "id": "b77-test-2166",
+  "confidence": 1.0,
+  "text": "How do I do a successful transfer to an account?",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "transfer_into_account",
+  "verdict": "label",
+  "reason": "Asks how to transfer to an account."
+ },
+ {
+  "id": "b77-test-2168",
+  "confidence": 0.9400000000000001,
+  "text": "Hey I want to buy some crypto but the app doesn't allow me to! What's the issue, I really want to exchange this",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "exchange_via_app",
+  "verdict": "ambiguous",
+  "reason": "Same crypto restriction."
+ },
+ {
+  "id": "b77-test-2172",
+  "confidence": 0.9,
+  "text": "What's the deal with no cryptocurrency on your app?",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "supported_cards_and_currencies",
+  "verdict": "label",
+  "reason": "Asks about crypto support, not a blocked beneficiary."
+ },
+ {
+  "id": "b77-test-2176",
+  "confidence": 0.96,
+  "text": "I have tried transferring money numerous times.  All I keep getting is an error message.  Can you tell me what is going on and how this van be fixed?",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "failed_transfer",
+  "verdict": "ambiguous",
+  "reason": "Repeated error message, no cause stated."
+ },
+ {
+  "id": "b77-test-2185",
+  "confidence": 0.9,
+  "text": "My transfer to beneficiary didn't go through",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "failed_transfer",
+  "verdict": "model",
+  "reason": "Names the beneficiary explicitly."
+ },
+ {
+  "id": "b77-test-2190",
+  "confidence": 0.99,
+  "text": "The account transfer I was trying to do failed.",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "failed_transfer",
+  "verdict": "ambiguous",
+  "reason": "Transfer failed, no cause."
+ },
+ {
+  "id": "b77-test-2195",
+  "confidence": 1.0,
+  "text": "Can you help with a transfer to an account",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "transfer_into_account",
+  "verdict": "label",
+  "reason": "Asks for help doing a transfer."
+ },
+ {
+  "id": "b77-test-2198",
+  "confidence": 0.93,
+  "text": "i tried to make a transfer to a beneficiary and it didn't go through",
+  "dataset_label": "beneficiary_not_allowed",
+  "jev_answer": "failed_transfer",
+  "verdict": "model",
+  "reason": "Names the beneficiary explicitly."
+ },
+ {
+  "id": "b77-test-2233",
+  "confidence": 0.98,
+  "text": "What extra charges are there?",
+  "dataset_label": "transfer_fee_charged",
+  "jev_answer": "extra_charge_on_statement",
+  "verdict": "ambiguous",
+  "reason": "\"Extra charges\" with no source named."
+ },
+ {
+  "id": "b77-test-2338",
+  "confidence": 0.9400000000000001,
+  "text": "How do I top up my card?",
+  "dataset_label": "transfer_into_account",
+  "jev_answer": "topping_up_by_card",
+  "verdict": "label",
+  "reason": "Asks how to top up a card."
+ },
+ {
+  "id": "b77-test-2477",
+  "confidence": 0.9400000000000001,
+  "text": "How can I top-up my card?",
+  "dataset_label": "top_up_by_cash_or_cheque",
+  "jev_answer": "topping_up_by_card",
+  "verdict": "ambiguous",
+  "reason": "How to top up, method not stated."
+ },
+ {
+  "id": "b77-test-2493",
+  "confidence": 0.95,
+  "text": "I need to get an actual card so that I can use it for in person transactions. How would I do this?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "order_physical_card and get_physical_card are near-duplicates."
+ },
+ {
+  "id": "b77-test-2494",
+  "confidence": 0.91,
+  "text": "Will I get a real card?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2497",
+  "confidence": 0.97,
+  "text": "Please tell me how to get a physical card.",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2500",
+  "confidence": 0.92,
+  "text": "How much does it cost in fees to use your card?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "card_payment_fee_charged",
+  "verdict": "ambiguous",
+  "reason": "Cost of using the card, not ordering it."
+ },
+ {
+  "id": "b77-test-2501",
+  "confidence": 0.95,
+  "text": "How can I get a physical card",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2502",
+  "confidence": 0.95,
+  "text": "Can I get a physical card through this app?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2503",
+  "confidence": 0.93,
+  "text": "can I have a non virtual card?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2504",
+  "confidence": 0.97,
+  "text": "How do I get a physical card?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2505",
+  "confidence": 0.91,
+  "text": "What are the fees to get a physical card?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Fees to get a physical card; both labels fit."
+ },
+ {
+  "id": "b77-test-2516",
+  "confidence": 0.94,
+  "text": "I need a physical card.",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2518",
+  "confidence": 0.95,
+  "text": "How do I get an actual card?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2519",
+  "confidence": 0.96,
+  "text": "Can I get a real card?",
+  "dataset_label": "order_physical_card",
+  "jev_answer": "get_physical_card",
+  "verdict": "ambiguous",
+  "reason": "Same near-duplicate pair."
+ },
+ {
+  "id": "b77-test-2544",
+  "confidence": 1.0,
+  "text": "My card is just not working at this time.",
+  "dataset_label": "virtual_card_not_working",
+  "jev_answer": "card_not_working",
+  "verdict": "ambiguous",
+  "reason": "Says only \"my card\"; virtual is not stated."
+ },
+ {
+  "id": "b77-test-2562",
+  "confidence": 0.97,
+  "text": "I made a withdraw from the ATM this past holiday and it seems like a was charged too much. If I would have   known about these charges I wouldn't have made a withdraw.",
+  "dataset_label": "wrong_exchange_rate_for_cash_withdrawal",
+  "jev_answer": "cash_withdrawal_charge",
+  "verdict": "label",
+  "reason": "Complains about ATM charges, not the rate."
+ },
+ {
+  "id": "b77-test-2563",
+  "confidence": 0.99,
+  "text": "Can you look to make sure the exchange rate is correct",
+  "dataset_label": "wrong_exchange_rate_for_cash_withdrawal",
+  "jev_answer": "exchange_rate",
+  "verdict": "ambiguous",
+  "reason": "Asks whether the exchange rate is correct."
+ },
+ {
+  "id": "b77-test-2571",
+  "confidence": 0.99,
+  "text": "Is there a fee for exchanging cash?",
+  "dataset_label": "wrong_exchange_rate_for_cash_withdrawal",
+  "jev_answer": "exchange_charge",
+  "verdict": "label",
+  "reason": "Asks about a fee for exchanging cash."
+ },
+ {
+  "id": "b77-test-2575",
+  "confidence": 1.0,
+  "text": "Will there be additional costs of I make a withdrawal from a local ATM of British pounds? I need some cash to feel comfortable on the journey home",
+  "dataset_label": "wrong_exchange_rate_for_cash_withdrawal",
+  "jev_answer": "cash_withdrawal_charge",
+  "verdict": "label",
+  "reason": "Asks about withdrawal costs."
+ },
+ {
+  "id": "b77-test-2576",
+  "confidence": 0.92,
+  "text": "It seems I was overcharged when I used an ATM while on vacation. If I knew about your fees in advance I sure would have gone somewhere else.",
+  "dataset_label": "wrong_exchange_rate_for_cash_withdrawal",
+  "jev_answer": "cash_withdrawal_charge",
+  "verdict": "label",
+  "reason": "Complains about ATM fees."
+ },
+ {
+  "id": "b77-test-2587",
+  "confidence": 0.98,
+  "text": "I withdrew some cash out of the ATM over the holiday. It seems that I was charged some outrageous fees. I would not have done that had I been aware of these outrageous charges!",
+  "dataset_label": "wrong_exchange_rate_for_cash_withdrawal",
+  "jev_answer": "cash_withdrawal_charge",
+  "verdict": "label",
+  "reason": "Complains about ATM fees."
+ },
+ {
+  "id": "b77-test-2597",
+  "confidence": 0.98,
+  "text": "I used the ATM machine to get money out for Holiday shopping and saw the outrageous charges. Why is that? I would not have used the ATM if I had known!",
+  "dataset_label": "wrong_exchange_rate_for_cash_withdrawal",
+  "jev_answer": "cash_withdrawal_charge",
+  "verdict": "label",
+  "reason": "Complains about ATM charges."
+ },
+ {
+  "id": "b77-test-2622",
+  "confidence": 0.9400000000000001,
+  "text": "how does a virtual card work",
+  "dataset_label": "get_disposable_virtual_card",
+  "jev_answer": "getting_virtual_card",
+  "verdict": "ambiguous",
+  "reason": "How a virtual card works, disposable not mentioned."
+ },
+ {
+  "id": "b77-test-2637",
+  "confidence": 1.0,
+  "text": "how many transactions can i make with a disposable card",
+  "dataset_label": "get_disposable_virtual_card",
+  "jev_answer": "disposable_card_limits",
+  "verdict": "label",
+  "reason": "\"How many transactions\" is a limits question."
+ },
+ {
+  "id": "b77-test-2650",
+  "confidence": 0.96,
+  "text": "How can I check to see if my top-up worked?",
+  "dataset_label": "top_up_failed",
+  "jev_answer": "verify_top_up",
+  "verdict": "label",
+  "reason": "Checking whether a top-up worked is verify_top_up."
+ },
+ {
+  "id": "b77-test-2685",
+  "confidence": 0.96,
+  "text": "How long does it take for an international transfer into my account?",
+  "dataset_label": "balance_not_updated_after_bank_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "label",
+  "reason": "Asks how long an inbound transfer takes: timing."
+ },
+ {
+  "id": "b77-test-2687",
+  "confidence": 0.93,
+  "text": "When will my transfer be available in my account.",
+  "dataset_label": "balance_not_updated_after_bank_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "label",
+  "reason": "Asks when funds will be available: timing."
+ },
+ {
+  "id": "b77-test-2691",
+  "confidence": 1.0,
+  "text": "How long does a UK transfer take?",
+  "dataset_label": "balance_not_updated_after_bank_transfer",
+  "jev_answer": "transfer_timing",
+  "verdict": "label",
+  "reason": "\"How long does a UK transfer take\" is timing."
+ },
+ {
+  "id": "b77-test-2693",
+  "confidence": 0.98,
+  "text": "I made a transfer and am still waiting.",
+  "dataset_label": "balance_not_updated_after_bank_transfer",
+  "jev_answer": "pending_transfer",
+  "verdict": "ambiguous",
+  "reason": "\"Made a transfer and still waiting\" fits pending or not-updated."
+ },
+ {
+  "id": "b77-test-2694",
+  "confidence": 0.93,
+  "text": "I made an out of country transfer and it hasn't went through yet.",
+  "dataset_label": "balance_not_updated_after_bank_transfer",
+  "jev_answer": "pending_transfer",
+  "verdict": "ambiguous",
+  "reason": "Same shape: transfer not through yet."
+ },
+ {
+  "id": "b77-test-2711",
+  "confidence": 1.0,
+  "text": "My transfer is pending.",
+  "dataset_label": "balance_not_updated_after_bank_transfer",
+  "jev_answer": "pending_transfer",
+  "verdict": "label",
+  "reason": "\"My transfer is pending\" is literally pending_transfer."
+ },
+ {
+  "id": "b77-test-2745",
+  "confidence": 0.9,
+  "text": "I need to cancel my card that got stolen a little while ago. Someone has already taken some money out and I don't want them to take anymore. Can you please do that?",
+  "dataset_label": "cash_withdrawal_not_recognised",
+  "jev_answer": "lost_or_stolen_card",
+  "verdict": "ambiguous",
+  "reason": "Stolen card and withdrawals in one message."
+ },
+ {
+  "id": "b77-test-2748",
+  "confidence": 0.95,
+  "text": "Can anyone help me, I lost my wallet and they've started withdrawing from my account.",
+  "dataset_label": "cash_withdrawal_not_recognised",
+  "jev_answer": "lost_or_stolen_card",
+  "verdict": "ambiguous",
+  "reason": "Lost wallet and withdrawals."
+ },
+ {
+  "id": "b77-test-2751",
+  "confidence": 0.93,
+  "text": "Help!  My wallet was stolen and someone is taking money out.  I need this money!  What can I do?",
+  "dataset_label": "cash_withdrawal_not_recognised",
+  "jev_answer": "lost_or_stolen_card",
+  "verdict": "ambiguous",
+  "reason": "Stolen wallet and withdrawals."
+ },
+ {
+  "id": "b77-test-2756",
+  "confidence": 0.9400000000000001,
+  "text": "There is a problem with my card. Somebody has removed money from my account in a town I haven't been to. Can you please freeze my account immediately?",
+  "dataset_label": "cash_withdrawal_not_recognised",
+  "jev_answer": "compromised_card",
+  "verdict": "ambiguous",
+  "reason": "Unknown withdrawals; compromised card is reasonable."
+ },
+ {
+  "id": "b77-test-2761",
+  "confidence": 1.0,
+  "text": "whats your exchange rate",
+  "dataset_label": "exchange_charge",
+  "jev_answer": "exchange_rate",
+  "verdict": "label",
+  "reason": "Asks the exchange rate, not the charge."
+ },
+ {
+  "id": "b77-test-2763",
+  "confidence": 1.0,
+  "text": "Where do I find the exchange rate?",
+  "dataset_label": "exchange_charge",
+  "jev_answer": "exchange_rate",
+  "verdict": "label",
+  "reason": "Asks where to find the rate."
+ },
+ {
+  "id": "b77-test-2829",
+  "confidence": 0.96,
+  "text": "Is it okay to use a bank card to top up",
+  "dataset_label": "top_up_by_card_charge",
+  "jev_answer": "topping_up_by_card",
+  "verdict": "ambiguous",
+  "reason": "Bank card top-up: charge or method."
+ },
+ {
+  "id": "b77-test-2833",
+  "confidence": 1.0,
+  "text": "Is there a charge or discount if I use a European bank in a top up?",
+  "dataset_label": "top_up_by_card_charge",
+  "jev_answer": "top_up_by_bank_transfer_charge",
+  "verdict": "label",
+  "reason": "Top-up using a European bank is a bank transfer."
+ },
+ {
+  "id": "b77-test-2848",
+  "confidence": 0.99,
+  "text": "Is there a way my new card can be renewed?",
+  "dataset_label": "activate_my_card",
+  "jev_answer": "card_about_to_expire",
+  "verdict": "ambiguous",
+  "reason": "\"Renewed\" reads as either activation or expiry."
+ },
+ {
+  "id": "b77-test-2852",
+  "confidence": 1.0,
+  "text": "WHAT CAN I DO AFTER THE CARD MISSING",
+  "dataset_label": "activate_my_card",
+  "jev_answer": "lost_or_stolen_card",
+  "verdict": "label",
+  "reason": "Card missing: lost_or_stolen fits better than activate."
+ },
+ {
+  "id": "b77-test-2962",
+  "confidence": 0.9,
+  "text": "My top-up for Google Pay isn't working",
+  "dataset_label": "apple_pay_or_google_pay",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Mentions Google Pay and a failing top-up; both labels fit."
+ },
+ {
+  "id": "b77-test-2991",
+  "confidence": 0.92,
+  "text": "My American Express is in my Apple Pay and the top up is failing, why?",
+  "dataset_label": "apple_pay_or_google_pay",
+  "jev_answer": "top_up_failed",
+  "verdict": "ambiguous",
+  "reason": "Apple Pay and a failing top-up in one sentence."
+ },
+ {
+  "id": "b77-test-3058",
+  "confidence": 0.9,
+  "text": "Where can I find your locations?",
+  "dataset_label": "country_support",
+  "jev_answer": "atm_support",
+  "verdict": "ambiguous",
+  "reason": "\"Your locations\" could mean ATMs or countries."
+ }
+]

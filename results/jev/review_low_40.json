@@ -1,0 +1,407 @@
+{
+ "sample": "40 random wrong answers from equal-mass groups 1 to 3 (457 total)",
+ "seed": 20260925,
+ "method": "random.seed(20260925); random.sample(sorted pool indices, 40)",
+ "items": [
+  {
+   "id": "b77-test-0032",
+   "group": 3,
+   "chosen_prob": 0.88,
+   "text": "How do I know when my card will arrive?",
+   "dataset_label": "card_arrival",
+   "jev_answer": "card_delivery_estimate",
+   "verdict": "ambiguous",
+   "reason": "Arrival and delivery estimate both fit."
+  },
+  {
+   "id": "b77-test-0037",
+   "group": 2,
+   "chosen_prob": 0.73,
+   "text": "Is there tracking info available?",
+   "dataset_label": "card_arrival",
+   "jev_answer": "card_delivery_estimate",
+   "verdict": "ambiguous",
+   "reason": "Tracking fits arrival or delivery estimate."
+  },
+  {
+   "id": "b77-test-0313",
+   "group": 1,
+   "chosen_prob": 0.49,
+   "text": "I need my card as soon as possible.",
+   "dataset_label": "card_delivery_estimate",
+   "jev_answer": "card_arrival",
+   "verdict": "ambiguous",
+   "reason": "Wanting the card fast fits arrival or estimate."
+  },
+  {
+   "id": "b77-test-0425",
+   "group": 2,
+   "chosen_prob": 0.6900000000000001,
+   "text": "Change currency",
+   "dataset_label": "exchange_via_app",
+   "jev_answer": "fiat_currency_support",
+   "verdict": "ambiguous",
+   "reason": "Could mean exchanging money or account currency support."
+  },
+  {
+   "id": "b77-test-0434",
+   "group": 2,
+   "chosen_prob": 0.71,
+   "text": "Can I change my currency from USD to EUR?",
+   "dataset_label": "exchange_via_app",
+   "jev_answer": "fiat_currency_support",
+   "verdict": "ambiguous",
+   "reason": "Could mean exchanging or currency support."
+  },
+  {
+   "id": "b77-test-0562",
+   "group": 1,
+   "chosen_prob": 0.4,
+   "text": "what is required documents for new card process ?",
+   "dataset_label": "contactless_not_working",
+   "jev_answer": "get_physical_card",
+   "verdict": "label",
+   "reason": "Nothing about contactless; asks about ordering a card."
+  },
+  {
+   "id": "b77-test-0713",
+   "group": 1,
+   "chosen_prob": 0.3,
+   "text": "I made an error in payment yesterday and I need it fixed asap because it's for my rent tomorrow.",
+   "dataset_label": "cancel_transfer",
+   "jev_answer": "failed_transfer",
+   "verdict": "model",
+   "reason": "User made the error; nothing failed."
+  },
+  {
+   "id": "b77-test-0868",
+   "group": 3,
+   "chosen_prob": 0.77,
+   "text": "Is there a reason why my transaction is taking so long?",
+   "dataset_label": "transfer_not_received_by_recipient",
+   "jev_answer": "transfer_timing",
+   "verdict": "ambiguous",
+   "reason": "Slow transaction fits timing or not received."
+  },
+  {
+   "id": "b77-test-0887",
+   "group": 1,
+   "chosen_prob": 0.35000000000000003,
+   "text": "If I only have 1 other US card, can you take it?",
+   "dataset_label": "supported_cards_and_currencies",
+   "jev_answer": "topping_up_by_card",
+   "verdict": "ambiguous",
+   "reason": "Asks if a US card is accepted; topping up is a fair reading."
+  },
+  {
+   "id": "b77-test-0891",
+   "group": 3,
+   "chosen_prob": 0.76,
+   "text": "Will you accept my other card from the U.S.?",
+   "dataset_label": "supported_cards_and_currencies",
+   "jev_answer": "card_acceptance",
+   "verdict": "model",
+   "reason": "Asks if the bank accepts their card, not where the card works."
+  },
+  {
+   "id": "b77-test-0914",
+   "group": 1,
+   "chosen_prob": 0.58,
+   "text": "Is my currency okay to add money with?",
+   "dataset_label": "supported_cards_and_currencies",
+   "jev_answer": "fiat_currency_support",
+   "verdict": "ambiguous",
+   "reason": "Currency for adding money fits either."
+  },
+  {
+   "id": "b77-test-1013",
+   "group": 2,
+   "chosen_prob": 0.6,
+   "text": "Why would my top up be cancelled?",
+   "dataset_label": "top_up_reverted",
+   "jev_answer": "top_up_failed",
+   "verdict": "ambiguous",
+   "reason": "Cancelled top up fits reverted or failed."
+  },
+  {
+   "id": "b77-test-1162",
+   "group": 2,
+   "chosen_prob": 0.67,
+   "text": "do I need to verify my identity every time I log into my account?",
+   "dataset_label": "why_verify_identity",
+   "jev_answer": "verify_my_identity",
+   "verdict": "ambiguous",
+   "reason": "Policy question could be why or how to verify."
+  },
+  {
+   "id": "b77-test-1215",
+   "group": 3,
+   "chosen_prob": 0.79,
+   "text": "The app will not let me into my account.",
+   "dataset_label": "unable_to_verify_identity",
+   "jev_answer": "passcode_forgotten",
+   "verdict": "ambiguous",
+   "reason": "Locked out; neither label is clearly right."
+  },
+  {
+   "id": "b77-test-1250",
+   "group": 1,
+   "chosen_prob": 0.52,
+   "text": "Where in the app can I find my PIN?",
+   "dataset_label": "get_physical_card",
+   "jev_answer": "change_pin",
+   "verdict": "model",
+   "reason": "Finding a PIN is not changing it."
+  },
+  {
+   "id": "b77-test-1251",
+   "group": 1,
+   "chosen_prob": 0.48,
+   "text": "I just got my new card but am not sure how to check its PIN.",
+   "dataset_label": "get_physical_card",
+   "jev_answer": "change_pin",
+   "verdict": "model",
+   "reason": "Checking a new card PIN is not changing it."
+  },
+  {
+   "id": "b77-test-1338",
+   "group": 2,
+   "chosen_prob": 0.6,
+   "text": "i know i entered the right info, but my top up isn't in my balance",
+   "dataset_label": "topping_up_by_card",
+   "jev_answer": "pending_top_up",
+   "verdict": "ambiguous",
+   "reason": "Top up missing from balance fits pending top up; card detail fits the dataset label."
+  },
+  {
+   "id": "b77-test-1345",
+   "group": 1,
+   "chosen_prob": 0.47000000000000003,
+   "text": "Is it possible to use my credit card to transfer money?",
+   "dataset_label": "topping_up_by_card",
+   "jev_answer": "transfer_into_account",
+   "verdict": "ambiguous",
+   "reason": "Credit card to move money fits top up or transfer in."
+  },
+  {
+   "id": "b77-test-1388",
+   "group": 3,
+   "chosen_prob": 0.84,
+   "text": "I need to create several disposable cards per day.",
+   "dataset_label": "disposable_card_limits",
+   "jev_answer": "get_disposable_virtual_card",
+   "verdict": "model",
+   "reason": "\"Several per day\" is about limits."
+  },
+  {
+   "id": "b77-test-1504",
+   "group": 2,
+   "chosen_prob": 0.6,
+   "text": "Can I dispute a payment even if I notice it several weeks after it was made?",
+   "dataset_label": "direct_debit_payment_not_recognised",
+   "jev_answer": "card_payment_not_recognised",
+   "verdict": "ambiguous",
+   "reason": "No mention of direct debit or card."
+  },
+  {
+   "id": "b77-test-1561",
+   "group": 1,
+   "chosen_prob": 0.47000000000000003,
+   "text": "My withdrawal was cancelled.",
+   "dataset_label": "declined_cash_withdrawal",
+   "jev_answer": "pending_cash_withdrawal",
+   "verdict": "model",
+   "reason": "Cancelled withdrawal is declined, not pending."
+  },
+  {
+   "id": "b77-test-1589",
+   "group": 2,
+   "chosen_prob": 0.72,
+   "text": "Why didn't the ATM give me my money?",
+   "dataset_label": "declined_cash_withdrawal",
+   "jev_answer": "atm_support",
+   "verdict": "ambiguous",
+   "reason": "ATM not paying out fits declined withdrawal or ATM support."
+  },
+  {
+   "id": "b77-test-1627",
+   "group": 1,
+   "chosen_prob": 0.32,
+   "text": "I have waited 15 days, but my payment still hasn't cleared.",
+   "dataset_label": "pending_card_payment",
+   "jev_answer": "pending_transfer",
+   "verdict": "ambiguous",
+   "reason": "\"Payment\" not cleared fits card payment or transfer."
+  },
+  {
+   "id": "b77-test-2082",
+   "group": 2,
+   "chosen_prob": 0.62,
+   "text": "the app reverted my payment",
+   "dataset_label": "reverted_card_payment?",
+   "jev_answer": "top_up_reverted",
+   "verdict": "model",
+   "reason": "A payment, not a top up."
+  },
+  {
+   "id": "b77-test-2083",
+   "group": 2,
+   "chosen_prob": 0.58,
+   "text": "My card payment was cancelled.",
+   "dataset_label": "reverted_card_payment?",
+   "jev_answer": "declined_card_payment",
+   "verdict": "ambiguous",
+   "reason": "Cancelled card payment fits reverted or declined."
+  },
+  {
+   "id": "b77-test-2101",
+   "group": 2,
+   "chosen_prob": 0.62,
+   "text": "what happens to the funds if a merchant refuses the payment",
+   "dataset_label": "reverted_card_payment?",
+   "jev_answer": "declined_card_payment",
+   "verdict": "ambiguous",
+   "reason": "Merchant refusing fits declined or reverted."
+  },
+  {
+   "id": "b77-test-2108",
+   "group": 3,
+   "chosen_prob": 0.84,
+   "text": "I'm not sure why my card payment was cancelled, can you find out why?",
+   "dataset_label": "reverted_card_payment?",
+   "jev_answer": "declined_card_payment",
+   "verdict": "ambiguous",
+   "reason": "Cancelled card payment fits reverted or declined."
+  },
+  {
+   "id": "b77-test-2161",
+   "group": 2,
+   "chosen_prob": 0.64,
+   "text": "I've transferred money before without issue but now I am encountering an error stating that it isn't possible. Why is that?",
+   "dataset_label": "beneficiary_not_allowed",
+   "jev_answer": "declined_transfer",
+   "verdict": "ambiguous",
+   "reason": "Transfer error with no reason given fits both."
+  },
+  {
+   "id": "b77-test-2179",
+   "group": 2,
+   "chosen_prob": 0.68,
+   "text": "The money would not transfer to a beneficiary.",
+   "dataset_label": "beneficiary_not_allowed",
+   "jev_answer": "failed_transfer",
+   "verdict": "model",
+   "reason": "Names the beneficiary explicitly."
+  },
+  {
+   "id": "b77-test-2183",
+   "group": 2,
+   "chosen_prob": 0.62,
+   "text": "Why did I receive an error message saying that my transfer was not possible?",
+   "dataset_label": "beneficiary_not_allowed",
+   "jev_answer": "failed_transfer",
+   "verdict": "ambiguous",
+   "reason": "Transfer not possible, no beneficiary mentioned."
+  },
+  {
+   "id": "b77-test-2271",
+   "group": 1,
+   "chosen_prob": 0.52,
+   "text": "I receive my salary in GBP. Do I need to configure this somehwere?",
+   "dataset_label": "receiving_money",
+   "jev_answer": "fiat_currency_support",
+   "verdict": "ambiguous",
+   "reason": "Salary in GBP fits receiving money or currency support."
+  },
+  {
+   "id": "b77-test-2266",
+   "group": 3,
+   "chosen_prob": 0.78,
+   "text": "How do I deposit my paycheck to this account?",
+   "dataset_label": "receiving_money",
+   "jev_answer": "top_up_by_cash_or_cheque",
+   "verdict": "ambiguous",
+   "reason": "Paycheck could be a cheque deposit."
+  },
+  {
+   "id": "b77-test-2417",
+   "group": 1,
+   "chosen_prob": 0.52,
+   "text": "My daughter would like a card as well, how can we make this happen?",
+   "dataset_label": "getting_spare_card",
+   "jev_answer": "order_physical_card",
+   "verdict": "model",
+   "reason": "A card for a family member is a spare card."
+  },
+  {
+   "id": "b77-test-2509",
+   "group": 1,
+   "chosen_prob": 0.52,
+   "text": "What locations can a card be delivered to?",
+   "dataset_label": "order_physical_card",
+   "jev_answer": "card_delivery_estimate",
+   "verdict": "ambiguous",
+   "reason": "Delivery locations fit ordering or delivery estimate."
+  },
+  {
+   "id": "b77-test-2524",
+   "group": 3,
+   "chosen_prob": 0.86,
+   "text": "Why did the disposable virtual card which I used to pay a gym subscription get denied?",
+   "dataset_label": "virtual_card_not_working",
+   "jev_answer": "declined_card_payment",
+   "verdict": "ambiguous",
+   "reason": "Virtual card declined fits both."
+  },
+  {
+   "id": "b77-test-2548",
+   "group": 3,
+   "chosen_prob": 0.83,
+   "text": "My transaction was just declined when I was using my disposable virtual card. What can I do?",
+   "dataset_label": "virtual_card_not_working",
+   "jev_answer": "declined_card_payment",
+   "verdict": "ambiguous",
+   "reason": "Virtual card declined fits both."
+  },
+  {
+   "id": "b77-test-2680",
+   "group": 3,
+   "chosen_prob": 0.77,
+   "text": "I made a transfer a few hours ago from a UK banking account.  I do not yet see the transfer.  Please check on this for me.",
+   "dataset_label": "balance_not_updated_after_bank_transfer",
+   "jev_answer": "pending_transfer",
+   "verdict": "ambiguous",
+   "reason": "Transfer in not showing fits both."
+  },
+  {
+   "id": "b77-test-2692",
+   "group": 2,
+   "chosen_prob": 0.71,
+   "text": "Hello I made a bank transfer couple hours ago from my UK account but it doesn't show up yet. Can you please check if everything is alright with it?",
+   "dataset_label": "balance_not_updated_after_bank_transfer",
+   "jev_answer": "pending_transfer",
+   "verdict": "ambiguous",
+   "reason": "Transfer in not showing fits both."
+  },
+  {
+   "id": "b77-test-2746",
+   "group": 2,
+   "chosen_prob": 0.59,
+   "text": "How do I cancel my card? There are charges on my account that I didn't make.",
+   "dataset_label": "cash_withdrawal_not_recognised",
+   "jev_answer": "card_payment_not_recognised",
+   "verdict": "label",
+   "reason": "Unrecognised charges, not withdrawals."
+  },
+  {
+   "id": "b77-test-2979",
+   "group": 3,
+   "chosen_prob": 0.76,
+   "text": "My top up is not working in Apple Pay.",
+   "dataset_label": "apple_pay_or_google_pay",
+   "jev_answer": "top_up_failed",
+   "verdict": "ambiguous",
+   "reason": "Apple Pay top up failing fits both."
+  }
+ ]
+}
