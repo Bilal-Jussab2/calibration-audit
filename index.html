@@ -93,9 +93,9 @@
     <h1>Does the confidence score mean what it says?</h1>
     <p class="standfirst">AI systems attach a confidence score to their answers, and software uses it to decide what a person checks and what goes straight through. This index records what each maker says about that score, and whether anyone has published evidence that it holds.</p>
     <div class="stats" aria-label="Summary">
-      <div class="stat"><b>30</b><span>Systems listed</span></div>
-      <div class="stat"><b>6</b><span>Makers who say the score is a probability of being right</span></div>
-      <div class="stat"><b>0 of 30</b><span>Makers who publish evidence that it is</span></div>
+      <div class="stat"><b>32</b><span>Systems listed</span></div>
+      <div class="stat"><b>8</b><span>Makers who say the score is a probability of being right</span></div>
+      <div class="stat"><b>1 of 32</b><span>Makers who publish evidence that it is</span></div>
       <div class="stat"><b>2</b><span>Measured independently</span></div>
     </div>
   </header>
@@ -117,8 +117,22 @@
         <td data-h="System"><span class="sys">Jev</span><span class="maker">TypeSafe AI</span></td>
         <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span><q>Calibrated: higher confidence means higher accuracy.</q><a class="src" href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">typesafe.ai</a></td>
         <td data-h="Evidence published"><span class="tag none">None found</span></td>
-        <td data-h="Independent measurement"><span class="tag done">Published</span><span class="note"><a href="https://donttrustme.ai/assay-001.html">ASSAY-001</a> by JourdanLabs (18 Sep 2026): calibration error 0.094 on BANKING77, overconfident; 0.020 on CLINC150. A second test by Korbant is in progress (<a href="https://github.com/Bilal-Jussab2/calibration-audit/blob/main/preregistration/jev-preregistration.md">method</a>).</span></td>
-        <td data-h="Checked"><span class="date">26 Sep 2026</span></td>
+        <td data-h="Independent measurement"><span class="tag done">Published</span><span class="note"><a href="jev.html">Korbant test</a> (12 Oct 2026, <a href="https://github.com/Bilal-Jussab2/calibration-audit/blob/main/preregistration/jev-preregistration.md">pre-registered</a>): calibration error 0.089 on BANKING77, overconfident; the benchmark&#8217;s near-duplicate intents decide the direction. Agrees with <a href="https://donttrustme.ai/assay-001.html">ASSAY-001</a> by JourdanLabs (18 Sep 2026): 0.094 on BANKING77, 0.020 on CLINC150.</span></td>
+        <td data-h="Checked"><span class="date">12 Oct 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="P">
+        <td data-h="System"><span class="sys">Strands Decider 2B</span><span class="maker">AWS Strands Labs (open source)</span></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span><q>Calibrated reliability scores</q>: <q>every decision carries a confidence.</q><a class="src" href="https://github.com/strands-labs/strands-decider">github.com/strands-labs</a></td>
+        <td data-h="Evidence published"><span class="tag done">Published by maker</span><span class="note">Self-reported on JevBench v1: calibration error 0.052; <q>answers at a confidence of 0.9 or more are right about 95% of the time</q> on unseen short classification tasks. Not yet checked independently.</span></td>
+        <td data-h="Independent measurement"><span class="tag prog">In progress</span><span class="note">Korbant test planned on the same datasets as Jev.</span></td>
+        <td data-h="Checked"><span class="date">3 Oct 2026</span></td>
+      </tr>
+      <tr data-cat="intent" data-kind="P">
+        <td data-h="System"><span class="sys">Microsoft-Decision-1</span><span class="maker">Microsoft</span></td>
+        <td data-h="What the maker says"><span class="kind kp">Says it is a probability of being right</span>It <q>returns a calibrated probability for each option instead of generated text.</q><a class="src" href="https://ai.azure.com/catalog/models/Microsoft-Decision-1">ai.azure.com</a></td>
+        <td data-h="Evidence published"><span class="tag none">None found</span><span class="note">The model card gives no calibration metric. A launch chart shows a &#8220;calibration&#8221; score of 92.2 without saying how it is measured.</span></td>
+        <td data-h="Independent measurement"><span class="tag na">Not measured</span></td>
+        <td data-h="Checked"><span class="date">11 Oct 2026</span></td>
       </tr>
       <tr data-cat="doc" data-kind="X">
         <td data-h="System"><span class="sys">Tesseract 5.3.4</span><span class="maker">Open source OCR</span></td>
@@ -333,12 +347,13 @@
     <li>Every independent measurement commits its method before any test data is sent, and the maker sees the results at least seven days before they are published.</li>
   </ol>
   <p class="col">Corrections and replies: <a href="mailto:bilal@korbant.co.uk">bilal@korbant.co.uk</a></p>
+  <p class="col"><b>Request a measurement.</b> Make an AI system that shows a confidence score? You can ask to have it measured. The method is pre-registered, the result is published whatever it shows, and you get the same right of reply as everyone else. <a href="mailto:bilal@korbant.co.uk?subject=Request%20a%20measurement">bilal@korbant.co.uk</a></p>
 
   <h2>Studies</h2>
   <div class="cards">
     <div class="card"><span class="k">Measurement · 3 Sep 2026</span><a href="tesseract-receipts.html">Does 0.9 mean right nine times out of ten?</a><p>Tesseract 5.3.4 on 200 scanned receipts, and the review threshold its own numbers support.</p></div>
     <div class="card"><span class="k">Register · 3 Sep 2026</span><a href="confidence-register.html">Everyone ships a confidence score. Nobody shows their working.</a><p>Five document extraction vendors publish a rule for when to trust a score. None publish evidence that it holds.</p></div>
-    <div class="card"><span class="k">Method · 22 Sep 2026</span><a href="https://github.com/Bilal-Jussab2/calibration-audit/blob/main/preregistration/jev-preregistration.md">Does Jev's confidence mean what it says?</a><p>A pre-registered test of TypeSafe AI's Jev. Results not yet published.</p></div>
+    <div class="card"><span class="k">Measurement · 12 Oct 2026</span><a href="jev.html">Does Jev's confidence mean what it says?</a><p>A pre-registered test of TypeSafe AI's Jev. Not supported on BANKING77, and the benchmark's near-duplicate intents decide which way it misses.</p></div>
   </div>
 
   <div class="sig">

@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Does Jev's confidence mean what it says? · Korbant</title>
+<meta name="description" content="A pre-registered test of TypeSafe AI's Jev on BANKING77 and CLINC150. Verdict: not supported. The benchmark's near-duplicate intents decide whether Jev looks over or underconfident.">
+<meta property="og:title" content="Does Jev's confidence mean what it says?">
+<meta property="og:description" content="Pre-registered test on BANKING77: said 0.82, right 61%. Calibration error 0.089. And why the benchmark is part of the story.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --paper:#FDFBF7; --panel:#F4F0E8; --rule:#1C1A16; --hair:#D9D3C6; --hair-soft:#E8E3D8;
+    --ink:#1C1A16; --ink-2:#443F37; --muted:#7A7264; --accent:#25405C;
+    --bad:#8A2E21; --bad-tint:#F7ECE8; --good:#2F5A3A; --good-tint:#E9F1EA;
+    --measure:37rem; color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Source Serif 4",ui-serif,Georgia,"Times New Roman",serif;
+    font-size:17.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:58rem;margin:0 auto;padding:3.5rem 1.5rem 6rem}
+  .col{max-width:var(--measure)}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .kicker{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .masthead{border-bottom:1.5px solid var(--rule);padding-bottom:1.2rem}
+  h1{font-size:2.15rem;line-height:1.14;font-weight:700;margin:.65rem 0 .5rem;letter-spacing:-.015em;max-width:var(--measure)}
+  .standfirst{font-size:1.06rem;line-height:1.45;color:var(--ink-2);margin:0;max-width:var(--measure)}
+  h2{font-size:1.34rem;line-height:1.25;margin:2.6rem 0 .6rem;font-weight:700}
+  p{margin:.6rem 0}
+  a{color:var(--accent);text-underline-offset:2px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--hair);margin:1.6rem 0 0;background:#fff}
+  .stat{padding:.9rem 1rem;border-right:1px solid var(--hair)}
+  .stat:last-child{border-right:0}
+  .stat b{display:block;font-size:1.9rem;line-height:1.1;font-variant-numeric:tabular-nums}
+  .stat span{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;background:#fff;border:1px solid var(--hair)}
+  th{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:.65rem .8rem;border-bottom:1.5px solid var(--rule);background:var(--panel)}
+  td{padding:.8rem;border-bottom:1px solid var(--hair-soft);vertical-align:top;line-height:1.4}
+  tr:last-child td{border-bottom:0}
+  td .sys{font-weight:700;display:block}
+  td .maker{font-size:.8rem;color:var(--muted)}
+  q{font-style:italic;quotes:"\201C" "\201D"}
+  .src{display:block;font-family:"IBM Plex Mono",monospace;font-size:.7rem;margin-top:.3rem}
+  .tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.04em;padding:.12rem .45rem;border-radius:3px;white-space:nowrap}
+  .none{background:var(--bad-tint);color:var(--bad)}
+  .na{background:var(--panel);color:var(--muted)}
+  .done{background:var(--good-tint);color:var(--good)}
+  .prog{background:#E8EDF3;color:var(--accent)}
+  .note{font-size:.8rem;color:var(--ink-2);display:block;margin-top:.3rem}
+  .date{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--muted);white-space:nowrap}
+  .rules{margin:.4rem 0 0;padding-left:1.2rem}
+  .rules li{margin:.35rem 0}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:.8rem}
+  .card{border:1px solid var(--hair);background:#fff;padding:1rem;display:flex;flex-direction:column}
+  .card .k{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .card a{font-weight:700;font-size:1.02rem;margin:.35rem 0 .3rem;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair);align-self:flex-start}
+  .card a:hover,.card a:focus-visible{border-color:var(--ink)}
+  .card p{font-size:.86rem;color:var(--ink-2);margin:0}
+  .sig{border-top:1.5px solid var(--rule);margin-top:3rem;padding-top:1rem}
+  @media (max-width:760px){
+    .sheet{padding:2.2rem 1rem 4rem}
+    h1{font-size:1.75rem}
+    .stats{grid-template-columns:1fr}
+    .stat{border-right:0;border-bottom:1px solid var(--hair)}
+    .stat:last-child{border-bottom:0}
+    .cards{grid-template-columns:1fr}
+    table,thead,tbody,tr,td{display:block;width:100%}
+    thead{display:none}
+    table{border:0;background:none}
+    tr{background:#fff;border:1px solid var(--hair);margin-bottom:.8rem}
+    td{border-bottom:1px solid var(--hair-soft)}
+    td[data-h]::before{content:attr(data-h);display:block;font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem}
+  }
+  .stats{grid-template-columns:repeat(4,1fr)!important}
+  .kind{display:block;font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem}
+  .kp{color:var(--bad)} .kn{color:var(--good)} .kt{color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 .7rem}
+  .chip{font-family:"IBM Plex Mono",monospace;font-size:.7rem;padding:.35rem .65rem;border:1px solid var(--hair);background:#fff;color:var(--ink-2);border-radius:999px;cursor:pointer}
+  .chip span{color:var(--muted)}
+  .chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)} .chip.on span{color:var(--hair)}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  tr[hidden]{display:none!important}
+  @media (max-width:760px){.stats{grid-template-columns:1fr 1fr!important}.stat:nth-child(2){border-right:0}.stat{border-bottom:1px solid var(--hair)}}
+</style>
+<style>
+  .art h2{max-width:var(--measure)} .art p,.art ul,.art ol{max-width:var(--measure)}
+  .art li{margin:.3rem 0}
+  .tw{overflow-x:auto;margin:1rem 0}
+  .tw table td,.tw table th{font-variant-numeric:tabular-nums}
+  .fig{margin:1.6rem 0;background:#fff;border:1px solid var(--hair);padding:1rem}
+  .fig svg{width:100%;height:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;fill:#7A7264}
+  .fig figcaption{font-size:.82rem;color:var(--ink-2);margin-top:.5rem}
+  .back{font-family:"IBM Plex Mono",monospace;font-size:.72rem}
+  .meta{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--muted);margin-top:.7rem}
+  @media (max-width:760px){.stats{grid-template-columns:1fr 1fr!important}.stat b{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <a class="back" href="index.html">← The index</a>
+  <header class="masthead">
+    <div class="kicker">Korbant · Measurement · 12 October 2026</div>
+    <h1>Does Jev's confidence mean what it says?</h1>
+    <p class="standfirst">A pre-registered test of TypeSafe AI's Jev on 3,080 BANKING77 questions and 1,000 CLINC150 questions that have no right answer.</p>
+    <div class="meta">Bilal Jussab · test run 22 September 2026 · method committed before any scored call</div>
+    <div class="stats" aria-label="Key results">
+  <div class="stat"><b>Not supported</b><span>Verdict, on the pre-registered rule</span></div>
+  <div class="stat"><b>0.089</b><span>Calibration error (pass mark 0.05)</span></div>
+  <div class="stat"><b>0.82 → 61%</b><span>Worst group: said vs right</span></div>
+  <div class="stat"><b>14.9%</b><span>Impossible questions answered at 0.90+</span></div>
+</div>
+  </header>
+  <div class="art">
+  <h2>The short answer</h2>
+<p>On this test the claim is <strong>not supported</strong>. Scored against the dataset's own labels, Jev says a higher number than its accuracy earns across the lower half of its confidence range, and correcting the labels that are plainly wrong does not fix that.</p>
+<p>The more interesting finding is about the benchmark. BANKING77 has many pairs of intents that mean almost the same thing, and most of Jev's mistakes are it choosing the other half of a pair. If you count those as mistakes, Jev looks overconfident. If you forgive them, it looks underconfident. The same answers support opposite conclusions depending on a scoring choice the dataset does not settle.</p>
+<p>What holds under every scoring: Jev's confidence ranks answers well. Its most confident answers are far more often right than its least confident ones. What does not hold is reading the number as a literal probability.</p>
+<figure class="fig"><svg viewBox="0 0 560 360" role="img" aria-label="Reliability diagram for Jev on BANKING77. Groups 1 to 5 sit clearly below the diagonal; the worst said 0.82 and was right 61% of the time."><line x1="52.0" x2="544.0" y1="316.0" y2="316.0" stroke="#E8E3D8"/><text x="44" y="320.0" text-anchor="end">0.3</text><text x="52.0" y="333" text-anchor="middle">0.3</text><line x1="52.0" x2="544.0" y1="273.1" y2="273.1" stroke="#E8E3D8"/><text x="44" y="277.1" text-anchor="end">0.4</text><text x="122.3" y="333" text-anchor="middle">0.4</text><line x1="52.0" x2="544.0" y1="230.3" y2="230.3" stroke="#E8E3D8"/><text x="44" y="234.3" text-anchor="end">0.5</text><text x="192.6" y="333" text-anchor="middle">0.5</text><line x1="52.0" x2="544.0" y1="187.4" y2="187.4" stroke="#E8E3D8"/><text x="44" y="191.4" text-anchor="end">0.6</text><text x="262.9" y="333" text-anchor="middle">0.6</text><line x1="52.0" x2="544.0" y1="144.6" y2="144.6" stroke="#E8E3D8"/><text x="44" y="148.6" text-anchor="end">0.7</text><text x="333.1" y="333" text-anchor="middle">0.7</text><line x1="52.0" x2="544.0" y1="101.7" y2="101.7" stroke="#E8E3D8"/><text x="44" y="105.7" text-anchor="end">0.8</text><text x="403.4" y="333" text-anchor="middle">0.8</text><line x1="52.0" x2="544.0" y1="58.9" y2="58.9" stroke="#E8E3D8"/><text x="44" y="62.9" text-anchor="end">0.9</text><text x="473.7" y="333" text-anchor="middle">0.9</text><line x1="52.0" x2="544.0" y1="16.0" y2="16.0" stroke="#E8E3D8"/><text x="44" y="20.0" text-anchor="end">1.0</text><text x="544.0" y="333" text-anchor="middle">1.0</text><line x1="52.0" y1="316.0" x2="544.0" y2="16.0" stroke="#7A7264" stroke-dasharray="4 4"/><text x="333.1" y="127.4" fill="#7A7264" text-anchor="end">says what it means</text><line x1="182.0" x2="182.0" y1="236.7" y2="287.3" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="182.0" x2="182.0" y1="309.6" y2="263.7" stroke="#25405C" stroke-width="1.5"/><line x1="307.8" x2="307.8" y1="160.0" y2="213.6" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="307.8" x2="307.8" y1="237.6" y2="190.0" stroke="#25405C" stroke-width="1.5"/><line x1="418.2" x2="418.2" y1="92.7" y2="183.1" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="418.2" x2="418.2" y1="206.7" y2="160.4" stroke="#25405C" stroke-width="1.5"/><line x1="484.3" x2="484.3" y1="52.4" y2="124.4" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="484.3" x2="484.3" y1="146.7" y2="105.1" stroke="#25405C" stroke-width="1.5"/><line x1="522.2" x2="522.2" y1="29.3" y2="78.6" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="522.2" x2="522.2" y1="97.4" y2="63.6" stroke="#25405C" stroke-width="1.5"/><line x1="536.3" x2="536.3" y1="20.7" y2="46.4" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="536.3" x2="536.3" y1="61.4" y2="36.6" stroke="#25405C" stroke-width="1.5"/><line x1="544.0" x2="544.0" y1="16.0" y2="21.6" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="544.0" x2="544.0" y1="30.1" y2="18.1" stroke="#25405C" stroke-width="1.5"/><line x1="544.0" x2="544.0" y1="16.0" y2="20.3" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="544.0" x2="544.0" y1="28.0" y2="17.3" stroke="#25405C" stroke-width="1.5"/><line x1="544.0" x2="544.0" y1="16.0" y2="32.7" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="544.0" x2="544.0" y1="44.7" y2="25.4" stroke="#25405C" stroke-width="1.5"/><line x1="544.0" x2="544.0" y1="16.0" y2="28.4" stroke="#8A2E21" stroke-opacity=".28" stroke-width="7"/><line x1="544.0" x2="544.0" y1="39.6" y2="22.4" stroke="#25405C" stroke-width="1.5"/><polyline fill="none" stroke="#25405C" stroke-width="2" points="182.0,287.3 307.8,213.6 418.2,183.1 484.3,124.4 522.2,78.6 536.3,46.4 544.0,21.6 544.0,20.3 544.0,32.7 544.0,28.4"/><circle cx="182.0" cy="287.3" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="307.8" cy="213.6" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="418.2" cy="183.1" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="484.3" cy="124.4" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="522.2" cy="78.6" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="536.3" cy="46.4" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="544.0" cy="21.6" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="544.0" cy="20.3" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="544.0" cy="32.7" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><circle cx="544.0" cy="28.4" r="3.8" fill="#FDFBF7" stroke="#25405C" stroke-width="2"/><text x="428.2" y="187.1" fill="#8A2E21">said 0.82, right 61%</text><text x="298.0" y="354" text-anchor="middle" fill="#7A7264">mean confidence in the group</text><text transform="translate(14 166.0) rotate(-90)" text-anchor="middle" fill="#7A7264">share actually right</text></svg><figcaption>Jev on BANKING77, original labels. 3,080 answers in ten groups of 308. Bars are 95% intervals. Red is the gap between what Jev said and how often it was right.</figcaption></figure><h2>An earlier independent test</h2>
+<p>I was not the first to test this. JourdanLabs published ASSAY-001 on 18 September 2026, four days before my method was committed (<a href="https://donttrustme.ai/assay-001.html">donttrustme.ai/assay-001.html</a>). It is also pre-registered, and it uses the same BANKING77 test split. My pre-registration wrongly said nobody had published a calibration figure; that is corrected in a dated amendment at the bottom of it.</p>
+<p>The two tests were designed and run separately, and on BANKING77 they agree:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>ASSAY-001</th>
+<th>This test</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="">Items</td><td data-h="ASSAY-001">3,080</td><td data-h="This test">3,080</td></tr>
+<tr><td data-h="">Accuracy</td><td data-h="ASSAY-001">79.8%</td><td data-h="This test">79.5%</td></tr>
+<tr><td data-h="">Calibration error</td><td data-h="ASSAY-001">0.094</td><td data-h="This test">0.089</td></tr>
+<tr><td data-h="">Direction</td><td data-h="ASSAY-001">Overconfident</td><td data-h="This test">Overconfident</td></tr>
+<tr><td data-h="">Groups used</td><td data-h="ASSAY-001">9 fixed width</td><td data-h="This test">10 equal size</td></tr>
+</tbody>
+</table></div>
+<p>The small gaps fit the differences in request wording and grouping. On CLINC150, ASSAY-001 found Jev calibrated, with an error of 0.020. It did not look at why the two datasets differ. The hand reviews below suggest a reason.</p>
+<p>Other people have measured Jev on BANKING77 as well. The register JourdanLabs keeps of independent measurements (<a href="https://donttrustme.ai/register.html">donttrustme.ai/register.html</a>) lists three more: AbdelStark (100 items, calibration error 0.054), Running-Dolphins (500 items, 0.099) and FirasSX914 (500 items, 0.130). A round up of eight independent BANKING77 runs put Jev's accuracy between 75.3% and 84.0%, with a median of 80.9% (<a href="https://dev.to/gde/jev-after-eight-days-of-independent-tests-level-with-mid-price-llms-behind-the-frontier-1kln">DEV Community, 24 September 2026</a>). My figures sit inside both ranges. Tests on other tasks, such as <a href="https://github.com/jujumilk3/jev-calibration-audit">jujumilk3's</a>, find calibration that changes from one domain to the next. As far as I can find, none of these looked at the labels behind Jev's mistakes, which is where this test adds something.</p>
+<h2>What was run</h2>
+<p>3,080 BANKING77 test utterances and 1,000 CLINC150 out of scope utterances, each sent to Jev in its own request, with the dataset's own labels as the only options. The API reported model <code>jev-1.13.0</code> on every call. All 4,080 calls returned a result. None failed and nothing was dropped, so there is no exclusion list.</p>
+<h2>Accuracy</h2>
+<p>Jev picked the exact dataset label on 2,450 of 3,080 items, which is 79.5% accuracy, with a 95% interval of 78.1% to 80.9%. Brier score 0.314.</p>
+<p>While building the harness I also trained a plain TF IDF and logistic regression model on BANKING77's own training split, only to check the scoring code worked. I am not reporting that number next to Jev's. It saw 10,003 labelled examples from this exact dataset, and a comparison would say more about training data than about either system.</p>
+<h2>Calibration, original labels</h2>
+<p>All 3,080 answers sorted by the probability on the chosen option and split into ten groups of 308:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Confidence range</th>
+<th>Mean confidence</th>
+<th>Accuracy</th>
+<th>95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="Group">1</td><td data-h="Confidence range">0.15 to 0.58</td><td data-h="Mean confidence">0.485</td><td data-h="Accuracy">36.7%</td><td data-h="95% interval">31.5% to 42.2%</td></tr>
+<tr><td data-h="Group">2</td><td data-h="Confidence range">0.58 to 0.75</td><td data-h="Mean confidence">0.664</td><td data-h="Accuracy">53.9%</td><td data-h="95% interval">48.3% to 59.4%</td></tr>
+<tr><td data-h="Group">3</td><td data-h="Confidence range">0.75 to 0.88</td><td data-h="Mean confidence">0.821</td><td data-h="Accuracy">61.0%</td><td data-h="95% interval">55.5% to 66.3%</td></tr>
+<tr><td data-h="Group">4</td><td data-h="Confidence range">0.88 to 0.95</td><td data-h="Mean confidence">0.915</td><td data-h="Accuracy">74.7%</td><td data-h="95% interval">69.5% to 79.2%</td></tr>
+<tr><td data-h="Group">5</td><td data-h="Confidence range">0.95 to 0.98</td><td data-h="Mean confidence">0.969</td><td data-h="Accuracy">85.4%</td><td data-h="95% interval">81.0% to 88.9%</td></tr>
+<tr><td data-h="Group">6</td><td data-h="Confidence range">0.98 to 1.00</td><td data-h="Mean confidence">0.989</td><td data-h="Accuracy">92.9%</td><td data-h="95% interval">89.4% to 95.2%</td></tr>
+<tr><td data-h="Group">7</td><td data-h="Confidence range">1.00</td><td data-h="Mean confidence">1.000</td><td data-h="Accuracy">98.7%</td><td data-h="95% interval">96.7% to 99.5%</td></tr>
+<tr><td data-h="Group">8</td><td data-h="Confidence range">1.00</td><td data-h="Mean confidence">1.000</td><td data-h="Accuracy">99.0%</td><td data-h="95% interval">97.2% to 99.7%</td></tr>
+<tr><td data-h="Group">9</td><td data-h="Confidence range">1.00</td><td data-h="Mean confidence">1.000</td><td data-h="Accuracy">96.1%</td><td data-h="95% interval">93.3% to 97.8%</td></tr>
+<tr><td data-h="Group">10</td><td data-h="Confidence range">1.00</td><td data-h="Mean confidence">1.000</td><td data-h="Accuracy">97.1%</td><td data-h="95% interval">94.5% to 98.5%</td></tr>
+</tbody>
+</table></div>
+<p>Expected calibration error 0.089. Largest single gap 0.210. Against the three conditions in the committed plan:</p>
+<ol>
+<li>Calibration error 0.05 or lower: <strong>fails</strong>, at 0.089.</li>
+<li>No group overconfident by a clear margin: <strong>fails</strong>. Groups 1 to 5 each have a whole 95% interval sitting more than 5 points below their own mean confidence. The gaps range from about 12 to 21 points, largest in group 3.</li>
+<li>Confidence separates right from wrong: <strong>passes</strong>, comfortably. The most confident group's interval (94.5% to 98.5%) sits far above the least confident group's (31.5% to 42.2%).</li>
+</ol>
+<p>The separate confidence score behaves almost identically: calibration error 0.083, largest gap 0.190, the same failure on conditions 1 and 2 and the same pass on condition 3. Nothing here gives a reason to prefer one signal over the other.</p>
+<h2>The confident mistakes</h2>
+<p>2,095 answers came back at 0.90 confidence or above. 156 of them were wrong against the original labels, a rate of 7.4%. Ying and Thomas (2022) estimated that about 14% of BANKING77's training examples may be mislabelled, so as the plan required, every one was checked by hand and sorted into three buckets. I did the first pass with the help of an AI model and then checked the verdicts myself. The full list, with a reason for every item, is published so anyone can disagree with any single call.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Verdict</th>
+<th>Count</th>
+<th>Share</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="Verdict">The dataset label is wrong and Jev is right</td><td data-h="Count">53</td><td data-h="Share">34%</td></tr>
+<tr><td data-h="Verdict">Genuinely ambiguous, both labels defensible</td><td data-h="Count">95</td><td data-h="Share">61%</td></tr>
+<tr><td data-h="Verdict">Jev is wrong</td><td data-h="Count">8</td><td data-h="Share">5%</td></tr>
+</tbody>
+</table></div>
+<h2>A second review, below 0.90 (added after the plan)</h2>
+<p>The plan only required checking answers at 0.90 and above. That leaves a gap: the corrected scorings would fix one end of the range and leave the other untouched, which could bias the result in either direction. So I added a second review that the plan did not call for, and I am marking it as extra rather than part of the committed method.</p>
+<p>From the 457 wrong answers in groups 1 to 3, I drew a random sample of 40 (seed 20260925, published) and sorted them the same way.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Verdict</th>
+<th>Count</th>
+<th>Share</th>
+<th>95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="Verdict">The dataset label is wrong</td><td data-h="Count">2</td><td data-h="Share">5%</td><td data-h="95% interval">1% to 17%</td></tr>
+<tr><td data-h="Verdict">Genuinely ambiguous</td><td data-h="Count">29</td><td data-h="Share">72.5%</td><td data-h="95% interval"></td></tr>
+<tr><td data-h="Verdict">Jev is wrong</td><td data-h="Count">9</td><td data-h="Share">22.5%</td><td data-h="95% interval"></td></tr>
+</tbody>
+</table></div>
+<p>Label errors are much rarer down here than at the top, but ambiguity is just as common. To rescore, I applied these sample rates to all 474 wrong answers below 0.90 that were not individually checked. Those figures are estimates, and the interval on a sample of 40 is wide.</p>
+<h2>Why so much is ambiguous</h2>
+<p>This is the most useful thing either review turned up, and I would say it plainly to anyone using BANKING77 as a benchmark. The dataset contains pairs of intents that mean nearly the same thing, and a large share of Jev's mistakes, at every confidence level, are it choosing the other member of a pair. The most common in the confident mistakes:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Dataset label</th>
+<th>Jev's answer</th>
+<th>Times</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="Dataset label">order_physical_card</td><td data-h="Jev's answer">get_physical_card</td><td data-h="Times">11</td></tr>
+<tr><td data-h="Dataset label">top_up_by_bank_transfer_charge</td><td data-h="Jev's answer">transfer_fee_charged</td><td data-h="Times">8</td></tr>
+<tr><td data-h="Dataset label">declined_transfer</td><td data-h="Jev's answer">declined_card_payment</td><td data-h="Times">8</td></tr>
+<tr><td data-h="Dataset label">top_up_reverted</td><td data-h="Jev's answer">top_up_failed</td><td data-h="Times">5</td></tr>
+<tr><td data-h="Dataset label">pending_transfer</td><td data-h="Jev's answer">transfer_timing</td><td data-h="Times">5</td></tr>
+<tr><td data-h="Dataset label">card_arrival</td><td data-h="Jev's answer">card_delivery_estimate</td><td data-h="Times">4</td></tr>
+</tbody>
+</table></div>
+<p>For a request to be sent a new physical card, both order_physical_card and get_physical_card are reasonable readings, and nothing in the dataset tells a reader which to prefer. A model trained on the training split can learn the dataset's convention for each pair. A model asked cold has only the label names to go on. That is a property of the benchmark, not of Jev, and it is worth knowing before anyone reads a BANKING77 accuracy figure as a measure of understanding.</p>
+<p>It may also explain the gap between the two datasets in ASSAY-001. CLINC150 spreads 150 intents across ten separate domains, so far fewer of them are near twins. If near duplicate intents are what make Jev look overconfident, a benchmark with fewer of them should make it look better calibrated, which is what ASSAY-001 found. I did not test CLINC150's in scope items, so this is a hypothesis the two results point to, not something either test shows.</p>
+<p>The genuine errors look different. Among the confident ones, six of the eight are Jev choosing a more general intent when the message names a specific situation: exchange_rate for a complaint about the rate on a card payment, or failed_transfer when the message says the problem was the beneficiary.</p>
+<h2>Rescoring</h2>
+<p>The headline stays scored against the original labels, untouched. These scorings sit next to it, never in place of it.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Scoring</th>
+<th>Accuracy</th>
+<th>Calibration error</th>
+<th>Problem groups</th>
+<th>Passes</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="Scoring">Original labels</td><td data-h="Accuracy">79.5%</td><td data-h="Calibration error">0.089</td><td data-h="Problem groups">1 to 5 overconfident</td><td data-h="Passes">No</td></tr>
+<tr><td data-h="Scoring">Label errors fixed (estimated)</td><td data-h="Accuracy">82.0%</td><td data-h="Calibration error">0.064</td><td data-h="Problem groups">3 and 4 overconfident</td><td data-h="Passes">No</td></tr>
+<tr><td data-h="Scoring">Label errors fixed, ambiguous forgiven (estimated)</td><td data-h="Accuracy">96.3%</td><td data-h="Calibration error">0.080</td><td data-h="Problem groups">1 to 3 <strong>underconfident</strong></td><td data-h="Passes">No</td></tr>
+</tbody>
+</table></div>
+<p>Accuracy by group under each scoring:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Mean confidence</th>
+<th>Original</th>
+<th>Label errors fixed</th>
+<th>Ambiguous also forgiven</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="Group">1</td><td data-h="Mean confidence">0.485</td><td data-h="Original">36.7%</td><td data-h="Label errors fixed">39.9%</td><td data-h="Ambiguous also forgiven">85.8%</td></tr>
+<tr><td data-h="Group">2</td><td data-h="Mean confidence">0.664</td><td data-h="Original">53.9%</td><td data-h="Label errors fixed">56.2%</td><td data-h="Ambiguous also forgiven">89.6%</td></tr>
+<tr><td data-h="Group">3</td><td data-h="Mean confidence">0.821</td><td data-h="Original">61.0%</td><td data-h="Label errors fixed">63.0%</td><td data-h="Ambiguous also forgiven">91.2%</td></tr>
+<tr><td data-h="Group">4</td><td data-h="Mean confidence">0.915</td><td data-h="Original">74.7%</td><td data-h="Label errors fixed">78.8%</td><td data-h="Ambiguous also forgiven">97.5%</td></tr>
+<tr><td data-h="Group">5</td><td data-h="Mean confidence">0.969</td><td data-h="Original">85.4%</td><td data-h="Label errors fixed">89.6%</td><td data-h="Ambiguous also forgiven">99.4%</td></tr>
+<tr><td data-h="Group">6 to 10</td><td data-h="Mean confidence">0.989 to 1.000</td><td data-h="Original">92.9% to 99.0%</td><td data-h="Label errors fixed">95.5% to 99.7%</td><td data-h="Ambiguous also forgiven">99.4% to 100%</td></tr>
+</tbody>
+</table></div>
+<p>The middle column is the one the plan's verdict rule uses. Fixing the label errors narrows the gap but does not close it. Even at the top of the sample's interval for label errors, groups 3 and 4 remain clearly overconfident.</p>
+<p>The right hand column is the most generous reading available, and it turns the picture upside down. Once every defensible alternative answer is counted in Jev's favour, its low confidence answers are right far more often than it says. Jev would then be underconfident, not overconfident, and it still fails the calibration error condition, from the other side.</p>
+<h2>Verdict</h2>
+<p>The committed plan set out the rule before the numbers existed:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Original labels</th>
+<th>Corrected labels</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr><td data-h="Original labels">Passes</td><td data-h="Corrected labels">Passes</td><td data-h="Verdict">Supported</td></tr>
+<tr><td data-h="Original labels">Fails</td><td data-h="Corrected labels">Passes</td><td data-h="Verdict">Inconclusive, the failure comes from label errors</td></tr>
+<tr><td data-h="Original labels">Fails</td><td data-h="Corrected labels">Fails</td><td data-h="Verdict">Not supported on this test</td></tr>
+</tbody>
+</table></div>
+<p>It fails on the original labels and fails with the label errors corrected. So: <strong>not supported on this test</strong>.</p>
+<p>What that does and does not mean. It does not mean Jev's confidence is meaningless: condition 3 passed by a wide margin under every scoring. It means the stated promise, that an answer given at a certain confidence is right about that often, does not hold on this benchmark. And how it fails depends on a question the benchmark cannot answer on its own: when two labels mean nearly the same thing, which one counts as correct.</p>
+<p>For anyone routing work by Jev's confidence, the practical reading is this. Use it to rank. Do not use it as a probability without checking it against your own labelled data, where you decide what counts as the right answer.</p>
+<h2>When no option fits</h2>
+<p>The 1,000 CLINC150 out of scope utterances were offered only the 150 in scope intents, so every answer is wrong by construction and a well calibrated model should be visibly unsure.</p>
+<p>Mean confidence on the chosen option 0.572, median 0.540, 90th percentile 0.95. 149 of the 1,000, which is 14.9%, came back at 0.90 or above. The separate confidence score gives almost the same picture: mean 0.560, median 0.530, 139 at or above 0.90.</p>
+<p>So Jev is less confident here than on real items, which is the right direction, but roughly one in seven impossible questions still gets an answer at 0.90 or above. This part was reported rather than scored, as the plan stated. It is also the result least affected by the labelling question, because no label here is correct.</p>
+<h2>Limits</h2>
+<p>Both datasets have been public for years and Jev may have seen them in training, which could flatter the accuracy figure. This is one task, intent classification, in one language. The review below 0.90 is a sample of 40, so the estimated scorings carry wide uncertainty. And both hand reviews are judgement calls, which is why every item and its reason is published rather than summarised.</p>
+<h2>Right of reply</h2>
+<p>TypeSafe AI was sent these results in full, with the data and the code, on 25 September 2026, and offered space to respond in full and unedited. No response had been received by 12 October 2026, the date of publication. Any correction made after publication will be added below with its date.</p>
+<p><strong>Corrections:</strong> none so far.</p>
+  <h2>Files</h2>
+<ul class="rules">
+<li><a href="https://github.com/Bilal-Jussab2/calibration-audit/blob/main/preregistration/jev-preregistration.md">The committed plan</a> (commit 6f429a5, 22 September 2026, with Amendment 1)</li>
+<li><a href="https://github.com/Bilal-Jussab2/calibration-audit/tree/main/jevcal">The code</a> (MIT). It reproduces every number on this page from the raw responses</li>
+<li><a href="https://github.com/Bilal-Jussab2/calibration-audit/tree/main/results/jev">Raw responses, both hand review lists and the scoring report</a></li>
+</ul>
+<h2>Data credits</h2>
+<p class="col">BANKING77: Casanueva, Temčinas, Gerz, Henderson and Vulić (2020), PolyAI, <a href="https://github.com/PolyAI-LDN/task-specific-datasets">github.com/PolyAI-LDN/task-specific-datasets</a>, licensed CC BY 4.0. CLINC150: Larson et al. (2019), <a href="https://github.com/clinc/oos-eval">github.com/clinc/oos-eval</a>, licensed CC BY 3.0. Both were used unmodified. Label noise estimate: Ying and Thomas (2022).</p>
+  </div>
+  <div class="sig">
+    <b>Bilal Jussab</b> · Korbant<br>
+    Independent calibration measurements · <a href="mailto:bilal@korbant.co.uk" style="color:inherit">bilal@korbant.co.uk</a><br>
+    <span class="kicker">This is a measurement, not a certification.</span>
+  </div>
+</div>
+</body>
+</html>
