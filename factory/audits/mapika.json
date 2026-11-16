@@ -1,0 +1,19 @@
+{
+ "audit": "mapika",
+ "adapter": "mapika",
+ "prereg_commit": "",
+ "pip": [
+  "decider-ai==1.10.0",
+  "flash-linear-attention"
+ ],
+ "checkpoints": {
+  "v12": [
+   "Mapika/decider-2b",
+   "7614a6c7ea5a047aa7d7bcfb1a0015469381c3e3"
+  ],
+  "v11": [
+   "Mapika/decider-2b",
+   "998c591fe4efe2938fba456f94fc9884541700ec"
+  ]
+ }
+}

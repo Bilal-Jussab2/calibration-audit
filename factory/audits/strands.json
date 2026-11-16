@@ -1,0 +1,5 @@
+{"audit": "strands", "adapter": "strands", "prereg_commit": "f9ec718690dc9753974fe728217e482ec5022d9c",
+ "pip": ["strands-decider==0.3.0"],
+ "checkpoints": {"v19": ["StrandsAgents/strands-decider-2B-hobson-v19", "bb282d786bc251fd4e3068de3ada9ddbb38127cd"],
+                 "v2610": ["StrandsAgents/strands-decider-2B-qwen3.5-v1-2610", "216d1ccb46a9e9b036eb9187b248db98480f77d4"]},
+ "extra_snapshots": [["Qwen/Qwen3.5-2B-Base", "b1485b2fa6dfa1287294f269f5fb618e03d52d7c"]]}
