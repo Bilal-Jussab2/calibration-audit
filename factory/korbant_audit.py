@@ -105,9 +105,13 @@ def adapter_strands(repo: str, rev: str, device: str) -> Ask:
 
 
 def adapter_mapika(repo: str, rev: str, device: str) -> Ask:
-    """Mapika decider, documented interface Decider.decide(context, [{question, options}]), shipped temperatures."""
+    """Mapika decider, documented interface Decider.decide(context, [{question, options}]), shipped temperatures.
+
+    use_graphs=False selects the library's eager path, the one the maker's own decider.evaluate uses. The default
+    compiled path needs a torch.compile per input shape, which does not finish on a Kaggle T4 (pre-registration amendment 1).
+    """
     from decider.infer import Decider
-    d = Decider(_snapshot(repo, rev), device=device)
+    d = Decider(_snapshot(repo, rev), device=device, use_graphs=False)
 
     def ask(text: str, labels: list[str]) -> dict:
         shown = [l.replace("_", " ") for l in labels]
