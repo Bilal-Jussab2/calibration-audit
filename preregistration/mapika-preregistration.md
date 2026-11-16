@@ -77,4 +77,4 @@ Mapika receives the results at least 14 days before publication, through a GitHu
 
 Any change is added below with a date and reason. Nothing above is edited in place.
 
-**Amendments:** none.
+**Amendment 1 (16 November 2026, before any test data was sent).** The model is loaded with `use_graphs=False`, the library's eager path. Reason: a timing check with made up inputs showed that the default path compiles the model once per input shape with `torch.compile`, and on the Kaggle T4 machine one compile had not finished after six minutes, so a full run would not complete. The eager path is a documented option of `Decider`, it is the path the maker's own `decider.evaluate` uses, and the project's changelog reports that it reproduces the maker's research readout exactly, while the compiled path differs from it slightly (mean difference 0.0035 in probability). Nothing else changes: same checkpoints, data, wording, shipped temperatures, measures and pass mark.
