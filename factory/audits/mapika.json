@@ -1,7 +1,7 @@
 {
  "audit": "mapika",
  "adapter": "mapika",
- "prereg_commit": "",
+ "prereg_commit": "8207f3e3d642981089c233e1e48699a184e83a17",
  "pip": [
   "decider-ai==1.10.0",
   "flash-linear-attention"
