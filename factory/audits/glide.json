@@ -1,0 +1,17 @@
+{
+ "audit": "glide",
+ "adapter": "glide",
+ "prereg_commit": "6123d3c3b2e3f0e6c723a9b23643660f8015b778",
+ "pip": [
+  "transformers==5.17.0",
+  "tokenizers==0.23.2",
+  "safetensors==0.8.0",
+  "flash-linear-attention==0.5.2"
+ ],
+ "checkpoints": {
+  "2b": [
+   "fastino/GLiDE-2B",
+   "742ba093a930f229c0e01622aa1c421dc9e2b70b"
+  ]
+ }
+}
