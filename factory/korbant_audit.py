@@ -123,6 +123,27 @@ def adapter_mapika(repo: str, rev: str, device: str) -> Ask:
     return ask
 
 
+def adapter_glide(repo: str, rev: str, device: str) -> Ask:
+    """Fastino GLiDE, documented interface Glide.from_pretrained(...).decide(state, questions), shipped temperature.
+
+    The glide package ships inside the model repo, so it is imported from the pinned snapshot. The T4 has no native
+    bfloat16, so the weights are loaded in float32 (exact conversion); vision is off because only text is sent.
+    """
+    import torch
+    snap = _snapshot(repo, rev)
+    if snap not in sys.path:
+        sys.path.insert(0, snap)
+    from glide import Glide
+    dtype = torch.bfloat16 if (device == "cuda" and torch.cuda.is_bf16_supported(including_emulation=False)) else torch.float32
+    m = Glide.from_pretrained(snap, device=device, dtype=dtype, vision=False)
+
+    def ask(text: str, labels: list[str]) -> dict:
+        q = {"type": "choice", "instructions": INSTRUCTIONS, "criteria": {l: l.replace("_", " ") for l in labels}}
+        a = m.decide(state=text, questions={"intent": q})["answers"]["intent"]
+        return {"choice": a["choice"], "probabilities": a["probabilities"], "confidence": a["confidence"]}
+    return ask
+
+
 def adapter_fake(repo: str, rev: str, device: str) -> Ask:
     """Deterministic stand-in used by the self-test only."""
     def ask(text: str, labels: list[str]) -> dict:
@@ -135,7 +156,7 @@ def adapter_fake(repo: str, rev: str, device: str) -> Ask:
 
 
 ADAPTERS: dict[str, Callable[[str, str, str], Ask]] = {
-    "strands": adapter_strands, "mapika": adapter_mapika, "fake": adapter_fake}
+    "strands": adapter_strands, "mapika": adapter_mapika, "glide": adapter_glide, "fake": adapter_fake}
 
 
 # ---------------------------------------------------------------- run
