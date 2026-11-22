@@ -5,7 +5,7 @@ When an AI system says it is 90% sure, is it right 90% of the time? Each study h
 | Study | System | Status |
 |---|---|---|
 | Receipt OCR | Tesseract 5.3.4, 200 scanned receipts | [Published](https://audit.korbant.co.uk/tesseract-receipts.html) |
-| Intent routing | Jev by TypeSafe AI | [Method committed](preregistration/jev-preregistration.md) 22 Sep 2026. Results not yet published |
+| Intent routing | Jev by TypeSafe AI | [Method committed](preregistration/jev-preregistration.md) 22 Sep 2026. [Published](https://audit.korbant.co.uk/jev.html) 12 Oct 2026 |
 
 ## How every study works
 
